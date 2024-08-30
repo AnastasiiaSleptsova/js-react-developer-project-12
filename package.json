@@ -1,0 +1,19 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "[![Actions Status](https://github.com/AnastasiiaSleptsova/js-react-developer-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/AnastasiiaSleptsova/js-react-developer-project-12/actions)",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build --prefix frontend",
+    "make_build": "cd ./frontend && npm run build",
+    "start_server": "start-server -s ./frontend/build",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "cd frontend && npm ci"
+  },
+  "proxy": "http://localhost:5001",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hexlet/chat-server": "^2.0.4"
+  }
+}
