@@ -1,19 +1,15 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./components/LoginPage/LoginPage";
-import MainPage from "./components/MainPage";
-import PageNotFound from ".//components/PageNotFound";
+import { BrowserRouter } from "react-router-dom";
+import { Router } from "./components/app/Router";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/" element={<MainPage />} />
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
+          <Router />
         </BrowserRouter>
       </header>
     </div>
