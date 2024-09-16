@@ -1,0 +1,18 @@
+.wrapper {
+  width: 100%;
+  min-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: rgb(242, 239, 239);
+}
+
+.chatBox {
+  width: 90%;
+  min-width: 90%;
+  margin: 20px auto;
+  display: flex;
+  background-color: white;
+  box-shadow: 5px 5px 10px rgb(198, 197, 197);
+}

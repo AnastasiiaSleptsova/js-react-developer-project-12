@@ -1,24 +1,21 @@
-import React from "react";
-import { Button } from "../../ui/Button/Button";
-import { useNavigate } from "react-router-dom";
+import React, {useState} from "react";
+import "./MainPage.css";
+import Header from "../../ui/Header/Header";
+import { ChatList } from "./ChatList/ChatList";
+import { MessageList } from "./MessageList/MessageList";
 
-
-const MainPage = () => {
-  const navigate = useNavigate();
-  
-  const logout = () => {
-    localStorage.clear();
-    navigate("/login");
-  }
+const MainPage = React.memo(() => {
+  const [activeChatId, setActiveChatId] = useState(null);
 
   return (
-    <div className="container">
-      <Button variant="primary" onClick={logout}>
-        Выйти
-      </Button>
-      <div> Вы на главной странице. Вас зовут </div>
+    <div className="wrapper">
+      <Header />
+      <div className="chatBox">
+        <ChatList setActiveChatId={setActiveChatId} activeChatId={activeChatId} />
+        <MessageList activeChatId={activeChatId}/>
+      </div>
     </div>
   );
-};
+})
 
 export default MainPage;
