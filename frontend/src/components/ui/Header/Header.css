@@ -1,17 +1,17 @@
 .header {
   width: 100%;
-  padding: 1% 5%; /* TODO переписать на пиксели */
+  padding: 10px 55px; 
   background-size: cover;
   background-position: top center;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   background-color: white;
-  box-shadow: 0px 5px 5px rgb(201, 200, 200);
+  box-shadow: 0px 0px 5px rgb(201, 200, 200);
 }
 
 
 .logoText {
-  font-size: 150%;
+  font-size: 25px;
   font-weight: 500;
 }

@@ -1,0 +1,17 @@
+.messageList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.messageItem {
+  flex: 1 0 auto;
+}
+
+.placeForMessage {
+  flex: 0 0 auto;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  min-height: 1rem;
+}
