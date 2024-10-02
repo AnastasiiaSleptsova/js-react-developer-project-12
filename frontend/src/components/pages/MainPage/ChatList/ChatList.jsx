@@ -1,38 +1,71 @@
 import React, { useEffect, useState } from "react";
-import { useGetChatsQuery } from "../../../../api/chatsApi";
+import {
+  useGetChatsQuery,
+} from "../../../../api/chatsApi";
+import { Dropdown, DropdownButton } from "react-bootstrap"; // Используем Bootstrap для выпадающего меню
 
 import "./ChatList.css";
+import AddChat from "./AddChat/AddChat";
+
 
 export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
-  const { data = [] } = useGetChatsQuery();
+  const { data: chatList = [] } = useGetChatsQuery();
+
+  const [isVisibleAddChatModal, setIsVisibleAddChatModal ] = useState(false)
 
   const handlerClick = (id) => {
     setActiveChatId(id);
   };
 
   useEffect(() => {
-    setActiveChatId(data[0]?.id);
-  }, [data, setActiveChatId]);
+    // Устанавливаем активный чат по умолчанию после загрузки данных
+    if (chatList.length > 0) {
+      setActiveChatId(chatList[0].id);
+    }
+  }, [chatList, setActiveChatId]);
 
   return (
     <div className="chatList">
       <div className="blockChannel">
         <b className="channels">Каналы</b>
-        <button className="button">+</button>
+        <button
+          className="buttonAddChat"
+          type="button"
+          onClick={() => setIsVisibleAddChatModal(true)}
+          data-testid="item-add"
+        >
+          +
+        </button>
       </div>
       <ul className="channelList">
-        {data?.map((item) => {
-          return (
-            <li
-              key={item.id}
-              onClick={() => handlerClick(item.id)}
-              className={activeChatId === item.id ? "active item" : "item"}
-            >
-              <h2 className="text"># {item.name}</h2>
-            </li>
-          );
-        })}
+        {chatList?.map((item) => (
+          <li
+            key={item.id}
+            onClick={() => handlerClick(item.id)}
+            className={activeChatId === item.id ? "active item" : "item"}
+          >
+            <h2 className="text">
+              <span>#</span> {item.name}
+            </h2>
+            {item.removable ? (
+              <DropdownButton
+                className="dropdown"
+                id="dropdown-basic-button"
+                variant="link"
+              >
+                <Dropdown.Item onClick={() => {}}>
+                  Переименовать
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => {}}>
+                  Удалить
+                </Dropdown.Item>
+              </DropdownButton>
+            ) : null}
+          </li>
+        ))}
       </ul>
+
+      {isVisibleAddChatModal && <AddChat isVisible={isVisibleAddChatModal} setIsVisible={setIsVisibleAddChatModal} />}
     </div>
   );
 });
