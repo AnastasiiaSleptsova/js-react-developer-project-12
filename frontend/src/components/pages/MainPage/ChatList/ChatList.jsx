@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import {
-  useGetChatsQuery,
-} from "../../../../api/chatsApi";
+import { useGetChatsQuery } from "../../../../api/chatsApi";
 import { Dropdown, DropdownButton } from "react-bootstrap"; // Используем Bootstrap для выпадающего меню
+import { AddChat } from "./AddChat/AddChat";
+import { RenameChat } from "./RenameChat/RenameChat";
 
 import "./ChatList.css";
-import AddChat from "./AddChat/AddChat";
-
 
 export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
   const { data: chatList = [] } = useGetChatsQuery();
+  const activeChat = chatList.find((chat) => chat.id === activeChatId);
 
-  const [isVisibleAddChatModal, setIsVisibleAddChatModal ] = useState(false)
+  const [isVisibleAddChatModal, setIsVisibleAddChatModal] = useState(false);
 
   const handlerClick = (id) => {
     setActiveChatId(id);
@@ -53,19 +52,31 @@ export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
                 id="dropdown-basic-button"
                 variant="link"
               >
-                <Dropdown.Item onClick={() => {}}>
+                <Dropdown.Item onClick={() => setIsVisibleAddChatModal(true)}>
                   Переименовать
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => {}}>
-                  Удалить
-                </Dropdown.Item>
+
+                <Dropdown.Item onClick={() => {}}>Удалить</Dropdown.Item>
               </DropdownButton>
             ) : null}
           </li>
         ))}
       </ul>
 
-      {isVisibleAddChatModal && <AddChat isVisible={isVisibleAddChatModal} setIsVisible={setIsVisibleAddChatModal} />}
+      {isVisibleAddChatModal && (
+        <AddChat
+          isVisible={isVisibleAddChatModal}
+          setIsVisible={setIsVisibleAddChatModal}
+        />
+      )}
+      {isVisibleAddChatModal && (
+        <RenameChat
+          chatId={activeChatId}
+          chatName={activeChat?.name}
+          isVisible={isVisibleAddChatModal}
+          setIsVisible={setIsVisibleAddChatModal}
+        />
+      )}
     </div>
   );
 });

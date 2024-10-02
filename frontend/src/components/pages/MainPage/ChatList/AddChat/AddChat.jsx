@@ -1,16 +1,15 @@
-import { useEffect, useId, useRef } from "react";
+import React, { useEffect, useId, useRef } from "react";
 import { Modal } from "../../../../ui/Modals/Modal";
 import { useFormik } from "formik";
 import { FormControl, FormGroup } from "react-bootstrap";
 import { useAddChatMutation } from "../../../../../api/chatsApi";
 
-const AddChat = ({ isVisible, setIsVisible }) => {
+export const AddChat = ({ isVisible, setIsVisible }) => {
   const [addChat] = useAddChatMutation();
   const id = useId();
 
   const handleSubmit = async (values) => {
-    console.log("!!! values = ", values);
-    addChat({ id, name: values.newChatName, removable: true });
+    await addChat({ id, name: values.newChatName, removable: true });
     setIsVisible(false);
   };
 
@@ -54,4 +53,4 @@ const AddChat = ({ isVisible, setIsVisible }) => {
   );
 };
 
-export default AddChat;
+

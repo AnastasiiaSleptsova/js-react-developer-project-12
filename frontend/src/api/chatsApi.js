@@ -34,9 +34,10 @@ export const chatsApi = createApi({
       invalidatesTags: [{ type: chatTag, id: "LIST" }],
     }),
     renameChat: builder.mutation({
-      query: (id) => ({
+      query: ({id, name}) => ({
         url: `/${id}`,
         method: "PATCH",
+        body: { name }
       }),
       invalidatesTags: [{ type: chatTag, id: "LIST" }],
     }),
