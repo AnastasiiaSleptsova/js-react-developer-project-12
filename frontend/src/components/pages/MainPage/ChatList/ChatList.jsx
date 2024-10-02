@@ -3,14 +3,18 @@ import { useGetChatsQuery } from "../../../../api/chatsApi";
 import { Dropdown, DropdownButton } from "react-bootstrap"; // Используем Bootstrap для выпадающего меню
 import { AddChat } from "./AddChat/AddChat";
 import { RenameChat } from "./RenameChat/RenameChat";
+import { DeleteChat } from "./DeleteChat/DeleteChat";
 
 import "./ChatList.css";
 
 export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
   const { data: chatList = [] } = useGetChatsQuery();
-  const activeChat = chatList.find((chat) => chat.id === activeChatId);
 
   const [isVisibleAddChatModal, setIsVisibleAddChatModal] = useState(false);
+  const [isVisibleRenameChatModal, setIsVisibleRenameChatModal] =
+    useState(false);
+  const [isVisibleDeleteChatModal, setIsVisibleDeleteChatModal] =
+    useState(false);
 
   const handlerClick = (id) => {
     setActiveChatId(id);
@@ -52,11 +56,17 @@ export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
                 id="dropdown-basic-button"
                 variant="link"
               >
-                <Dropdown.Item onClick={() => setIsVisibleAddChatModal(true)}>
+                <Dropdown.Item
+                  onClick={() => setIsVisibleRenameChatModal(true)}
+                >
                   Переименовать
                 </Dropdown.Item>
 
-                <Dropdown.Item onClick={() => {}}>Удалить</Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => setIsVisibleDeleteChatModal(true)}
+                >
+                  Удалить
+                </Dropdown.Item>
               </DropdownButton>
             ) : null}
           </li>
@@ -69,12 +79,19 @@ export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
           setIsVisible={setIsVisibleAddChatModal}
         />
       )}
-      {isVisibleAddChatModal && (
+
+      {isVisibleRenameChatModal && (
         <RenameChat
+          activeChatId={activeChatId}
+          isVisible={isVisibleRenameChatModal}
+          setIsVisible={setIsVisibleRenameChatModal}
+        />
+      )}
+      {isVisibleDeleteChatModal && (
+        <DeleteChat
           chatId={activeChatId}
-          chatName={activeChat?.name}
-          isVisible={isVisibleAddChatModal}
-          setIsVisible={setIsVisibleAddChatModal}
+          isVisible={isVisibleDeleteChatModal}
+          setIsVisible={setIsVisibleDeleteChatModal}
         />
       )}
     </div>
