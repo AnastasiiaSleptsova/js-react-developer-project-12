@@ -1,10 +1,12 @@
 import { Button } from "../Button/Button";
 import { useNavigate } from "react-router-dom";
 
-import "./Header.css";
+import classes from "./Header.module.css";
 
 export const Header = () => {
   const navigate = useNavigate();
+
+  const isAuthenticated = !!localStorage.getItem("token"); 
 
   const logout = () => {
     localStorage.clear();
@@ -12,11 +14,13 @@ export const Header = () => {
   };
 
   return (
-    <div className="header">
-      <div className="logoText">Hexlet Chat</div>
-      <Button variant="primary" onClick={logout}>
-        Выйти
-      </Button>
+    <div className={classes.header}>
+      <div className={classes.logoText}>Hexlet Chat</div>
+      {isAuthenticated && (
+        <Button variant="primary" onClick={logout}>
+          Выйти
+        </Button>
+      )}
     </div>
   );
 };
