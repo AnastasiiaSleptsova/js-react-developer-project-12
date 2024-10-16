@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getApiHost } from "./getApiHost";
 import { API_ROUTES } from "./routes";
-// import axios from "./axios";
 
 const messageTag = 'messages'
 
