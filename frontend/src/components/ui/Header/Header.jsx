@@ -1,5 +1,5 @@
 import { Button } from "../Button/Button";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import classes from "./Header.module.css";
 
@@ -15,7 +15,7 @@ export const Header = () => {
 
   return (
     <div className={classes.header}>
-      <div className={classes.logoText}>Hexlet Chat</div>
+      <NavLink to='/login' className={classes.logoText}>Hexlet Chat</NavLink>
       {isAuthenticated && (
         <Button variant="primary" onClick={logout}>
           Выйти

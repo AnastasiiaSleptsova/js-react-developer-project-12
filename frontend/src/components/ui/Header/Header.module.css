@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  padding: 10px 55px; 
+  padding: 10px 55px;
   background-size: cover;
   background-position: top center;
   display: flex;
@@ -10,8 +10,10 @@
   box-shadow: 0px 0px 5px rgb(201, 200, 200);
 }
 
-
 .logoText {
   font-size: 25px;
   font-weight: 500;
+  color: black;
+  text-decoration: none;
 }
+

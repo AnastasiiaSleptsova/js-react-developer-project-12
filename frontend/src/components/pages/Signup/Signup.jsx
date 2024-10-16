@@ -22,13 +22,13 @@ const SignupSchema = Yup.object().shape({
 });
 
 export const Signup = () => {
-  const [sendUser, { isSuccess, isError, error }] = useSendUserMutation();
+  const [sendUser] = useSendUserMutation();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
 
   const onErrorPostUser = (statusCode) => {
     if (statusCode === 401) {
-      setErrorMessage("Конфликт пользователей");
+      setErrorMessage("Пользователя с таким логином уже существует");
     } else if (errorMessage === 500) {
       setErrorMessage("Внутренняя ошибка сервера");
     } else {
