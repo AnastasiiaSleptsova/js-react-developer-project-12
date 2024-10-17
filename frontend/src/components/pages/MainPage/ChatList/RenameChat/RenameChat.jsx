@@ -7,10 +7,13 @@ import {
 import { Modal } from "../../../../ui/Modals/Modal";
 import { FormGroup, FormControl, Form } from "react-bootstrap";
 import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
 
 export const RenameChat = ({ activeChatId, isVisible, setIsVisible }) => {
   const [renameChat] = useRenameChatMutation();
   const { data: chatList = [] } = useGetChatsQuery();
+  const { t } = useTranslation();
+
   const chatNamesList = chatList.map((chat) => chat.name);
   const chatName = chatList.find((chat) => chat.id === activeChatId)?.name;
 
@@ -24,11 +27,11 @@ export const RenameChat = ({ activeChatId, isVisible, setIsVisible }) => {
     onSubmit: handleSubmit,
     validationSchema: Yup.object({
       newChatName: Yup.string()
-        .required("Обязательное поле")
-        .min(3, "Значение должно быть больше 3 символов")
+        .required(t("requiredField"))
+        .min(3, t("minSymbol_few", { count: 3 }))
         .test(
           "unique-chat",
-          "Чат с таким названием уже существует",
+          t("channelNameBusy"),
           (value) => !chatNamesList.includes(value)
         ),
     }),
@@ -68,7 +71,7 @@ export const RenameChat = ({ activeChatId, isVisible, setIsVisible }) => {
 
   return (
     <Modal
-      headerTitle="Изменить название чата"
+      headerTitle={t("renameChannel")}
       content={content}
       isVisible={isVisible}
       onClose={() => setIsVisible(false)}

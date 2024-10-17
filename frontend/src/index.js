@@ -1,17 +1,20 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import {store} from "./slices/index.js";
-import {Provider} from 'react-redux'
+import { store } from "./slices/index.js";
+import { Provider } from "react-redux";
+import "./utils/i18next.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
+    <Suspense fallback={<div>Loading...</div>}>
       <App />
-    </Provider>
+    </Suspense>
+  </Provider>
   //   </React.StrictMode>
 );
 

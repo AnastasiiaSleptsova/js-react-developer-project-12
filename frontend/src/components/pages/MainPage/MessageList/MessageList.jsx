@@ -7,6 +7,7 @@ import {
 import { MessageHeader } from "./MessageHeader/MessageHeader";
 import { useSocketSetup } from "../../../../api/socket/useSocketSetup";
 import { socket } from "../../../../api/socket/socket";
+import { useTranslation } from "react-i18next";
 
 import "./MessageList.css";
 
@@ -16,13 +17,13 @@ export const MessageList = ({ activeChatId }) => {
   const [messagesSocket, setMessagesFromSocket] = useState([]);
   const [newMessage, setNewMessage] = useState(""); // Хранение нового сообщения
   const [deleteMessage] = useDeleteMessageMutation();
+  const { t } = useTranslation();
 
   useSocketSetup();
 
   useEffect(() => {
     const handleNewMessage = (event) => {
       setMessagesFromSocket((prev) => {
-        // Проверяем, есть ли уже сообщение с таким же ID
         if (prev.find((msg) => msg.id === event.id)) return prev;
         return [...prev, event];
       });
@@ -39,25 +40,21 @@ export const MessageList = ({ activeChatId }) => {
     ...messages.filter((message) => activeChatId === message.channelId),
     ...messagesSocket.filter((message) => activeChatId === message.channelId),
   ].reduce((acc, current) => {
-    // Убираем дубликаты по id
     if (!acc.find((msg) => msg.id === current.id)) {
       acc.push(current);
     }
     return acc;
   }, []);
 
-
-  // Обработчик отправки сообщения
   const sendMessageHandler = async () => {
     if (newMessage) {
       try {
         await sendMessage({
-          // Отправка сообщения через API
           body: newMessage,
           channelId: activeChatId,
           username: "anastasiia", // TODO Здесь нужно использовать реальное имя пользователя
         }).unwrap(); // unwrap метод, который обеспечивает корректную работу всех дополнительных пропов из useSendMessageMutation
-        setNewMessage(""); // Очистка поля после отправки
+        setNewMessage(""); 
       } catch (err) {
         console.error("Ошибка отправки сообщения:", err);
       }
@@ -82,7 +79,7 @@ export const MessageList = ({ activeChatId }) => {
     }
   };
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <h1>{t("loading")}</h1>;
 
   return (
     <div className="messageList">
@@ -106,9 +103,9 @@ export const MessageList = ({ activeChatId }) => {
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Введите сообщение..."
+          placeholder={t("enterMessage")}
         />
-        <button type="submit">Send</button>
+        <button type="submit">{t("buttonSend")}</button>
       </form>
     </div>
   );

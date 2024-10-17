@@ -1,0 +1,12 @@
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    margin-left: 3.5rem;
+}
+
+.changeLanguage {
+    display: flex;
+    flex-direction: row;
+}

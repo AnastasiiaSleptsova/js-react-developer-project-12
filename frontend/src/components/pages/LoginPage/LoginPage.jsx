@@ -5,27 +5,30 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { getToken } from "../../../api/getToken";
 import { Button } from "../../ui/Button/Button";
 import imgForLoginPage from "../../../images/imgForLoginPage.jpeg";
+import { useTranslation } from "react-i18next";
 
 import classes from "./LoginPage.module.css";
 
-const SignupSchema = Yup.object().shape({
-  password: Yup.string()
-    .min(2, "Минимум 2 буквы")
-    .max(10, "Максимум 10 букв")
-    .required("Обязательное поле"),
-});
-
 export const LoginPage = () => {
+  const { t } = useTranslation();
+
+  const SignupSchema = Yup.object().shape({
+    password: Yup.string()
+      .min(2, t("minSymbol_few", { count: 2 }))
+      .max(10, t("maxSymbol_many", { count: 10 }))
+      .required(t("requiredField")),
+  });
+
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
 
   const onErrorGetToken = (statusCode) => {
     if (statusCode === 401) {
-      setErrorMessage("Логин или пароль некорректные");
+      setErrorMessage(t("error401Login"));
     } else if (errorMessage === 500) {
-      setErrorMessage("Внутренняя ошибка сервера");
+      setErrorMessage(t("error500"));
     } else {
-      setErrorMessage("Упс. Что-то пошло не так");
+      setErrorMessage(t("smthError"));
     }
   };
 
@@ -34,14 +37,14 @@ export const LoginPage = () => {
       <div className={classes.content}>
         <div className={classes.loginForm}>
           <div className={classes.picture}>
-            <img src={imgForLoginPage} alt="img for login page" />
+            <img src={imgForLoginPage} alt="человечек с красным флагом на горе" />
           </div>
           <div className={classes.login}>
-            <h1 className={classes.text}>Войти</h1>
+            <h1 className={classes.text}>{t("enter")}</h1>
             <Formik
               initialValues={{
-                email: "admin",
-                password: "admin",
+                email: "",
+                password: "",
               }}
               validationSchema={SignupSchema}
               onSubmit={(values) => {
@@ -56,12 +59,16 @@ export const LoginPage = () => {
               {({ errors, touched }) => (
                 <Form className={classes.form}>
                   <Field name="email" />
-                  <Field name="password" type="password" className={classes.password}/>
+                  <Field
+                    name="password"
+                    type="password"
+                    className={classes.password}
+                  />
                   {errors.password && touched.password ? (
                     <div>{errors.password}</div>
                   ) : null}
                   <Button variant="primary" type="submit">
-                    Войти
+                  {t("enter")}
                   </Button>
                 </Form>
               )}
@@ -70,7 +77,7 @@ export const LoginPage = () => {
           </div>
         </div>
         <div className={classes.signup}>
-          Нет аккаунта? <NavLink to="/signup" >Регистрация</NavLink>
+          {t("notAccount")} <NavLink to="/signup">{t("signup")}</NavLink>
         </div>
       </div>
     </div>

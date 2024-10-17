@@ -5,34 +5,37 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../ui/Button/Button";
 import imgForSignupPage from "../../../images/imgForSignupPage.jpg";
 import { useSendUserMutation } from "../../../api/signupUserApi";
+import { useTranslation } from "react-i18next";
 
 import classes from "./Signup.module.css";
 
-const SignupSchema = Yup.object().shape({
-  userName: Yup.string()
-    .min(3, "Минимум 3 символа")
-    .max(20, "Максимум 20 символов")
-    .required("Обязательное поле"),
-  password: Yup.string()
-    .min(6, "Минимум 6 символов")
-    .required("Обязательное поле"),
-  retypePassword: Yup.string()
-    .required("Обязательное поле")
-    .oneOf([Yup.ref("password")], "Ваши пароли не совпадают"),
-});
-
 export const Signup = () => {
+  const { t } = useTranslation();
+  
+  const SignupSchema = Yup.object().shape({
+    userName: Yup.string()
+      .min(3, t("minSymbol_few",{count: 3}))
+      .max(20, t("maxSymbol_many",{count: 20}))
+      .required(t("requiredField")),
+    password: Yup.string()
+      .min(6, t("minSymbol_many",{count: 6}))
+      .required(t("requiredField")),
+    retypePassword: Yup.string()
+      .required(t("requiredField"))
+      .oneOf([Yup.ref("password")], t("passwordDontToch")),
+  });
+
   const [sendUser] = useSendUserMutation();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
 
   const onErrorPostUser = (statusCode) => {
     if (statusCode === 401) {
-      setErrorMessage("Пользователя с таким логином уже существует");
+      setErrorMessage(t("error401Signup"));
     } else if (errorMessage === 500) {
-      setErrorMessage("Внутренняя ошибка сервера");
+      setErrorMessage(t("error500"));
     } else {
-      setErrorMessage("Упс. Что-то пошло не так");
+      setErrorMessage(t("smthError"));
     }
   };
 
@@ -43,7 +46,7 @@ export const Signup = () => {
           <img src={imgForSignupPage} alt="img for signup page" />
         </div>
         <div className={classes.signup}>
-          <h1 className={classes.text}>Регистрация</h1>
+          <h1 className={classes.text}>{t("signup")}</h1>
           <Formik
             initialValues={{
               userName: "",
@@ -55,12 +58,12 @@ export const Signup = () => {
               sendUser({ userName: values.userName, password: values.password })
                 .unwrap() // распаковывает промис от RTK Query, чтобы можно было использовать then/catch
                 .then((response) => {
-                  navigate("/"); 
+                  navigate("/");
                   // console.log('response', response);
                   // localStorage.setItem("token", response.token);
                 })
                 .catch((error) => {
-                  onErrorPostUser(error?.status); 
+                  onErrorPostUser(error?.status);
                 });
             }}
           >
@@ -87,7 +90,7 @@ export const Signup = () => {
                   <div>{errors.retypePassword}</div>
                 ) : null}
                 <Button variant="primary" type="submit">
-                  Зарегистрироваться
+                  {t("buttonSignup")}
                 </Button>
               </Form>
             )}

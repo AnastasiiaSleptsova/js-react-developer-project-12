@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useGetChatsQuery } from "../../../../api/chatsApi";
-import { Dropdown, DropdownButton } from "react-bootstrap"; 
+import { Dropdown, DropdownButton } from "react-bootstrap";
 import { AddChat } from "./AddChat/AddChat";
 import { RenameChat } from "./RenameChat/RenameChat";
 import { DeleteChat } from "./DeleteChat/DeleteChat";
+import { useTranslation } from "react-i18next";
 
 import classes from "./ChatList.module.css";
 
 export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
   const { data: chatList = [] } = useGetChatsQuery();
+  const { t } = useTranslation();
 
   const [isVisibleAddChatModal, setIsVisibleAddChatModal] = useState(false);
   const [isVisibleRenameChatModal, setIsVisibleRenameChatModal] =
@@ -31,7 +33,7 @@ export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
   return (
     <div className={classes.chatList}>
       <div className={classes.blockChannel}>
-        <b className={classes.channels}>Каналы</b>
+        <b className={classes.channels}>{t("channels")}</b>
         <button
           className={classes.buttonAddChat}
           type="button"
@@ -46,7 +48,9 @@ export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
           <li
             key={item.id}
             onClick={() => handlerClick(item.id)}
-            className={activeChatId === item.id ? activeClass : `${classes.item}`}
+            className={
+              activeChatId === item.id ? activeClass : `${classes.item}`
+            }
           >
             <h2 className={classes.text}>
               <span>#</span> {item.name}
@@ -60,13 +64,13 @@ export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
                 <Dropdown.Item
                   onClick={() => setIsVisibleRenameChatModal(true)}
                 >
-                  Переименовать
+                  {t("rename")}
                 </Dropdown.Item>
 
                 <Dropdown.Item
                   onClick={() => setIsVisibleDeleteChatModal(true)}
                 >
-                  Удалить
+                  {t("delete")}
                 </Dropdown.Item>
               </DropdownButton>
             ) : null}

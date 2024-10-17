@@ -4,12 +4,15 @@ import { useFormik } from "formik";
 import { Form, FormControl, FormGroup } from "react-bootstrap";
 import { useAddChatMutation, useGetChatsQuery } from "../../../../../api/chatsApi";
 import * as Yup from 'yup'
+import { useTranslation } from "react-i18next";
 
 export const AddChat = ({ isVisible, setIsVisible }) => {
   const [addChat] = useAddChatMutation();
   const {data: chatList = []} = useGetChatsQuery();
   const id = useId();
   const inputRef = useRef();
+  const { t } = useTranslation();
+
 
   const handleSubmit = async (values) => {
     await addChat({ id, name: values.newChatName, removable: true });
@@ -25,9 +28,9 @@ export const AddChat = ({ isVisible, setIsVisible }) => {
     onSubmit: handleSubmit,
     validationSchema: Yup.object({
       newChatName: Yup.string()
-        .required('Обязательное поле')
-        .min(3, 'Значение должно быть больше 3 символов')
-        .test('unique-chat', 'Чат с таким названием уже существует', (value) => !chatNamesList.includes(value))
+        .required(t("requiredField"))
+        .min(3, t("minSymbol_few", { count: 3 }))
+        .test('unique-chat', t("channelNameBusy"), (value) => !chatNamesList.includes(value))
     }),
   });
 
@@ -56,14 +59,14 @@ export const AddChat = ({ isVisible, setIsVisible }) => {
             {formik.errors.newChatName}
           </Form.Control.Feedback>
         ) : null}
-        <input type="submit" className="btn btn-primary mt-2" value="Отправить" />
+        <input type="submit" className="btn btn-primary mt-2" value={t("buttonSend")} />
       </FormGroup>
     </Form>
   );
 
   return (
     <Modal
-      headerTitle="Добавить чат"
+      headerTitle={t("addChannel")}
       content={content}
       isVisible={isVisible}
       onClose={() => setIsVisible(false)}
