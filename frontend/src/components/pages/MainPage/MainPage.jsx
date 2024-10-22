@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ChatList } from "./ChatList/ChatList";
 import { MessageList } from "./MessageList/MessageList";
+import { ToastContainer } from "react-toastify";
 
 import classes from "./MainPage.module.css";
 
@@ -11,7 +12,7 @@ export const MainPage = React.memo(() => {
     <div className={classes.content}>
       <ChatList setActiveChatId={setActiveChatId} activeChatId={activeChatId} />
       <MessageList activeChatId={activeChatId} />
+      <ToastContainer />
     </div>
   );
 });
-

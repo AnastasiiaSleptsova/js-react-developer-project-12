@@ -5,6 +5,7 @@ import { AddChat } from "./AddChat/AddChat";
 import { RenameChat } from "./RenameChat/RenameChat";
 import { DeleteChat } from "./DeleteChat/DeleteChat";
 import { useTranslation } from "react-i18next";
+import "react-toastify/dist/ReactToastify.css";
 
 import classes from "./ChatList.module.css";
 
@@ -84,7 +85,6 @@ export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
           setIsVisible={setIsVisibleAddChatModal}
         />
       )}
-
       {isVisibleRenameChatModal && (
         <RenameChat
           activeChatId={activeChatId}

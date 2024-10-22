@@ -6,7 +6,7 @@ import en from "./en/translation.json";
 
 export default i18next
   .use(initReactI18next) // передаем экземпляр i18n в react-i18next, который сделает его доступным для всех компонентов через context API.
-  .use(LanguageDetector) // с помощью плагина определяем язык пользователя в браузере
+  // .use(LanguageDetector) // с помощью плагина определяем язык пользователя в браузере
   .init({
     resources: {
       ru: ru,
