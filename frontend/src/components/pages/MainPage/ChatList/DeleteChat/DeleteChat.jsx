@@ -2,7 +2,8 @@ import { useRemoveChatMutation } from "../../../../../api/chatsApi";
 import { Modal } from "../../../../ui/Modals/Modal";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const DeleteChat = ({ chatId, chatName, isVisible, setIsVisible }) => {
   const [removeChat] = useRemoveChatMutation();
@@ -11,6 +12,7 @@ export const DeleteChat = ({ chatId, chatName, isVisible, setIsVisible }) => {
 
   const handleClick = async () => {
     await removeChat(chatId);
+    toast.success(t("toastForDeleteChannel"));
     setIsVisible(false);
   };
 

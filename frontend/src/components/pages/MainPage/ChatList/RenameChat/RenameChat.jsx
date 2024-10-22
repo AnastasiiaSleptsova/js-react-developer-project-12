@@ -8,6 +8,8 @@ import { Modal } from "../../../../ui/Modals/Modal";
 import { FormGroup, FormControl, Form } from "react-bootstrap";
 import * as Yup from "yup";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const RenameChat = ({ activeChatId, isVisible, setIsVisible }) => {
   const [renameChat] = useRenameChatMutation();
@@ -19,6 +21,7 @@ export const RenameChat = ({ activeChatId, isVisible, setIsVisible }) => {
 
   const handleSubmit = async (values) => {
     await renameChat({ id: activeChatId, name: values.newChatName });
+    toast.success(t("toastForRenameChannel"));
     setIsVisible(false);
   };
 

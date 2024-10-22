@@ -34,6 +34,9 @@
     "maxSymbol_many": "Максимум {{count}} символов",
     "channelNameBusy": "Чат с таким названием уже существует",
     "areYouSure": "Вы действительно хотите удалить канал",
-    "cancel": "Отмена"
+    "cancel": "Отмена",
+    "toastForNewChannel": "Канал создан",
+    "toastForRenameChannel": "Канал переименован",
+    "toastForDeleteChannel": "Канал удалён"
   }
 }

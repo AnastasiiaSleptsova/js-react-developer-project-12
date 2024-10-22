@@ -34,6 +34,9 @@
     "maxSymbol_many": "Maximum of {{count}} characters",
     "channelNameBusy": "A chat with that name already exists",
     "areYouSure": "Do you really want to delete the channel",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "toastForNewChannel": "Channel created",
+    "toastForRenameChannel": "Channel renamed",
+    "toastForDeleteChannel": "Channel deleted"
   }
 }

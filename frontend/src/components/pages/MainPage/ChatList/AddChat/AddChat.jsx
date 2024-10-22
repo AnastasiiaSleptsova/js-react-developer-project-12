@@ -20,7 +20,7 @@ export const AddChat = ({ isVisible, setIsVisible }) => {
 
   const handleSubmit = async (values) => {
     await addChat({ id, name: values.newChatName, removable: true });
-    toast.success(t("Канал создан"));
+    toast.success(t("toastForNewChannel"));
     setIsVisible(false);
   };
 
