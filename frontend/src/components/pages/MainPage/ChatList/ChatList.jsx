@@ -34,7 +34,7 @@ export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
   return (
     <div className={classes.chatList}>
       <div className={classes.blockChannel}>
-        <b className={classes.channels}>{t("channels")}</b>
+        <b className={classes.channels}>{t("Каналы")}</b>
         <button
           className={classes.buttonAddChat}
           type="button"
@@ -65,13 +65,13 @@ export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
                 <Dropdown.Item
                   onClick={() => setIsVisibleRenameChatModal(true)}
                 >
-                  {t("rename")}
+                  {t("Переименовать")}
                 </Dropdown.Item>
 
                 <Dropdown.Item
                   onClick={() => setIsVisibleDeleteChatModal(true)}
                 >
-                  {t("delete")}
+                  {t("Удалить")}
                 </Dropdown.Item>
               </DropdownButton>
             ) : null}

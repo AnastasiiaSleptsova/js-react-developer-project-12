@@ -18,11 +18,11 @@ export const Header = () => {
   return (
     <header className={classes.header}>
       <NavLink to="/login" className={classes.logoText}>
-        {t("logoText")}
+        {t("Hexlet Chat")}
       </NavLink>
       {isAuthenticated && (
         <Button variant="primary" onClick={logout}>
-          {t("buttonExit")}
+          {t("Выйти")}
         </Button>
       )}
     </header>

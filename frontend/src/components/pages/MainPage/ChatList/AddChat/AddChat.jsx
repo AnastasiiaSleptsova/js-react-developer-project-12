@@ -20,7 +20,7 @@ export const AddChat = ({ isVisible, setIsVisible }) => {
 
   const handleSubmit = async (values) => {
     await addChat({ id, name: values.newChatName, removable: true });
-    toast.success(t("toastForNewChannel"));
+    toast.success(t("Канал создан"));
     setIsVisible(false);
   };
 
@@ -33,11 +33,11 @@ export const AddChat = ({ isVisible, setIsVisible }) => {
     onSubmit: handleSubmit,
     validationSchema: Yup.object({
       newChatName: Yup.string()
-        .required(t("requiredField"))
+        .required(t("Обязательное поле"))
         .min(3, t("minSymbol_few", { count: 3 }))
         .test(
           "unique-chat",
-          t("channelNameBusy"),
+          t("Чат с таким названием уже существует"),
           (value) => !chatNamesList.includes(value)
         ),
     }),
@@ -68,7 +68,7 @@ export const AddChat = ({ isVisible, setIsVisible }) => {
           </Form.Control.Feedback>
         ) : null}
         <button type="submit" className="btn btn-primary mt-2">
-          {t("buttonSend")}
+          {t("Отправить")}
         </button>
       </FormGroup>
     </Form>
@@ -76,7 +76,7 @@ export const AddChat = ({ isVisible, setIsVisible }) => {
 
   return (
     <Modal
-      headerTitle={t("addChannel")}
+      headerTitle={t("Добавить чат")}
       content={content}
       isVisible={isVisible}
       onClose={() => setIsVisible(false)}

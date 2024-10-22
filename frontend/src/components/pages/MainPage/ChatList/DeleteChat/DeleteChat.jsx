@@ -12,23 +12,23 @@ export const DeleteChat = ({ chatId, chatName, isVisible, setIsVisible }) => {
 
   const handleClick = async () => {
     await removeChat(chatId);
-    toast.success(t("toastForDeleteChannel"));
+    toast.success(t("Канал удалён"));
     setIsVisible(false);
   };
 
   const content = (
     <div>
-      <h3>{t("areYouSure")} {chatName} ?</h3>
-      <Button onClick={() => setIsVisible(false)}>{t("cancel")}</Button>
+      <h3>{t("Вы действительно хотите удалить канал")} {chatName} ?</h3>
+      <Button onClick={() => setIsVisible(false)}>{t("Отмена")}</Button>
       <Button variant="danger" onClick={handleClick}>
-      {t("delete")}
+      {t("Удалить")}
       </Button>
     </div>
   );
 
   return (
     <Modal
-      headerTitle={t("deleteChannel")}
+      headerTitle={t("Удалить чат")}
       content={content}
       isVisible={isVisible}
       onClose={() => setIsVisible(false)}

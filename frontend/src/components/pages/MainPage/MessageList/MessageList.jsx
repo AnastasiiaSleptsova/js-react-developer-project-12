@@ -79,7 +79,7 @@ export const MessageList = ({ activeChatId }) => {
     }
   };
 
-  if (isLoading) return <h1>{t("loading")}</h1>;
+  if (isLoading) return <h1>{t("Загрузка...")}</h1>;
 
   return (
     <div className="messageList">
@@ -103,9 +103,9 @@ export const MessageList = ({ activeChatId }) => {
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          placeholder={t("enterMessage")}
+          placeholder={t("Введите сообщение...")}
         />
-        <button type="submit">{t("buttonSend")}</button>
+        <button type="submit">{t("Отправить")}</button>
       </form>
     </div>
   );

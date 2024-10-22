@@ -16,13 +16,13 @@ export const Signup = () => {
     userName: Yup.string()
       .min(3, t("minSymbol_few",{count: 3}))
       .max(20, t("maxSymbol_many",{count: 20}))
-      .required(t("requiredField")),
+      .required(t("Обязательное поле")),
     password: Yup.string()
       .min(6, t("minSymbol_many",{count: 6}))
-      .required(t("requiredField")),
+      .required(t("Обязательное поле")),
     retypePassword: Yup.string()
-      .required(t("requiredField"))
-      .oneOf([Yup.ref("password")], t("passwordDontToch")),
+      .required(t("Обязательное поле"))
+      .oneOf([Yup.ref("password")], t("Ваши пароли не совпадают")),
   });
 
   const [sendUser] = useSendUserMutation();
@@ -31,11 +31,11 @@ export const Signup = () => {
 
   const onErrorPostUser = (statusCode) => {
     if (statusCode === 401) {
-      setErrorMessage(t("error401Signup"));
+      setErrorMessage(t("Пользователя с таким логином уже существует"));
     } else if (errorMessage === 500) {
-      setErrorMessage(t("error500"));
+      setErrorMessage(t("Внутренняя ошибка сервера"));
     } else {
-      setErrorMessage(t("smthError"));
+      setErrorMessage(t("Упс. Что-то пошло не так"));
     }
   };
 
@@ -46,7 +46,7 @@ export const Signup = () => {
           <img src={imgForSignupPage} alt="img for signup page" />
         </div>
         <div className={classes.signup}>
-          <h1 className={classes.text}>{t("signup")}</h1>
+          <h1 className={classes.text}>{t("Регистрация")}</h1>
           <Formik
             initialValues={{
               userName: "",
@@ -90,7 +90,7 @@ export const Signup = () => {
                   <div>{errors.retypePassword}</div>
                 ) : null}
                 <Button variant="primary" type="submit">
-                  {t("buttonSignup")}
+                  {t("Зарегестрироваться")}
                 </Button>
               </Form>
             )}

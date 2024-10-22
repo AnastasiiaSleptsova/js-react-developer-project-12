@@ -6,7 +6,7 @@ export const PageNotFound = () => {
   return (
     <>
       <div>
-        404 <br /> {t("error404Login")}
+        404 <br /> {t("Страница не найдена")}
       </div>
     </>
   );

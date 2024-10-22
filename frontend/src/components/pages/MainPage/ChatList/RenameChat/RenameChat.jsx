@@ -21,7 +21,7 @@ export const RenameChat = ({ activeChatId, isVisible, setIsVisible }) => {
 
   const handleSubmit = async (values) => {
     await renameChat({ id: activeChatId, name: values.newChatName });
-    toast.success(t("toastForRenameChannel"));
+    toast.success(t("Канал переименован"));
     setIsVisible(false);
   };
 
@@ -30,11 +30,11 @@ export const RenameChat = ({ activeChatId, isVisible, setIsVisible }) => {
     onSubmit: handleSubmit,
     validationSchema: Yup.object({
       newChatName: Yup.string()
-        .required(t("requiredField"))
+        .required(t("Обязательное поле"))
         .min(3, t("minSymbol_few", { count: 3 }))
         .test(
           "unique-chat",
-          t("channelNameBusy"),
+          t("Чат с таким названием уже существует"),
           (value) => !chatNamesList.includes(value)
         ),
     }),
@@ -74,7 +74,7 @@ export const RenameChat = ({ activeChatId, isVisible, setIsVisible }) => {
 
   return (
     <Modal
-      headerTitle={t("renameChannel")}
+      headerTitle={t("Изменить название чата")}
       content={content}
       isVisible={isVisible}
       onClose={() => setIsVisible(false)}

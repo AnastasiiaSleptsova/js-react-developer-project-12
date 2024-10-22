@@ -6,8 +6,6 @@ import { getToken } from "../../../api/getToken";
 import { Button } from "../../ui/Button/Button";
 import imgForLoginPage from "../../../images/imgForLoginPage.jpeg";
 import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import classes from "./LoginPage.module.css";
 
@@ -18,7 +16,7 @@ export const LoginPage = () => {
     password: Yup.string()
       .min(2, t("minSymbol_few", { count: 2 }))
       .max(10, t("maxSymbol_many", { count: 10 }))
-      .required(t("requiredField")),
+      .required(t("Обязательное поле")),
   });
 
   const navigate = useNavigate();
@@ -26,14 +24,11 @@ export const LoginPage = () => {
 
   const onErrorGetToken = (statusCode) => {
     if (statusCode === 401) {
-      setErrorMessage(t("error401Login"));
-      toast(t("error401Login"));
+      setErrorMessage(t("Логин или пароль некорректные"));
     } else if (statusCode === 500) {
-      setErrorMessage(t("error500"));
-      toast(t("error500"));
+      setErrorMessage(t("Внутренняя ошибка сервера"));
     } else {
-      setErrorMessage(t("smthError"));
-      toast(t("smthError"));
+      setErrorMessage(t("Упс. Что-то пошло не так"));
     }
   };
 
@@ -48,7 +43,7 @@ export const LoginPage = () => {
             />
           </div>
           <div className={classes.login}>
-            <h1 className={classes.text}>{t("enter")}</h1>
+            <h1 className={classes.text}>{t("Войти")}</h1>
             <Formik
               initialValues={{
                 email: "",
@@ -76,7 +71,7 @@ export const LoginPage = () => {
                     <div>{errors.password}</div>
                   ) : null}
                   <Button variant="primary" type="submit">
-                    {t("enter")}
+                    {t("Войти")}
                   </Button>
                 </Form>
               )}
@@ -85,7 +80,7 @@ export const LoginPage = () => {
           </div>
         </div>
         <div className={classes.signup}>
-          {t("notAccount")} <NavLink to="/signup">{t("signup")}</NavLink>
+          {t("Нет аккаунта?")} <NavLink to="/signup">{t("Регистрация")}</NavLink>
         </div>
       </div>
     </div>
