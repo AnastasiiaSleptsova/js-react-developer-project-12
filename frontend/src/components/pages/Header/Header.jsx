@@ -1,4 +1,4 @@
-import { Button } from "../Button/Button";
+import { Button } from "../../ui/Button/Button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -16,7 +16,7 @@ export const Header = () => {
   };
 
   return (
-    <div className={classes.header}>
+    <header className={classes.header}>
       <NavLink to="/login" className={classes.logoText}>
         {t("logoText")}
       </NavLink>
@@ -25,6 +25,6 @@ export const Header = () => {
           {t("buttonExit")}
         </Button>
       )}
-    </div>
+    </header>
   );
 };

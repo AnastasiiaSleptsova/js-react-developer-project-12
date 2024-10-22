@@ -6,6 +6,8 @@ import { getToken } from "../../../api/getToken";
 import { Button } from "../../ui/Button/Button";
 import imgForLoginPage from "../../../images/imgForLoginPage.jpeg";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import classes from "./LoginPage.module.css";
 
@@ -25,10 +27,13 @@ export const LoginPage = () => {
   const onErrorGetToken = (statusCode) => {
     if (statusCode === 401) {
       setErrorMessage(t("error401Login"));
-    } else if (errorMessage === 500) {
+      toast(t("error401Login"));
+    } else if (statusCode === 500) {
       setErrorMessage(t("error500"));
+      toast(t("error500"));
     } else {
       setErrorMessage(t("smthError"));
+      toast(t("smthError"));
     }
   };
 
@@ -37,7 +42,10 @@ export const LoginPage = () => {
       <div className={classes.content}>
         <div className={classes.loginForm}>
           <div className={classes.picture}>
-            <img src={imgForLoginPage} alt="человечек с красным флагом на горе" />
+            <img
+              src={imgForLoginPage}
+              alt="человечек с красным флагом на горе"
+            />
           </div>
           <div className={classes.login}>
             <h1 className={classes.text}>{t("enter")}</h1>
@@ -68,7 +76,7 @@ export const LoginPage = () => {
                     <div>{errors.password}</div>
                   ) : null}
                   <Button variant="primary" type="submit">
-                  {t("enter")}
+                    {t("enter")}
                   </Button>
                 </Form>
               )}
