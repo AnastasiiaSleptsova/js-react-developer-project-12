@@ -15,6 +15,10 @@
   border-radius: 0.5rem;
 }
 
+.picture {
+  margin-top: 1rem;
+}
+
 .loginForm {
   display: flex;
   padding: 4rem 2rem;
@@ -35,11 +39,11 @@
 .form {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0 1rem;
 }
 
-.password {
-  margin: 1rem 0;
+.button {
+  margin-top: 2rem;
 }
 
 .signup {
@@ -48,3 +52,5 @@
   padding: 1rem 1rem;
   text-align: center;
 }
+
+

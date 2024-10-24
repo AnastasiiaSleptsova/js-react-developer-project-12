@@ -8,14 +8,14 @@ import { MessageHeader } from "./MessageHeader/MessageHeader";
 import { useSocketSetup } from "../../../../api/socket/useSocketSetup";
 import { socket } from "../../../../api/socket/socket";
 import { useTranslation } from "react-i18next";
-
-import "./MessageList.css";
+import faPapperPlane from "../../../../images/faPapperPlane.png"
+import classes from "./MessageList.module.css";
 
 export const MessageList = ({ activeChatId }) => {
   const { data: messages = [], isLoading } = useGetMessagesQuery();
   const [sendMessage] = useSendMessageMutation();
   const [messagesSocket, setMessagesFromSocket] = useState([]);
-  const [newMessage, setNewMessage] = useState(""); // Хранение нового сообщения
+  const [newMessage, setNewMessage] = useState("");
   const [deleteMessage] = useDeleteMessageMutation();
   const { t } = useTranslation();
 
@@ -54,7 +54,7 @@ export const MessageList = ({ activeChatId }) => {
           channelId: activeChatId,
           username: "anastasiia", // TODO Здесь нужно использовать реальное имя пользователя
         }).unwrap(); // unwrap метод, который обеспечивает корректную работу всех дополнительных пропов из useSendMessageMutation
-        setNewMessage(""); 
+        setNewMessage("");
       } catch (err) {
         console.error("Ошибка отправки сообщения:", err);
       }
@@ -65,7 +65,6 @@ export const MessageList = ({ activeChatId }) => {
     e.preventDefault();
     sendMessageHandler();
   };
-
 
   const handleDeleteMessage = async (id) => {
     try {
@@ -82,9 +81,9 @@ export const MessageList = ({ activeChatId }) => {
   if (isLoading) return <h1>{t("Загрузка...")}</h1>;
 
   return (
-    <div className="messageList">
+    <div className={classes.messageList}>
       <MessageHeader />
-      <ul className="messageItem">
+      <ul className={classes.messageItem}>
         {uniqueFiltredMessages?.map((message) => (
           <li
             key={message.id}
@@ -98,16 +97,19 @@ export const MessageList = ({ activeChatId }) => {
         ))}
       </ul>
 
-      <form className="placeForMessage" onSubmit={handleSubmit}>
+      <form className={classes.messageForm} onSubmit={handleSubmit}>
         <input
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder={t("Введите сообщение...")}
+          className={classes.messageInput}
         />
-        <button type="submit">{t("Отправить")}</button>
+        <button type="submit" className={classes.sendButton}>
+        {/* <img src={faPapperPlane} alt={t("")}/> */}
+        </button>
       </form>
+
     </div>
   );
 };
-

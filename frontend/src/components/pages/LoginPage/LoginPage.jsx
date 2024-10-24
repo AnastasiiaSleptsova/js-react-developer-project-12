@@ -7,6 +7,7 @@ import { Button } from "../../ui/Button/Button";
 import imgForLoginPage from "../../../images/imgForLoginPage.jpeg";
 import { useTranslation } from "react-i18next";
 import { ToastContainer } from "react-toastify";
+import FormTextField from "../../ui/FormTextField/FormTextField";
 
 import classes from "./LoginPage.module.css";
 
@@ -40,7 +41,8 @@ export const LoginPage = () => {
           <div className={classes.picture}>
             <img
               src={imgForLoginPage}
-              alt="человечек с красным флагом на горе"
+              alt={t("Человечек с красным флагом на горе")}
+              className={classes.picture}
             />
           </div>
           <div className={classes.login}>
@@ -62,16 +64,24 @@ export const LoginPage = () => {
             >
               {({ errors, touched }) => (
                 <Form className={classes.form}>
-                  <Field name="email" />
-                  <Field
+                  <FormTextField
+                    name="email"
+                    type="text"
+                    placeholder={t("Ваш ник")}
+                  />
+                  <FormTextField
                     name="password"
                     type="password"
-                    className={classes.password}
+                    placeholder={t("Пароль")}
                   />
-                  {errors.password && touched.password ? (
+                  {/* {errors.password && touched.password ? (
                     <div>{errors.password}</div>
-                  ) : null}
-                  <Button variant="primary" type="submit">
+                  ) : null} */}
+                  <Button 
+                  variant="primary" 
+                  type="submit"
+                  className={classes.button}
+                  >
                     {t("Войти")}
                   </Button>
                 </Form>

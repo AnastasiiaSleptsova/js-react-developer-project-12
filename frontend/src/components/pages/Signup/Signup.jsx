@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Formik, Form, Field } from "formik";
+import React, { useState } from "react";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../ui/Button/Button";
@@ -7,6 +7,7 @@ import imgForSignupPage from "../../../images/imgForSignupPage.jpg";
 import { useSendUserMutation } from "../../../api/signupUserApi";
 import { useTranslation } from "react-i18next";
 import { ToastContainer } from "react-toastify";
+import FormTextField from "../../ui/FormTextField/FormTextField";
 
 import classes from "./Signup.module.css";
 
@@ -44,7 +45,7 @@ export const Signup = () => {
     <div className={classes.wrapper}>
       <div className={classes.content}>
         <div className={classes.picture}>
-          <img src={imgForSignupPage} alt="img for signup page" />
+          <img src={imgForSignupPage} alt={t("Человечек рад")}/>
         </div>
         <div className={classes.signup}>
           <h1 className={classes.text}>{t("Регистрация")}</h1>
@@ -60,36 +61,35 @@ export const Signup = () => {
                 .unwrap() // распаковывает промис от RTK Query, чтобы можно было использовать then/catch
                 .then((response) => {
                   navigate("/");
-                  // TODO сделать с Олегом логику с получением токинов из респонса 
+                  // TODO сделать с Олегом логику с получением токинов из респонса
                 })
                 .catch((error) => {
                   onErrorPostUser(error?.status);
                 });
             }}
           >
-            {({ errors, touched }) => (
+            {() => (
               <Form className={classes.form}>
-                <Field name="userName" />
-                {errors.userName && touched.userName ? (
-                  <div>{errors.userName}</div>
-                ) : null}
-                <Field
+                <FormTextField
+                  name="userName"
+                  type="text"
+                  placeholder={t("Имя пользователя")}
+                />
+                <FormTextField
                   name="password"
                   type="password"
-                  className={classes.password}
+                  placeholder={t("Пароль")}
                 />
-                {errors.password && touched.password ? (
-                  <div>{errors.password}</div>
-                ) : null}
-                <Field
+                <FormTextField
                   name="retypePassword"
                   type="password"
-                  className={classes.password}
+                  placeholder={t("Подтвердите пароль")}
                 />
-                {errors.retypePassword && touched.retypePassword ? (
-                  <div>{errors.retypePassword}</div>
-                ) : null}
-                <Button variant="primary" type="submit">
+                <Button 
+                variant="primary" 
+                type="submit"
+                className={classes.button}
+                >
                   {t("Зарегестрироваться")}
                 </Button>
               </Form>
@@ -102,3 +102,17 @@ export const Signup = () => {
     </div>
   );
 };
+
+
+  /* {errors.userName && touched.userName ? (
+                  <div>{errors.userName}</div>
+                ) : null} */
+
+
+  /* <Field
+                  name="password"
+                  type="password"
+                  placeholder={t("Пароль")}
+                  className={classes.password}
+                /> */
+
