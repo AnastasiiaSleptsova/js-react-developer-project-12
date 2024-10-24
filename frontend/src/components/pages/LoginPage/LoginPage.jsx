@@ -6,6 +6,7 @@ import { getToken } from "../../../api/getToken";
 import { Button } from "../../ui/Button/Button";
 import imgForLoginPage from "../../../images/imgForLoginPage.jpeg";
 import { useTranslation } from "react-i18next";
+import { ToastContainer } from "react-toastify";
 
 import classes from "./LoginPage.module.css";
 
@@ -80,9 +81,11 @@ export const LoginPage = () => {
           </div>
         </div>
         <div className={classes.signup}>
-          {t("Нет аккаунта?")} <NavLink to="/signup">{t("Регистрация")}</NavLink>
+          {t("Нет аккаунта?")}{" "}
+          <NavLink to="/signup">{t("Регистрация")}</NavLink>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

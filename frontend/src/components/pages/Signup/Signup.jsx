@@ -6,19 +6,20 @@ import { Button } from "../../ui/Button/Button";
 import imgForSignupPage from "../../../images/imgForSignupPage.jpg";
 import { useSendUserMutation } from "../../../api/signupUserApi";
 import { useTranslation } from "react-i18next";
+import { ToastContainer } from "react-toastify";
 
 import classes from "./Signup.module.css";
 
 export const Signup = () => {
   const { t } = useTranslation();
-  
+
   const SignupSchema = Yup.object().shape({
     userName: Yup.string()
-      .min(3, t("minSymbol_few",{count: 3}))
-      .max(20, t("maxSymbol_many",{count: 20}))
+      .min(3, t("minSymbol_few", { count: 3 }))
+      .max(20, t("maxSymbol_many", { count: 20 }))
       .required(t("Обязательное поле")),
     password: Yup.string()
-      .min(6, t("minSymbol_many",{count: 6}))
+      .min(6, t("minSymbol_many", { count: 6 }))
       .required(t("Обязательное поле")),
     retypePassword: Yup.string()
       .required(t("Обязательное поле"))
@@ -59,8 +60,7 @@ export const Signup = () => {
                 .unwrap() // распаковывает промис от RTK Query, чтобы можно было использовать then/catch
                 .then((response) => {
                   navigate("/");
-                  // console.log('response', response);
-                  // localStorage.setItem("token", response.token);
+                  // TODO сделать с Олегом логику с получением токинов из респонса 
                 })
                 .catch((error) => {
                   onErrorPostUser(error?.status);
@@ -96,6 +96,7 @@ export const Signup = () => {
             )}
           </Formik>
           {errorMessage && <div>{errorMessage}</div>}
+          <ToastContainer />
         </div>
       </div>
     </div>

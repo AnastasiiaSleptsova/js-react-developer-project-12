@@ -17,6 +17,6 @@ export const getToken = async ({ username, password, onSuccess, onError}) => {
 
     onError && onError(e.status)
     console.error(e)
-    toast.error("Упс. Что-то пошло не так")
+    toast.error("Упс. Что-то пошло не так") // TODO добавить логику i18n
   }
 };
