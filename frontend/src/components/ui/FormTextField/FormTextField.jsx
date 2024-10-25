@@ -32,9 +32,9 @@ const FormTextField = ({
                 feedback={form.errors[field.name]}
               />
 
-              <Form.Control.Feedback type="invalid">
+              {/* <Form.Control.Feedback type="invalid">
                 {form.errors[field.name]}
-              </Form.Control.Feedback>
+              </Form.Control.Feedback> */}
             </InputGroup>
           </Form.Group>
         );

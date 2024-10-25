@@ -45,7 +45,7 @@ export const Signup = () => {
     <div className={classes.wrapper}>
       <div className={classes.content}>
         <div className={classes.picture}>
-          <img src={imgForSignupPage} alt={t("Человечек рад")}/>
+          <img src={imgForSignupPage} alt={t("Человечек рад")} />
         </div>
         <div className={classes.signup}>
           <h1 className={classes.text}>{t("Регистрация")}</h1>
@@ -59,36 +59,44 @@ export const Signup = () => {
             onSubmit={(values) => {
               sendUser({ userName: values.userName, password: values.password })
                 .unwrap() // распаковывает промис от RTK Query, чтобы можно было использовать then/catch
-                .then((response) => {
+                .then(() => {
                   navigate("/");
-                  // TODO сделать с Олегом логику с получением токинов из респонса
                 })
                 .catch((error) => {
                   onErrorPostUser(error?.status);
                 });
             }}
           >
-            {() => (
+            {({ errors, touched }) => (
               <Form className={classes.form}>
                 <FormTextField
                   name="userName"
                   type="text"
                   placeholder={t("Имя пользователя")}
                 />
+                {errors.userName && touched.userName ? (
+                  <div className={classes.error}>{errors.userName}</div>
+                ) : null}
                 <FormTextField
                   name="password"
                   type="password"
                   placeholder={t("Пароль")}
                 />
+                {errors.password && touched.password ? (
+                  <div className={classes.error}>{errors.password}</div>
+                ) : null}
                 <FormTextField
                   name="retypePassword"
                   type="password"
                   placeholder={t("Подтвердите пароль")}
                 />
-                <Button 
-                variant="primary" 
-                type="submit"
-                className={classes.button}
+                {errors.retypePassword && touched.retypePassword ? (
+                  <div className={classes.error}>{errors.retypePassword}</div>
+                ) : null}
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className={classes.button}
                 >
                   {t("Зарегестрироваться")}
                 </Button>
@@ -102,17 +110,3 @@ export const Signup = () => {
     </div>
   );
 };
-
-
-  /* {errors.userName && touched.userName ? (
-                  <div>{errors.userName}</div>
-                ) : null} */
-
-
-  /* <Field
-                  name="password"
-                  type="password"
-                  placeholder={t("Пароль")}
-                  className={classes.password}
-                /> */
-

@@ -18,10 +18,10 @@ export const signupUserApi = createApi({
         body: {username: userName, password}, 
       }),
       transformResponse: (response) => {
+        // TODO перенести отсюда
         localStorage.setItem('token', response.token)
         localStorage.setItem('username', response.username)
       },
-      
     }),
   }),
 });

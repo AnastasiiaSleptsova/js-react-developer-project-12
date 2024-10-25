@@ -74,13 +74,13 @@ export const LoginPage = () => {
                     type="password"
                     placeholder={t("Пароль")}
                   />
-                  {/* {errors.password && touched.password ? (
-                    <div>{errors.password}</div>
-                  ) : null} */}
-                  <Button 
-                  variant="primary" 
-                  type="submit"
-                  className={classes.button}
+                  {errors.password && touched.password ? (
+                    <div className={classes.error}>{errors.password}</div>
+                  ) : null}
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className={classes.button}
                   >
                     {t("Войти")}
                   </Button>
