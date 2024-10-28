@@ -8,7 +8,8 @@ import { MessageHeader } from "./MessageHeader/MessageHeader";
 import { useSocketSetup } from "../../../../api/socket/useSocketSetup";
 import { socket } from "../../../../api/socket/socket";
 import { useTranslation } from "react-i18next";
-import faPapperPlane from "../../../../images/faPapperPlane.png"
+import leoProfanity from "leo-profanity";
+
 import classes from "./MessageList.module.css";
 
 export const MessageList = ({ activeChatId }) => {
@@ -48,9 +49,10 @@ export const MessageList = ({ activeChatId }) => {
 
   const sendMessageHandler = async () => {
     if (newMessage) {
+      const cleanMessage = leoProfanity.clean(newMessage);
       try {
         await sendMessage({
-          body: newMessage,
+          body: cleanMessage,
           channelId: activeChatId,
           username: "anastasiia", // TODO Здесь нужно использовать реальное имя пользователя
         }).unwrap(); // unwrap метод, который обеспечивает корректную работу всех дополнительных пропов из useSendMessageMutation
@@ -106,10 +108,9 @@ export const MessageList = ({ activeChatId }) => {
           className={classes.messageInput}
         />
         <button type="submit" className={classes.sendButton}>
-        {/* <img src={faPapperPlane} alt={t("")}/> */}
+          {/* <img src={faPapperPlane} alt={t("")}/> */}
         </button>
       </form>
-
     </div>
   );
 };
