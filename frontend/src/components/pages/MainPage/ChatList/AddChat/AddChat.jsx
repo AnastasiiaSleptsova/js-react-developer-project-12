@@ -10,6 +10,8 @@ import * as Yup from "yup";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import leoProfanity from "leo-profanity";
+
 
 export const AddChat = ({ isVisible, setIsVisible }) => {
   const [addChat] = useAddChatMutation();
@@ -19,7 +21,8 @@ export const AddChat = ({ isVisible, setIsVisible }) => {
   const { t } = useTranslation();
 
   const handleSubmit = async (values) => {
-    await addChat({ id, name: values.newChatName, removable: true });
+    const cleanChatName = leoProfanity.clean(values.newChatName);
+    await addChat({ id, name: cleanChatName, removable: true });
     toast.success(t("Канал создан"));
     setIsVisible(false);
   };
@@ -38,7 +41,7 @@ export const AddChat = ({ isVisible, setIsVisible }) => {
         .test(
           "unique-chat",
           t("Чат с таким названием уже существует"),
-          (value) => !chatNamesList.includes(value)
+          (value) => !chatNamesList.includes(leoProfanity.clean(value)) // проверка на уникальность очищенного названия
         ),
     }),
   });
