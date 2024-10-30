@@ -12,7 +12,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import leoProfanity from "leo-profanity";
 
-
 export const AddChat = ({ isVisible, setIsVisible }) => {
   const [addChat] = useAddChatMutation();
   const { data: chatList = [] } = useGetChatsQuery();
@@ -38,6 +37,7 @@ export const AddChat = ({ isVisible, setIsVisible }) => {
       newChatName: Yup.string()
         .required(t("Обязательное поле"))
         .min(3, t("minSymbol_few", { count: 3 }))
+        .max(20, t("maxSymbol_many", { count: 20 }))
         .test(
           "unique-chat",
           t("Чат с таким названием уже существует"),

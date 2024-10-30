@@ -25,6 +25,10 @@ export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
 
   const activeClass = `${classes.active} ${classes.item}`;
 
+  const testHendelClick = () => {
+    console.log(chatList[chatList.length + 1].id);
+  };
+
   useEffect(() => {
     if (chatList.length > 0) {
       setActiveChatId(chatList[0].id);
@@ -43,6 +47,7 @@ export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
         >
           +
         </button>
+        {/* <button onClick={testHendelClick}>тест</button> */}
       </div>
       <ul className={classes.channelList}>
         {chatList?.map((item) => (
