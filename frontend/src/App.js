@@ -20,9 +20,9 @@ const rollbarConfig = {
   code_version: "0.13.7",
   payload: {
     person: {
-      id: 117,
-      email: "chief@unsc.gov",
-      username: "john-halo",
+      id: 1,
+      email: "am89650731404@gmail.com",
+      username: "Nastya",
     },
   },
 };
