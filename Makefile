@@ -13,7 +13,6 @@ start-backend:
 start:
 	npx start-server -s ./frontend/build -p 3000
 
-
 build:
 	rm -rf frontend/build
 	npm run build
