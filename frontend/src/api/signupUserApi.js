@@ -26,6 +26,6 @@ export const signupUserApi = createApi({
   }),
 });
 
-export const {
-  useSendUserMutation,
-} = signupUserApi;
+
+
+export const { useSendUserMutation } = signupUserApi;

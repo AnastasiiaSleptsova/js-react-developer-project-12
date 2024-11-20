@@ -18,9 +18,9 @@ export const MessageList = ({ activeChatId }) => {
   const [messagesSocket, setMessagesFromSocket] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [deleteMessage] = useDeleteMessageMutation();
-  const { t } = useTranslation();
-
   useSocketSetup();
+  const { t } = useTranslation();
+  const username = localStorage.getItem("username");
 
   useEffect(() => {
     const handleNewMessage = (event) => {
@@ -33,7 +33,7 @@ export const MessageList = ({ activeChatId }) => {
     socket.on("newMessage", handleNewMessage);
 
     return () => {
-      socket.off("newMessage", handleNewMessage); // Используем socket.off для удаления обработчика события newMessage, когда компонент размонтируется.
+      socket.off("newMessage", handleNewMessage);
     };
   }, []);
 
@@ -54,9 +54,8 @@ export const MessageList = ({ activeChatId }) => {
         await sendMessage({
           body: cleanMessage,
           channelId: activeChatId,
-          username: "anastasiia", // TODO Здесь нужно использовать реальное имя пользователя
-        }).unwrap(); // unwrap метод, который обеспечивает корректную работу всех дополнительных пропов из useSendMessageMutation
-        setNewMessage("");
+          username,
+        }).unwrap();
       } catch (err) {
         console.error("Ошибка отправки сообщения:", err);
       }
@@ -71,9 +70,7 @@ export const MessageList = ({ activeChatId }) => {
   const handleDeleteMessage = async (id) => {
     try {
       await deleteMessage(id).unwrap();
-      // После успешного удаления сообщения обновляем локальное состояние
       setMessagesFromSocket((prev) => prev.filter((msg) => msg.id !== id));
-      // Отправляем событие удаления по WebSocket
       socket.emit("deleteMessage", id);
     } catch (err) {
       console.error("Ошибка при удалении сообщения:", err);
@@ -93,7 +90,7 @@ export const MessageList = ({ activeChatId }) => {
               handleDeleteMessage(message.id);
             }}
           >
-            <strong>{message.username}</strong>
+            <strong>{message.username}: </strong>
             {message.body}
           </li>
         ))}

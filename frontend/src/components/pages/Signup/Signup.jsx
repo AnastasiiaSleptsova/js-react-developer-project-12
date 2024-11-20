@@ -58,7 +58,7 @@ export const Signup = () => {
             validationSchema={SignupSchema}
             onSubmit={(values) => {
               sendUser({ userName: values.userName, password: values.password })
-                .unwrap() // распаковывает промис от RTK Query, чтобы можно было использовать then/catch
+                .unwrap() 
                 .then(() => {
                   navigate("/");
                 })
