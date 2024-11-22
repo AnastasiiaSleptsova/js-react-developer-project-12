@@ -12,7 +12,7 @@ import leoProfanity from "leo-profanity";
 
 import classes from "./MessageList.module.css";
 
-export const MessageList = ({ activeChatId }) => {
+export const MessageList = ({ activeChannelId }) => {
   const { data: messages = [], isLoading } = useGetMessagesQuery();
   const [sendMessage] = useSendMessageMutation();
   const [messagesSocket, setMessagesFromSocket] = useState([]);
@@ -38,8 +38,8 @@ export const MessageList = ({ activeChatId }) => {
   }, []);
 
   const uniqueFiltredMessages = [
-    ...messages.filter((message) => activeChatId === message.channelId),
-    ...messagesSocket.filter((message) => activeChatId === message.channelId),
+    ...messages.filter((message) => activeChannelId === message.channelId),
+    ...messagesSocket.filter((message) => activeChannelId === message.channelId),
   ].reduce((acc, current) => {
     if (!acc.find((msg) => msg.id === current.id)) {
       acc.push(current);
@@ -53,7 +53,7 @@ export const MessageList = ({ activeChatId }) => {
       try {
         await sendMessage({
           body: cleanMessage,
-          channelId: activeChatId,
+          channelId: activeChannelId,
           username,
         }).unwrap();
       } catch (err) {
@@ -81,7 +81,7 @@ export const MessageList = ({ activeChatId }) => {
 
   return (
     <div className={classes.messageList}>
-      <MessageHeader activeChatId={activeChatId}/>
+      <MessageHeader activeChannelId={activeChannelId}/>
       <ul className={classes.messageItem}>
         {uniqueFiltredMessages?.map((message) => (
           <li

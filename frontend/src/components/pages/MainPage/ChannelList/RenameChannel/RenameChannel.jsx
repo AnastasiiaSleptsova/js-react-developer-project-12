@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import {
-  useGetChatsQuery,
-  useRenameChatMutation,
-} from "../../../../../api/chatsApi";
+  useGetChannelsQuery,
+  useRenameChannelMutation,
+} from "../../../../../api/channelsApi";
 import { Modal } from "../../../../ui/Modals/Modal";
 import { FormGroup, FormControl, Form } from "react-bootstrap";
 import * as Yup from "yup";
@@ -11,31 +11,31 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const RenameChat = ({ activeChatId, isVisible, setIsVisible }) => {
-  const [renameChat] = useRenameChatMutation();
-  const { data: chatList = [] } = useGetChatsQuery();
+export const RenameChannel = ({ activeChannelId, isVisible, setIsVisible }) => {
+  const [renameChannel] = useRenameChannelMutation();
+  const { data: channelList = [] } = useGetChannelsQuery();
   const { t } = useTranslation();
 
-  const chatNamesList = chatList.map((chat) => chat.name);
-  const chatName = chatList.find((chat) => chat.id === activeChatId)?.name;
+  const channelNamesList = channelList.map((channel) => channel.name);
+  const channelName = channelList.find((channel) => channel.id === activeChannelId)?.name;
 
   const handleSubmit = async (values) => {
-    await renameChat({ id: activeChatId, name: values.newChatName });
+    await renameChannel({ id: activeChannelId, name: values.newChannelName });
     toast.success(t("Канал переименован"));
     setIsVisible(false);
   };
 
   const formik = useFormik({
-    initialValues: { newChatName: chatName },
+    initialValues: { newChannelName: channelName },
     onSubmit: handleSubmit,
     validationSchema: Yup.object({
-      newChatName: Yup.string()
+      newChannelName: Yup.string()
         .required(t("Обязательное поле"))
         .min(3, t("minSymbol_few", { count: 3 }))
         .test(
-          "unique-chat",
+          "unique-channel",
           t("Чат с таким названием уже существует"),
-          (value) => !chatNamesList.includes(value)
+          (value) => !channelNamesList.includes(value)
         ),
     }),
   });
@@ -57,14 +57,14 @@ export const RenameChat = ({ activeChatId, isVisible, setIsVisible }) => {
           ref={inputRef}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.newChatName}
+          value={formik.values.newChannelName}
           data-testid="input-body"
-          name="newChatName"
-          isInvalid={!!formik.errors.newChatName && formik.touched.newChatName}
+          name="newChannelName"
+          isInvalid={!!formik.errors.newChannelName && formik.touched.newChannelName}
         />
-        {formik.touched.newChatName && formik.errors.newChatName ? (
+        {formik.touched.newChannelName && formik.errors.newChannelName ? (
           <Form.Control.Feedback type="invalid">
-            {formik.errors.newChatName}
+            {formik.errors.newChannelName}
           </Form.Control.Feedback>
         ) : null}
       </FormGroup>

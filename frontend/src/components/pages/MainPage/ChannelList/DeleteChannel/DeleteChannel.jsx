@@ -1,24 +1,24 @@
-import { useRemoveChatMutation } from "../../../../../api/chatsApi";
+import { useRemoveChannelMutation } from "../../../../../api/channelsApi";
 import { Modal } from "../../../../ui/Modals/Modal";
 import { Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export const DeleteChat = ({ chatId, chatName, isVisible, setIsVisible }) => {
-  const [removeChat] = useRemoveChatMutation();
+export const DeleteChannel = ({ channelId, channelName, isVisible, setIsVisible }) => {
+  const [removeChannel] = useRemoveChannelMutation();
   const { t } = useTranslation();
 
 
   const handleClick = async () => {
-    await removeChat(chatId);
+    await removeChannel(channelId);
     toast.success(t("Канал удалён"));
     setIsVisible(false);
   };
 
   const content = (
     <div>
-      <h3>{t("Вы действительно хотите удалить канал")} {chatName} ?</h3>
+      <h3>{t("Вы действительно хотите удалить канал")} {channelName} ?</h3>
       <Button onClick={() => setIsVisible(false)}>{t("Отмена")}</Button>
       <Button variant="danger" onClick={handleClick}>
       {t("Удалить")}

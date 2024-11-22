@@ -2,11 +2,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getApiHost } from "./getApiHost";
 import { API_ROUTES } from "./routes";
 
-const chatTag = 'chats'
+const channelTag = 'channels'
 
-export const chatsApi = createApi({
-  reducerPath: "chats",
-  tagTypes: [chatTag],
+export const channelsApi = createApi({
+  reducerPath: "channels",
+  tagTypes: [channelTag],
   baseQuery: fetchBaseQuery({
     baseUrl: getApiHost() + API_ROUTES.CHANNELS,
     prepareHeaders: (headers) => {
@@ -20,40 +20,40 @@ export const chatsApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getChats: builder.query({
+    getChannels: builder.query({
       query: () => "",
-      providesTags: [{ type: chatTag, id: "LIST" }],
+      providesTags: [{ type: channelTag, id: "LIST" }],
     }),
-    addChat: builder.mutation({
-      query: (newChat) => ({
+    addChannel: builder.mutation({
+      query: (newChannel) => ({
         // { id: string, name: string, removable: boolean }
         url: "",
         method: "POST",
-        body: newChat,
+        body: newChannel,
       }),
-      invalidatesTags: [{ type: chatTag, id: "LIST" }],
+      invalidatesTags: [{ type: channelTag, id: "LIST" }],
     }),
-    renameChat: builder.mutation({
+    renameChannel: builder.mutation({
       query: ({id, name}) => ({
         url: `/${id}`,
         method: "PATCH",
         body: { name }
       }),
-      invalidatesTags: [{ type: chatTag, id: "LIST" }],
+      invalidatesTags: [{ type: channelTag, id: "LIST" }],
     }),
-    removeChat: builder.mutation({
+    removeChannel: builder.mutation({
       query: (id) => ({
         url: `/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: chatTag, id: "LIST" }],
+      invalidatesTags: [{ type: channelTag, id: "LIST" }],
     }),
   }),
 });
 
 export const {
-  useGetChatsQuery,
-  useAddChatMutation,
-  useRenameChatMutation,
-  useRemoveChatMutation,
-} = chatsApi;
+  useGetChannelsQuery,
+  useAddChannelMutation,
+  useRenameChannelMutation,
+  useRemoveChannelMutation,
+} = channelsApi;

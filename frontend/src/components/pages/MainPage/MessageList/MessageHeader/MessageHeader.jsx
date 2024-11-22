@@ -1,15 +1,15 @@
 import React from "react";
-import { useGetChatsQuery } from "../../../../../api/chatsApi";
+import { useGetChannelsQuery } from "../../../../../api/channelsApi";
 import { useGetMessagesQuery } from "../../../../../api/messagesApi";
 import { useTranslation } from "react-i18next";
 
 import classes from "./MessageHeader.module.css";
 
-export const MessageHeader = ({ activeChatId }) => {
+export const MessageHeader = ({ activeChannelId }) => {
   const { data: messages = [], isLoading } = useGetMessagesQuery();
-  const { data: chatList = [] } = useGetChatsQuery();
-  const activeChannelName = chatList.find(
-    (channel) => activeChatId === channel.id
+  const { data: channelList = [] } = useGetChannelsQuery();
+  const activeChannelName = channelList.find(
+    (channel) => activeChannelId === channel.id
   );
   const { t } = useTranslation();
 
@@ -29,7 +29,7 @@ export const MessageHeader = ({ activeChatId }) => {
   };
 
   const countMessage = messages.filter(
-    (message) => activeChatId === message.channelId
+    (message) => activeChannelId === message.channelId
   );
   return (
     <div className={classes.messageHeader}>

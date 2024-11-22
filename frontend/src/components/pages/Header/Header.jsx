@@ -18,7 +18,7 @@ export const Header = () => {
   return (
     <header className={classes.header}>
       <NavLink to="/login" className={classes.logoText}>
-        {t("Hexlet Chat")}
+        {t("Hexlet Channel")}
       </NavLink>
       {isAuthenticated && (
         <Button variant="primary" onClick={logout}>

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { ChatList } from "./ChatList/ChatList";
+import { ChannelList } from "./ChannelList/ChannelList";
 import { MessageList } from "./MessageList/MessageList";
 import { ToastContainer } from "react-toastify";
 
 import classes from "./MainPage.module.css";
 
 export const MainPage = React.memo(() => {
-  const [activeChatId, setActiveChatId] = useState(null);
+  const [activeChannelId, setActiveChannelId] = useState(null);
 
   return (
     <div className={classes.content}>
-      <ChatList setActiveChatId={setActiveChatId} activeChatId={activeChatId} />
-      <MessageList activeChatId={activeChatId} />
+      <ChannelList setActiveChannelId={setActiveChannelId} activeChannelId={activeChannelId} />
+      <MessageList activeChannelId={activeChannelId} />
       <ToastContainer />
     </div>
   );
