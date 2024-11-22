@@ -12,7 +12,6 @@ import classes from "./ChatList.module.css";
 export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
   const { data: chatList = [] } = useGetChatsQuery();
   const { t } = useTranslation();
-
   const [isVisibleAddChatModal, setIsVisibleAddChatModal] = useState(false);
   const [isVisibleRenameChatModal, setIsVisibleRenameChatModal] =
     useState(false);
@@ -47,7 +46,7 @@ export const ChatList = React.memo(({ activeChatId, setActiveChatId }) => {
         >
           +
         </button>
-        {/* <button onClick={testHendelClick}>тест</button> */}
+        <button onClick={testHendelClick}>тест</button>
       </div>
       <ul className={classes.channelList}>
         {chatList?.map((item) => (

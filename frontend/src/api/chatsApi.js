@@ -8,7 +8,7 @@ export const chatsApi = createApi({
   reducerPath: "chats",
   tagTypes: [chatTag],
   baseQuery: fetchBaseQuery({
-    baseUrl: getApiHost() + API_ROUTES.CHATS,
+    baseUrl: getApiHost() + API_ROUTES.CHANNELS,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
 

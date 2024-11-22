@@ -81,7 +81,7 @@ export const MessageList = ({ activeChatId }) => {
 
   return (
     <div className={classes.messageList}>
-      <MessageHeader />
+      <MessageHeader activeChatId={activeChatId}/>
       <ul className={classes.messageItem}>
         {uniqueFiltredMessages?.map((message) => (
           <li
