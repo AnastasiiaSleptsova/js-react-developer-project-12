@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   useGetMessagesQuery,
   useSendMessageMutation,
@@ -22,8 +22,13 @@ export const MessageList = ({ activeChannelId }) => {
   const [deleteMessage] = useDeleteMessageMutation();
   useSocketSetup();
   const { t } = useTranslation();
+  const messagesEndRef = useRef(null);
   const username = localStorage.getItem("username");
-
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   useEffect(() => {
     const handleNewMessage = (event) => {
       setMessagesFromSocket((prev) => {
@@ -50,6 +55,9 @@ export const MessageList = ({ activeChannelId }) => {
     }
     return acc;
   }, []);
+  useEffect(() => {
+    scrollToBottom();
+  }, [uniqueFiltredMessages]);
 
   const sendMessageHandler = async () => {
     if (newMessage) {
@@ -96,12 +104,12 @@ export const MessageList = ({ activeChannelId }) => {
               handleDeleteMessage(message.id);
             }}
           >
-            <strong>{message.username}: </strong>
+            <strong>{message.username || "admin"}: </strong>
             {message.body}
           </li>
         ))}
+        <div ref={messagesEndRef}></div>
       </ul>
-
       <form className={classes.messageForm} onSubmit={handleSubmit}>
         <input
           type="text"
