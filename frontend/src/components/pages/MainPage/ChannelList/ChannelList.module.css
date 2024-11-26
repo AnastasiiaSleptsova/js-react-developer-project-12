@@ -1,21 +1,24 @@
 .channelList {
   min-width: 18%;
+  max-width: 300px;
   background-color: rgb(248, 249, 250);
-  border-right: 1px solid rgb(164, 162, 162);
+  border-right: 1px solid #ced4da;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .blockChannel {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   padding: 1rem;
-  margin-bottom: 0.5rem;
-  margin-top: 0.25rem;
 }
 
 @media (max-width: 430px) {
   .blockChannel {
-    padding: 0.3rem;
+    padding: 0.5rem;
   }
 }
 
@@ -31,7 +34,9 @@
 }
 
 .channels {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #343a40;
 }
 
 @media (max-width: 430px) {
@@ -47,18 +52,13 @@
 }
 
 .buttonAddChannel {
-  margin-left: 3px;
-  align-items: flex-start;
-  flex-direction: column;
-  justify-content: center;
-  color: rgb(13, 110, 253);
-  line-height: normal;
-  text-indent: 0px;
-  text-shadow: none;
-  padding-block: 1px;
-  padding-inline: 6px;
-  border-color: rgb(13, 110, 253);
-  border-radius: 5px;
+  color: #007bff;
+  background-color: transparent;
+  border: 1px solid #007bff;
+  border-radius: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 @media (max-width: 430px) {
@@ -71,8 +71,29 @@
   }
 }
 
-.channelList {
-  padding: 10px;
+.buttonAddChannel:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.chatlList {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0.5rem;
+}
+
+.chatlList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chatlList::-webkit-scrollbar-thumb {
+  background-color: #adb5bd;
+  border-radius: 4px;
+}
+
+.chatlList::-webkit-scrollbar-track {
+  background-color: #f8f9fa;
 }
 
 @media (max-width: 430px) {
@@ -81,12 +102,30 @@
   }
 }
 
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  background-color: #ffffff;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.item:hover {
+  background-color: #f8f9fa;
+  transform: scale(1.02);
+}
+
 .text {
   font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  white-space: nowrap;
+  font-weight: 500;
+  color: #495057;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
@@ -102,53 +141,27 @@
   }
 }
 
-.item {
-  display: flex;
-  flex-direction: row;
-  list-style-type: none;
-  padding-left: 0.75rem;
-  padding-top: 0.375rem;
-  border: 1px solid #0000;
-  border-radius: 0.175rem;
-  box-shadow: inset 0 1px 0 #ffffff26, 0 1px 1px rgba(0, 0, 0, 0.075);
-  background-color: #0000;
-  vertical-align: middle;
-  user-select: none;
-  transition: color 0.25s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.25s ease-in-out, box-shadow 0.15s ease-in-out;
-  text-decoration: none;
-  text-align: left;
-  height: 40px;
-  text-transform: none;
-  cursor: pointer;
-}
-
-.dropdown {
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  background-color: #0000;
-  border: 1px solid #0000;
-  border-radius: 0.375rem;
-}
-
 .active {
-  background-color: #6a6d70;
-  border-color: #6a6d70;
+  background-color: #5c5d5e;
+}
+
+.active h2{
   color: white;
 }
 
 .active:hover {
-  background-color: #5c636a;
-  border-color: #5c636a;
-  color: white;
+  background-color: #484c4e;
 }
 
-.active:disabled {
-  opacity: 0.65;
+.dropdown {
+  font-size: 1rem;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
-.active:focus {
-  box-shadow: 0 0 0 0.25rem rgba(0, 0, 0, 0.5);
+.dropdown .dropdown-item:hover {
+  background-color: #f1f3f5;
+  color: #030303;
 }

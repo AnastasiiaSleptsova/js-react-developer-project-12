@@ -10,7 +10,10 @@ export const MainPage = React.memo(() => {
 
   return (
     <div className={classes.content}>
-      <ChannelList setActiveChannelId={setActiveChannelId} activeChannelId={activeChannelId} />
+      <ChannelList
+        setActiveChannelId={setActiveChannelId}
+        activeChannelId={activeChannelId}
+      />
       <MessageList activeChannelId={activeChannelId} />
       <ToastContainer />
     </div>

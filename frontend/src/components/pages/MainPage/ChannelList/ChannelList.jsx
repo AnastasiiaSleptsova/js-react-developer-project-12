@@ -24,9 +24,9 @@ export const ChannelList = React.memo(({ activeChannelId, setActiveChannelId }) 
 
   const activeClass = `${classes.active} ${classes.item}`;
 
-  const testHendelClick = () => {
-    console.log(channelList[channelList.length + 1].id);
-  };
+  // const testHendelClick = () => {
+  //   console.log(channelList[channelList.length + 1].id);
+  // };
 
   useEffect(() => {
     if (channelList.length > 0) {
@@ -46,9 +46,9 @@ export const ChannelList = React.memo(({ activeChannelId, setActiveChannelId }) 
         >
           +
         </button>
-        <button onClick={testHendelClick}>тест</button>
+        {/* <button onClick={testHendelClick}>тест</button> */}
       </div>
-      <ul className={classes.channelList}>
+      <ul className={classes.chatlList}>
         {channelList?.map((item) => (
           <li
             key={item.id}

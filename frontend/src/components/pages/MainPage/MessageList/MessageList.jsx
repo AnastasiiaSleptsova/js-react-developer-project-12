@@ -9,6 +9,8 @@ import { useSocketSetup } from "../../../../api/socket/useSocketSetup";
 import { socket } from "../../../../api/socket/socket";
 import { useTranslation } from "react-i18next";
 import leoProfanity from "leo-profanity";
+import { IoIosSend } from "react-icons/io";
+import { PiX } from "react-icons/pi";
 
 import classes from "./MessageList.module.css";
 
@@ -39,7 +41,9 @@ export const MessageList = ({ activeChannelId }) => {
 
   const uniqueFiltredMessages = [
     ...messages.filter((message) => activeChannelId === message.channelId),
-    ...messagesSocket.filter((message) => activeChannelId === message.channelId),
+    ...messagesSocket.filter(
+      (message) => activeChannelId === message.channelId
+    ),
   ].reduce((acc, current) => {
     if (!acc.find((msg) => msg.id === current.id)) {
       acc.push(current);
@@ -56,6 +60,7 @@ export const MessageList = ({ activeChannelId }) => {
           channelId: activeChannelId,
           username,
         }).unwrap();
+        setNewMessage("");
       } catch (err) {
         console.error("Ошибка отправки сообщения:", err);
       }
@@ -81,11 +86,12 @@ export const MessageList = ({ activeChannelId }) => {
 
   return (
     <div className={classes.messageList}>
-      <MessageHeader activeChannelId={activeChannelId}/>
-      <ul className={classes.messageItem}>
+      <MessageHeader activeChannelId={activeChannelId} />
+      <ul className={classes.messages}>
         {uniqueFiltredMessages?.map((message) => (
           <li
             key={message.id}
+            className={classes.messageItem}
             onClick={() => {
               handleDeleteMessage(message.id);
             }}
@@ -105,7 +111,7 @@ export const MessageList = ({ activeChannelId }) => {
           className={classes.messageInput}
         />
         <button type="submit" className={classes.sendButton}>
-          {/* <img src={faPapperPlane} alt={t("")}/> */}
+          <IoIosSend />
         </button>
       </form>
     </div>
