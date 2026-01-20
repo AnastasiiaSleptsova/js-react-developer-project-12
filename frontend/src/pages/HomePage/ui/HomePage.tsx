@@ -2,8 +2,8 @@ import { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Button } from 'antd'
-import { logout } from '@/features/auth'
-import { RootState } from '@/app/store'
+import { logout } from '@features/auth'
+import { RootState } from '@app/store'
 
 // Компонент главной страницы (страница с чатом)
 export const HomePage: FC = () => {

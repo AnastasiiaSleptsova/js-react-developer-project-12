@@ -4,7 +4,8 @@ import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { AuthService, setAuthUser, setError as setAuthError, clearError } from '@/features/auth'
+import { AuthService, setAuthUser, setError as setAuthError, clearError } from '@features/auth'
+
 import styles from './LoginPage.module.scss'
 
 interface LoginFormData extends FieldValues {

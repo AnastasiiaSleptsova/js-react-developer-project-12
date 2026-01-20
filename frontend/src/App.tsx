@@ -1,12 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { FC } from 'react'
 
-import { HomePage, LoginPage } from '@/pages'
-import { ProtectedRoute } from '@/app/providers'
+import { HomePage, LoginPage, NotFoundPage } from '@pages'
+import { ProtectedRoute } from '@app/providers'
 
-import './App.css'
 import 'antd/dist/reset.css'
-import { NotFoundPage } from './сomponents/NotFoundPage'
 
 const App: FC = () => {
   return (

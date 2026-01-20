@@ -1,4 +1,5 @@
-import { apiClient } from '@/shared/api/apiClient'
+import { apiClient } from '@shared/api/apiClient'
+
 import { LoginRequest, AuthResponse } from './types'
 
 // Сервис для работы с авторизацией
