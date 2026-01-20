@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { FC } from 'react'
 
 import { PageOne } from './сomponents/PageOne'
 import { LoginPage } from './сomponents/LoginPage'
@@ -7,7 +8,7 @@ import { NotFoundPage } from './сomponents/NotFoundPage'
 import './App.css'
 import 'antd/dist/reset.css'
 
-function App() {
+const App: FC = () => {
   return (
     <BrowserRouter>
       <Routes>

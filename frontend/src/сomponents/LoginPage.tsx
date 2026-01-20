@@ -1,11 +1,18 @@
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller, SubmitHandler, FieldValues } from 'react-hook-form'
 import { Input, Button } from 'antd'
+import { FC } from 'react'
 
 import styles from './LoginPage.module.scss'
 
-export const LoginPage = () => {
-    const { control, handleSubmit, formState: { errors } } = useForm()
-    const onSubmit = (data) => {
+interface LoginFormData extends FieldValues {
+  email: string
+  password: string
+}
+
+export const LoginPage: FC = () => {
+    const { control, handleSubmit, formState: { errors } } = useForm<LoginFormData>()
+    
+    const onSubmit: SubmitHandler<LoginFormData> = (data) => {
         console.log('Login data:', data)
         alert('Submitted: ' + JSON.stringify(data))
     }
@@ -22,7 +29,7 @@ export const LoginPage = () => {
                     rules={{ required: 'Email is required' }}
                     render={({ field }) => <Input {...field} placeholder="you@example.com" />}
                 />
-                {errors.email && <p className={styles.error}>{errors.email.message}</p>}
+                {errors.email && <p className={styles.error}>{errors.email.message?.toString()}</p>}
 
                 <label className={styles.label}>Password</label>
                 <Controller
@@ -31,7 +38,7 @@ export const LoginPage = () => {
                     rules={{ required: 'Password is required' }}
                     render={({ field }) => <Input.Password {...field} placeholder="••••••••" />}
                 />
-                {errors.password && <p className={styles.error}>{errors.password.message}</p>}
+                {errors.password && <p className={styles.error}>{errors.password.message?.toString()}</p>}
 
                 <Button type="primary" htmlType="submit" className={styles.button} block>
                     Sign in
