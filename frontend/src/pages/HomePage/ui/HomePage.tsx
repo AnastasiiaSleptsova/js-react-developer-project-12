@@ -1,30 +1,24 @@
 import { FC } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { Button } from 'antd'
-import { logout } from '@features/auth'
-import { RootState } from '@app/store'
+import { Layout } from 'antd'
+import { ChatHeader } from './ChatHeader'
+import { ChannelsList } from './ChannelsList'
+import { MessagesList } from './MessagesList'
 
-// Компонент главной страницы (страница с чатом)
 export const HomePage: FC = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  // Username хранится в Redux для отображения в UI
-  const username = useSelector((state: RootState) => state.auth.username)
-
-  // Обработчик выхода из аккаунта
-  const handleLogout = () => {
-    dispatch(logout())
-    navigate('/login')
-  }
-
   return (
-    <div style={{ padding: '24px' }}>
-      <h1>Добро пожаловать, {username}!</h1>
-      <p>Это будет ваша страница с чатом</p>
-      <Button danger onClick={handleLogout}>
-        Выйти
-      </Button>
-    </div>
+    <Layout style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <ChatHeader />
+      <Layout style={{ flex: 1, overflow: 'hidden' }}>
+        <Layout.Sider width={250} style={{ overflow: 'auto', backgroundColor: '#fafafa' }}>
+          <div style={{ padding: '16px', fontWeight: 'bold', borderBottom: '1px solid #d9d9d9' }}>
+            📢 Каналы
+          </div>
+          <ChannelsList />
+        </Layout.Sider>
+        <Layout.Content style={{ overflow: 'auto', backgroundColor: '#fff' }}>
+          <MessagesList />
+        </Layout.Content>
+      </Layout>
+    </Layout>
   )
 }

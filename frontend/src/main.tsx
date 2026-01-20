@@ -1,9 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { ReduxProvider } from '@app/providers'
 
 import App from './App.tsx'
+
+const queryClient = new QueryClient()
 
 const root = document.getElementById('root')
 if (!root) {
@@ -13,7 +16,9 @@ if (!root) {
 createRoot(root).render(
   <StrictMode>
     <ReduxProvider>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </ReduxProvider>
   </StrictMode>,
 )
