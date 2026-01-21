@@ -11,6 +11,15 @@ export const socketService = {
         auth: {
           token: localStorage.getItem('token') || '',
         },
+        // Конфигурация для работы с CORS и инкогнито сессиями
+        withCredentials: true,
+        transports: ['websocket', 'polling'],
+        reconnection: true,
+        reconnectionDelay: 1000,
+        reconnectionDelayMax: 5000,
+        reconnectionAttempts: 5,
+        // Для работы в инкогнито и различных браузерах
+        closeOnBeforeunload: false,
       })
 
       socket.on('connect', () => {

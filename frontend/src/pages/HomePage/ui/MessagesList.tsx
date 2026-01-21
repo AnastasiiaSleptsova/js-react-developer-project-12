@@ -1,77 +1,58 @@
-import { Alert, Empty, Skeleton, Layout } from "antd";
+import { Layout } from 'antd'
 
-import { useMessages } from "@features/chat";
-import { useAppSelector } from "@app/store";
-import { MessageInput } from "./MessageInput";
-import styles from "./MessagesList.module.scss";
+import { useMessages } from '@features/chat'
+import { useAppSelector } from '@app/store'
+import { MessageInput } from './MessageInput'
+import { useMessagesScroll } from './hooks/useMessagesScroll'
+import { useMessageNotification } from './hooks/useMessageNotification'
+import { MessagesContainer } from './components/MessagesContainer'
+import { EmptyMessages } from './components/EmptyMessages'
+import { LoadingMessages } from './components/LoadingMessages'
+import { ErrorMessages } from './components/ErrorMessages'
+
+import styles from './MessagesList.module.scss'
 
 export const MessagesList = () => {
-  const selectedChannelId = useAppSelector(
-    (state) => state.chat.selectedChannelId
-  );
-  const currentUsername = useAppSelector((state) => state.auth.username);
-  const { data: messages = [], isLoading, error } = useMessages();
+  const selectedChannelId = useAppSelector((state) => state.chat.selectedChannelId)
+  const currentUsername = useAppSelector((state) => state.auth.username)
+  const { data: messages = [], isLoading, error } = useMessages()
+
+  const filteredMessages = messages.filter((msg) => msg.channelId === selectedChannelId)
+
+  const messagesEndRef = useMessagesScroll({
+    filteredMessages,
+    selectedChannelId,
+  })
+
+  useMessageNotification({
+    filteredMessages,
+    currentUsername,
+  })
 
   if (!selectedChannelId) {
-    return (
-      <div className={styles.emptyPlaceholder}>
-        <Empty description="Выберите канал для просмотра сообщений" />
-      </div>
-    );
+    return <EmptyMessages />
   }
 
   if (isLoading) {
-    return (
-      <div style={{ padding: "16px" }}>
-        <Skeleton active paragraph={{ rows: 5 }} />
-      </div>
-    );
+    return <LoadingMessages />
   }
 
   if (error) {
-    return (
-      <Alert
-        message="Ошибка"
-        description="Не удалось загрузить сообщения"
-        type="error"
-      />
-    );
+    return <ErrorMessages />
   }
-
-  const filteredMessages = messages.filter((msg) => msg.channelId === selectedChannelId);
 
   return (
     <Layout className={styles.contentLayout}>
       <Layout.Content className={styles.layoutContent}>
-        {filteredMessages.length === 0 ? (
-          <div className={styles.emptyPlaceholder}>
-            <Empty description="Нет сообщений в этом канале" />
-          </div>
-        ) : (
-          <div className={styles.messagesList}>
-            <div className={styles.messagesContainer}>
-              {filteredMessages.map((message) => {
-                const isCurrentUser = message.username === currentUsername;
-                return (
-                  <div
-                    key={message.id}
-                    className={`${styles.messageItem} ${
-                      isCurrentUser ? styles.isCurrentUser : styles.isOtherUser
-                    }`}
-                  >
-                    <div className={styles.messageBubble}>
-                      <span className={styles.username}>{message.username}</span>
-                      <p className={styles.body}>{message.body}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
+        <MessagesContainer
+          filteredMessages={filteredMessages}
+          currentUsername={currentUsername}
+          messagesEndRef={messagesEndRef}
+        />
       </Layout.Content>
       <MessageInput />
     </Layout>
-  );
-};
+  )
+}
+
 
