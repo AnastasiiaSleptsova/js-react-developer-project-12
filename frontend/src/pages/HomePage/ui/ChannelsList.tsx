@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useChannels } from '@features/chat'
 import { useAppDispatch, useAppSelector } from '@app/store'
 import { setSelectedChannel } from '@features/chat'
@@ -6,7 +7,16 @@ import { Alert, List, Skeleton } from 'antd'
 export const ChannelsList = () => {
   const { data: channels = [], isLoading, error } = useChannels()
   const dispatch = useAppDispatch()
-  const selectedChannelId = useAppSelector((state) => state.chat.selectedChannelId)
+  const reduxSelectedChannelId = useAppSelector((state) => state.chat.selectedChannelId) // TODO использовать селектор
+  
+  // Выбираем первый канал при загрузке, если ничего не выбрано
+  useEffect(() => {
+    if (channels.length > 0 && !reduxSelectedChannelId) {
+      dispatch(setSelectedChannel(channels[0].id))
+    }
+  }, [channels, reduxSelectedChannelId, dispatch])
+
+  const selectedChannelId = reduxSelectedChannelId || (channels.length > 0 ? channels[0].id : null)
 
   if (isLoading) {
     return (

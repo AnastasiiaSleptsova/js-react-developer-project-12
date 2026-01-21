@@ -1,0 +1,87 @@
+.messagesList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+
+  .messagesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .messageItem {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+
+    &.isCurrentUser {
+      justify-content: flex-end;
+
+      .messageBubble {
+        background-color: #1890ff;
+        color: white;
+        border-radius: 18px 18px 4px 18px;
+        margin-left: auto;
+
+        .username {
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 12px;
+        }
+      }
+    }
+
+    &.isOtherUser {
+      justify-content: flex-start;
+
+      .messageBubble {
+        background-color: #f0f0f0;
+        color: rgba(0, 0, 0, 0.85);
+        border-radius: 18px 18px 18px 4px;
+        margin-right: auto;
+
+        .username {
+          color: rgba(0, 0, 0, 0.65);
+          font-size: 12px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .messageBubble {
+    padding: 8px 12px;
+    max-width: 60%;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
+    .username {
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .body {
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+}
+
+.emptyPlaceholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.contentLayout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .layoutContent {
+    overflow: auto;
+    flex: 1;
+  }
+}
+
