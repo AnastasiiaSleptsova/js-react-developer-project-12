@@ -128,6 +128,13 @@ export const LoginPage: FC = () => {
         >
           Войти
         </Button>
+
+        <div className={styles.footer}>
+          <span>Нет аккаунта?</span>
+          <Button type="link" onClick={() => navigate('/signup')}>
+            Зарегистрироваться
+          </Button>
+        </div>
       </form>
     </div>
   )

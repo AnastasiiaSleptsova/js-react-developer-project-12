@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { FC } from 'react'
 
-import { HomePage, LoginPage, NotFoundPage } from '@pages'
+import { HomePage, LoginPage, SignupPage, NotFoundPage } from '@pages'
 import { ProtectedRoute } from '@app/providers'
 
 import 'antd/dist/reset.css'
@@ -11,6 +11,7 @@ const App: FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
         <Route 
           path="/" 
           element={
@@ -27,4 +28,5 @@ const App: FC = () => {
 }
 
 export default App
+
 
