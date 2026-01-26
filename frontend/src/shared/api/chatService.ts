@@ -26,5 +26,23 @@ export class ChatService {
     const response = await apiClient.post<Message>('/v1/messages', payload)
     return response.data
   }
+
+  // Создать канал
+  static async createChannel(payload: { name: string }) {
+    const response = await apiClient.post('/v1/channels', payload)
+    return response.data
+  }
+
+  // Переименовать канал
+  static async editChannel(id: string, payload: { name: string }) {
+    const response = await apiClient.patch(`/v1/channels/${id}`, payload)
+    return response.data
+  }
+
+  // Удалить канал
+  static async removeChannel(id: string) {
+    const response = await apiClient.delete(`/v1/channels/${id}`)
+    return response.data
+  }
 }
 
