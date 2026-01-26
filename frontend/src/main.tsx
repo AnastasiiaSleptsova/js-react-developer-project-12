@@ -14,11 +14,11 @@ if (!root) {
 }
 
 createRoot(root).render(
-  <StrictMode>
+  // <StrictMode>
     <ReduxProvider>
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
     </ReduxProvider>
-  </StrictMode>,
+  // </StrictMode>,
 )

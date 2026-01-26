@@ -1,34 +1,23 @@
-import { useEffect } from 'react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { ChatService, Message, socketService } from '@shared/api'
+import { useMemo } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { ChatService, Message } from '@shared/api'
 
-export const useMessages = () => {
-  const queryClient = useQueryClient()
-
-  const query = useQuery<Message[], Error>({
-    queryKey: ['messages'],
+export const useMessages = (channelId: string | null) => {
+  // Храним полный список сообщений под единым ключом
+  const baseQuery = useQuery<Message[], Error>({
+    queryKey: ['messages', 'all'],
     queryFn: () => ChatService.getMessages(),
     staleTime: 1000 * 30,
   })
 
-  // Подписываемся на события WebSocket для реального времени
-  useEffect(() => {
-    socketService.connect()
+  // Отдаём наружу только сообщения выбранного канала, без дополнительного запроса
+  const filteredMessages = useMemo(() => {
+    if (!channelId || !baseQuery.data) return []
+    return baseQuery.data.filter((m) => m.channelId === channelId)
+  }, [baseQuery.data, channelId])
 
-    const handleNewMessage = (message: Message) => {
-      queryClient.setQueryData(['messages'], (oldMessages: Message[] | undefined) => {
-        if (!oldMessages) return [message]
-        return [...oldMessages, message]
-      })
-    }
-
-    socketService.onNewMessage(handleNewMessage)
-
-    return () => {
-      socketService.offNewMessage(handleNewMessage)
-    }
-  }, [queryClient])
-
-  return query
+  return {
+    ...baseQuery,
+    data: filteredMessages,
+  }
 }
-

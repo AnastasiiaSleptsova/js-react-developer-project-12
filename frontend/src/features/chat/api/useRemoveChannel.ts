@@ -16,7 +16,7 @@ export const useRemoveChannel = () => {
         return old.filter((ch) => String(ch.id) !== removedId)
       })
 
-      queryClient.setQueryData(['messages'], (old: Message[] | undefined) => {
+      queryClient.setQueryData(['messages', 'all'], (old: Message[] | undefined) => {
         if (!old) return []
         return old.filter((m) => String(m.channelId) !== removedId)
       })

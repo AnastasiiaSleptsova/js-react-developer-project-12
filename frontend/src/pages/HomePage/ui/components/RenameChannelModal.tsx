@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Modal, Input, Button } from 'antd'
+import type { InputRef } from 'antd'
 import { useForm, Controller } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+
+import styles from './RenameChannelModal.module.scss'
 
 const schema = (existingNames: string[]) =>
   z.object({
@@ -24,6 +27,7 @@ type Props = {
 }
 
 export const RenameChannelModal: React.FC<Props> = ({ open, onClose, onSubmit, id, initialName, existingNames }) => {
+  const inputRef = useRef<InputRef>(null)
   const {
     control,
     handleSubmit,
@@ -40,9 +44,25 @@ export const RenameChannelModal: React.FC<Props> = ({ open, onClose, onSubmit, i
     }
   }, [open, initialName, reset])
 
+  useEffect(() => {
+    if (!open) return
+    const timer = setTimeout(() => {
+      inputRef.current?.focus()
+    }, 0)
+    return () => clearTimeout(timer)
+  }, [open])
+
   return (
-    <Modal open={open} onCancel={onClose} footer={null} title="Переименовать канал">
+    <Modal
+      open={open}
+      onCancel={onClose}
+      footer={null}
+      title="Переименовать канал"
+      centered
+      width={520}
+    >
       <form
+        className={styles.form}
         onSubmit={handleSubmit(async (values) => {
           await onSubmit(values.name)
         })}
@@ -50,11 +70,17 @@ export const RenameChannelModal: React.FC<Props> = ({ open, onClose, onSubmit, i
         <Controller
           name="name"
           control={control}
-          render={({ field }) => <Input autoFocus placeholder="Имя канала" {...field} />}
+          render={({ field }) => (
+            <Input
+              placeholder="Имя канала"
+              {...field}
+              ref={inputRef}
+            />
+          )}
         />
-        {errors.name && <div style={{ color: 'red', marginTop: 6 }}>{errors.name.message}</div>}
-        <div style={{ marginTop: 12, textAlign: 'right' }}>
-          <Button onClick={onClose} style={{ marginRight: 8 }}>
+        {errors.name && <div className={styles.error}>{errors.name.message}</div>}
+        <div className={styles.footer}>
+          <Button onClick={onClose}>
             Отмена
           </Button>
           <Button htmlType="submit" type="primary" loading={isSubmitting}>

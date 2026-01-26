@@ -3,8 +3,11 @@ import { Layout } from 'antd'
 import { ChatHeader } from './ChatHeader'
 import { ChannelsList } from './ChannelsList'
 import { MessagesList } from './MessagesList'
+import { useChatSocket } from '@features/chat/hooks/useChatSocket'
 
 export const HomePage: FC = () => {
+  useChatSocket()
+
   return (
     <Layout style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
       <ChatHeader />

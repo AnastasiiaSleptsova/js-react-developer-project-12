@@ -15,9 +15,7 @@ import styles from './MessagesList.module.scss'
 export const MessagesList = () => {
   const selectedChannelId = useAppSelector((state) => state.chat.selectedChannelId)
   const currentUsername = useAppSelector((state) => state.auth.username)
-  const { data: messages = [], isLoading, error } = useMessages()
-  
-  const filteredMessages = messages.filter((msg) => msg.channelId === selectedChannelId)
+  const { data: filteredMessages = [], isLoading, error } = useMessages(selectedChannelId)
 
   const messagesEndRef = useMessagesScroll({
     filteredMessages,
@@ -55,5 +53,4 @@ export const MessagesList = () => {
     </Layout>
   )
 }
-
 

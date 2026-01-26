@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react'
-import { Alert, List, Skeleton, Button, Dropdown, Modal } from 'antd'
-import { EllipsisOutlined, PlusOutlined } from '@ant-design/icons'
+import { useEffect, useState, useMemo, useCallback } from 'react'
+
+import { Alert, List, Skeleton, Modal } from 'antd'
 
 import { useAppDispatch, useAppSelector } from '@app/store'
 import { setSelectedChannel } from '@features/chat'
 import { useChannels, useCreateChannel, useEditChannel, useRemoveChannel } from '@features/chat'
+import { Channel } from '@shared/api/types'
 
 
 import { AddChannelModal } from './components/AddChannelModal'
+import { ChannelsListHeader } from './components/ChannelsListHeader'
+import { ChannelListItem } from './components/ChannelListItem'
 import { RenameChannelModal } from './components/RenameChannelModal'
+
 import styles from './ChannelsList.module.scss'
 
 export const ChannelsList = () => {
@@ -22,6 +26,9 @@ export const ChannelsList = () => {
   const [isAddOpen, setAddOpen] = useState(false)
   const [renameInfo, setRenameInfo] = useState<{ id: string; name: string } | null>(null)
   
+  // Мемоизируем existingNames для избежания лишних пересчетов
+  const existingNames = useMemo(() => channels.map((c) => String(c.name)), [channels])
+  
   // Выбираем первый канал при загрузке, если ничего не выбрано
   useEffect(() => {
     if (channels.length > 0 && !reduxSelectedChannelId) {
@@ -30,6 +37,26 @@ export const ChannelsList = () => {
   }, [channels, reduxSelectedChannelId, dispatch])
 
   const selectedChannelId = reduxSelectedChannelId || (channels.length > 0 ? channels[0].id : null)
+
+  const handleSelectChannel = useCallback((id: string) => {
+    dispatch(setSelectedChannel(id))
+  }, [dispatch])
+
+  const handleRenameChannel = useCallback((id: string, name: string) => {
+    setRenameInfo({ id, name })
+  }, [])
+
+  const handleRemoveChannel = useCallback((channelId: string, channelName: string) => {
+    Modal.confirm({
+      title: 'Подтвердите удаление',
+      content: `Удалить канал "${channelName}"? Все сообщения канала будут удалены.`,
+      okText: 'Удалить',
+      okButtonProps: { danger: true },
+      onOk: async () => {
+        await removeChannel.mutateAsync(String(channelId))
+      },
+    })
+  }, [removeChannel])
 
   if (isLoading) {
     return (
@@ -45,68 +72,21 @@ export const ChannelsList = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <div className={styles.title}>📢 Каналы</div>
-        <Button
-          type="text"
-          icon={<PlusOutlined />}
-          onClick={() => setAddOpen(true)}
-        >
-          Добавить
-        </Button>
-      </div>
+      <ChannelsListHeader onAdd={() => setAddOpen(true)} />
 
       <List
         dataSource={channels}
         renderItem={(channel) => (
-          <List.Item
+          <ChannelListItem
             key={channel.id}
-            className={styles.item}
-            style={{
-              backgroundColor: selectedChannelId === channel.id ? '#e6f7ff' : 'transparent',
-              borderLeft: selectedChannelId === channel.id ? '4px solid #1890ff' : 'none',
-              paddingLeft: '12px',
-            }}
-          >
-            <div
-              className={styles.itemContent}
-              onClick={() => dispatch(setSelectedChannel(channel.id))}
-            >
-              <span className={styles.channelName}># {channel.name}</span>
-            </div>
-            <div>
-              <Dropdown
-                menu={{
-                  items: [
-                    {
-                      key: 'rename',
-                      label: 'Переименовать',
-                      onClick: () => setRenameInfo({ id: String(channel.id), name: String(channel.name) }),
-                    },
-                    {
-                      key: 'remove',
-                      label: 'Удалить',
-                      disabled: !channel.removable,
-                      onClick: () => {
-                        Modal.confirm({
-                          title: 'Подтвердите удаление',
-                          content: `Удалить канал "${channel.name}"? Все сообщения канала будут удалены.`,
-                          okText: 'Удалить',
-                          okButtonProps: { danger: true },
-                          onOk: async () => {
-                            await removeChannel.mutateAsync(String(channel.id))
-                          },
-                        })
-                      },
-                    },
-                  ],
-                }}
-                trigger={["click"]}
-              >
-                <Button type="text" icon={<EllipsisOutlined />} />
-              </Dropdown>
-            </div>
-          </List.Item>
+            id={channel.id}
+            name={channel.name}
+            removable={channel.removable}
+            isSelected={selectedChannelId === channel.id}
+            onSelect={handleSelectChannel}
+            onRename={handleRenameChannel}
+            onRemove={handleRemoveChannel}
+          />
         )}
       />
 
@@ -117,7 +97,7 @@ export const ChannelsList = () => {
           await createChannel.mutateAsync({ name })
           setAddOpen(false)
         }}
-        existingNames={channels.map((c) => String(c.name))}
+        existingNames={existingNames}
       />
 
       {renameInfo && (
@@ -130,7 +110,7 @@ export const ChannelsList = () => {
             await editChannel.mutateAsync({ id: renameInfo.id, newName })
             setRenameInfo(null)
           }}
-          existingNames={channels.map((c) => String(c.name)).filter((n) => n !== renameInfo.name)}
+          existingNames={existingNames.filter((n) => n !== renameInfo.name)}
         />
       )}
     </div>
