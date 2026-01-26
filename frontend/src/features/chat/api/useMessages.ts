@@ -7,7 +7,9 @@ export const useMessages = (channelId: string | null) => {
   const baseQuery = useQuery<Message[], Error>({
     queryKey: ['messages', 'all'],
     queryFn: () => ChatService.getMessages(),
-    staleTime: 1000 * 30,
+    staleTime: 30_000,
+    refetchInterval: 30_000,
+    refetchIntervalInBackground: true,
   })
 
   // Отдаём наружу только сообщения выбранного канала, без дополнительного запроса

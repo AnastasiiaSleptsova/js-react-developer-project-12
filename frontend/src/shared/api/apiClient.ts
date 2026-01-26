@@ -5,6 +5,7 @@ export const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 8000, // ограничиваем ожидание, чтобы не зависать при отсутствии сети
 })
 
 // Добавляем токен в заголовки запроса

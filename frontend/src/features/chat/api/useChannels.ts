@@ -7,5 +7,7 @@ export const useChannels = () => {
     queryKey: ['channels'],
     queryFn: () => ChatService.getChannels(),
     staleTime: 1000 * 60 * 5,
+    refetchInterval: 1000 * 60,
+    refetchIntervalInBackground: true,
   })
 }

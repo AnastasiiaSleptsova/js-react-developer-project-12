@@ -44,5 +44,12 @@
   "Вернуться на главную": "Return to homepage",
   "Войти": "Log in",
   "Имя пользователя должно содержать минимум 3 символа": "Username must contain at least 3 characters",
-  "Пароль должен содержать минимум 6 символов": "Password must contain at least 6 characters"
+  "Пароль должен содержать минимум 6 символов": "Password must contain at least 6 characters",
+  "Канал создан": "Channel created",
+  "Канал переименован": "Channel renamed",
+  "Канал удалён": "Channel deleted",
+  "Ошибка создания канала": "Channel creation failed",
+  "Ошибка переименования канала": "Channel rename failed",
+  "Ошибка удаления канала": "Channel deletion failed",
+  "Похоже, нет соединения с интернетом": "It seems there is no internet connection"
 }

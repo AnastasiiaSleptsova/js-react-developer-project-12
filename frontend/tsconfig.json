@@ -8,7 +8,6 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
 
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -16,16 +15,18 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Path alias */
     "baseUrl": ".",
-    "paths": {
-      "@app*": ["src/app/*"],
-      "@features*": ["src/features/*"],
-      "@pages*": ["src/pages/*"],
-      "@shared*": ["src/shared/*"]
+  "paths": {
+      "@app": ["src/app"],
+      "@app/*": ["src/app/*"],
+      "@features": ["src/features"],
+      "@features/*": ["src/features/*"],
+      "@pages": ["src/pages"],
+      "@pages/*": ["src/pages/*"],
+      "@shared": ["src/shared"],
+      "@shared/*": ["src/shared/*"]
     },
 
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
