@@ -16,7 +16,7 @@ export const MessagesList = () => {
   const selectedChannelId = useAppSelector((state) => state.chat.selectedChannelId)
   const currentUsername = useAppSelector((state) => state.auth.username)
   const { data: messages = [], isLoading, error } = useMessages()
-
+  
   const filteredMessages = messages.filter((msg) => msg.channelId === selectedChannelId)
 
   const messagesEndRef = useMessagesScroll({
@@ -27,6 +27,7 @@ export const MessagesList = () => {
   useMessageNotification({
     filteredMessages,
     currentUsername,
+    selectedChannelId,
   })
 
   if (!selectedChannelId) {
