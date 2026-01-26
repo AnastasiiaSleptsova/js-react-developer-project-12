@@ -17,7 +17,7 @@
   "Имя канала": "Channel name",
   "Введите имя канала": "Enter channel name",
   "Минимум 3 символа": "At least 3 characters",
-  "Максимум 20 символов": "Maximum 20 characters",
+  "Максимум 140 символов": "Maximum 140 characters",
   "Канал с таким именем уже существует": "Channel with that name already exists",
   "Отмена": "Cancel",
   "Создать": "Create",
@@ -51,5 +51,7 @@
   "Ошибка создания канала": "Channel creation failed",
   "Ошибка переименования канала": "Channel rename failed",
   "Ошибка удаления канала": "Channel deletion failed",
-  "Похоже, нет соединения с интернетом": "It seems there is no internet connection"
+  "Похоже, нет соединения с интернетом": "It seems there is no internet connection",
+  "Нецензурные слова запрещены": "Profanity is not allowed",
+  "Не удалось отправить сообщение": "Failed to send message"
 }
