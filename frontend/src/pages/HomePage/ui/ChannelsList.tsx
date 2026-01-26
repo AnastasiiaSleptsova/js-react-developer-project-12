@@ -53,6 +53,7 @@ export const ChannelsList = () => {
       okText: t('Удалить'),
       cancelText: t('Отмена'),
       okButtonProps: { danger: true },
+      centered: true,
       onOk: async () => {
         await removeChannel.mutateAsync(String(channelId))
       },

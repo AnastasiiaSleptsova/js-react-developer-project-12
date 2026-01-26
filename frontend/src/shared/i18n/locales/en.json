@@ -1,5 +1,5 @@
 {
-  "💬 Чат": "💬 Chat",
+  "💬 Hexlet Chat": "💬 Hexlet Chat",
   "Выйти": "Log out",
   "📢 Каналы": "📢 Channels",
   "Добавить": "Add",
@@ -53,5 +53,12 @@
   "Ошибка удаления канала": "Channel deletion failed",
   "Похоже, нет соединения с интернетом": "It seems there is no internet connection",
   "Нецензурные слова запрещены": "Profanity is not allowed",
-  "Не удалось отправить сообщение": "Failed to send message"
+  "Не удалось отправить сообщение": "Failed to send message",
+  "Упс, что-то пошло не так": "Oops, something went wrong",
+  "Мы уже работаем над этой проблемой и скоро всё восстановим.": "We are already working on the issue and will be back online soon.",
+  "Попробовать ещё раз": "Try again",
+  "Обновить страницу": "Reload page",
+  "Вызвать ошибку": "Trigger error",
+  "Сознательно вызвать ошибку для проверки": "Intentionally trigger an error for testing",
+  "Тестовая ошибка": "Test error: {{time}}"
 }
