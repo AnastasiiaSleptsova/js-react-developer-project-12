@@ -1,11 +1,10 @@
 import { useEffect, useState, useMemo, useCallback } from 'react'
-
+import { useTranslation } from 'react-i18next'
 import { Alert, List, Skeleton, Modal } from 'antd'
 
 import { useAppDispatch, useAppSelector } from '@app/store'
 import { setSelectedChannel } from '@features/chat'
 import { useChannels, useCreateChannel, useEditChannel, useRemoveChannel } from '@features/chat'
-import { Channel } from '@shared/api/types'
 
 
 import { AddChannelModal } from './components/AddChannelModal'
@@ -16,6 +15,7 @@ import { RenameChannelModal } from './components/RenameChannelModal'
 import styles from './ChannelsList.module.scss'
 
 export const ChannelsList = () => {
+  const { t } = useTranslation()
   const { data: channels = [], isLoading, error } = useChannels()
   const dispatch = useAppDispatch()
   const reduxSelectedChannelId = useAppSelector((state) => state.chat.selectedChannelId) // TODO использовать селектор
@@ -48,9 +48,10 @@ export const ChannelsList = () => {
 
   const handleRemoveChannel = useCallback((channelId: string, channelName: string) => {
     Modal.confirm({
-      title: 'Подтвердите удаление',
-      content: `Удалить канал "${channelName}"? Все сообщения канала будут удалены.`,
-      okText: 'Удалить',
+      title: t('Подтвердите удаление'),
+      content: t('Удалить канал "{{channelName}}"? Все сообщения канала будут удалены.', { channelName }),
+      okText: t('Удалить'),
+      cancelText: t('Отмена'),
       okButtonProps: { danger: true },
       onOk: async () => {
         await removeChannel.mutateAsync(String(channelId))
@@ -67,7 +68,7 @@ export const ChannelsList = () => {
   }
 
   if (error) {
-    return <Alert title="Ошибка" description="Не удалось загрузить каналы" type="error" />
+    return <Alert title={t('Ошибка')} description={t('Не удалось загрузить каналы')} type="error" />
   }
 
   return (

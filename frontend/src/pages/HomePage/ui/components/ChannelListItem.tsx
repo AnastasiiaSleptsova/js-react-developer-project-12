@@ -5,6 +5,7 @@ import { Button, Dropdown, List } from 'antd'
 import { EllipsisOutlined } from '@ant-design/icons'
 
 import styles from '../ChannelsList.module.scss'
+import { useTranslation } from 'react-i18next'
 
 type ChannelListItemProps = {
   id: string
@@ -25,15 +26,17 @@ const ChannelListItemComponent = ({
   onRename,
   onRemove,
 }: ChannelListItemProps) => {
+  const { t } = useTranslation()
+
   const menuItems = useMemo(() => ([
     {
       key: 'rename',
-      label: 'Переименовать',
+      label: t('Переименовать'),
       onClick: () => onRename(id, name),
     },
     {
       key: 'remove',
-      label: 'Удалить',
+      label: t('Удалить'),
       disabled: !removable,
       onClick: () => onRemove(id, name),
     },

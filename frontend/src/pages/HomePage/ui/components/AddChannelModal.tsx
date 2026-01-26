@@ -1,21 +1,12 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import { Modal, Input, Button } from 'antd'
 import { useForm, Controller } from 'react-hook-form'
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import type { InputRef } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 import styles from './AddChannelModal.module.scss'
-
-const schema = (existingNames: string[]) =>
-  z.object({
-    name: z
-      .string()
-      .min(1, { message: 'Введите имя канала' })
-      .min(3, { message: 'Минимум 3 символа' })
-      .max(20, { message: 'Максимум 20 символов' })
-      .refine((val) => !existingNames.includes(val), { message: 'Канал с таким именем уже существует' }),
-  })
+import { buildChannelNameSchema } from './channelNameSchema'
 
 type Props = {
   open: boolean
@@ -25,14 +16,19 @@ type Props = {
 }
 
 export const AddChannelModal: React.FC<Props> = ({ open, onClose, onSubmit, existingNames }) => {
+  const { t } = useTranslation()
   const inputRef = useRef<InputRef>(null)
+
+  const schema = useMemo(() => buildChannelNameSchema(t, existingNames), [t, existingNames])
+  const resolver = useMemo(() => zodResolver(schema), [schema])
+
   const {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<{ name: string }>({ 
-    resolver: zodResolver(schema(existingNames)),
+  } = useForm<{ name: string }>({
+    resolver,
     defaultValues: { name: '' },
   })
 
@@ -52,7 +48,7 @@ export const AddChannelModal: React.FC<Props> = ({ open, onClose, onSubmit, exis
       open={open}
       onCancel={onClose}
       footer={null}
-      title="Добавить канал"
+      title={t('Добавить канал')}
       centered
       width={520}
     >
@@ -67,7 +63,7 @@ export const AddChannelModal: React.FC<Props> = ({ open, onClose, onSubmit, exis
           control={control}
           render={({ field }) => (
             <Input
-              placeholder="Имя канала"
+              placeholder={t('Введите имя канала')}
               {...field}
               ref={inputRef}
             />
@@ -76,10 +72,10 @@ export const AddChannelModal: React.FC<Props> = ({ open, onClose, onSubmit, exis
         {errors.name && <div className={styles.error}>{errors.name.message}</div>}
         <div className={styles.footer}>
           <Button onClick={onClose}>
-            Отмена
+            {t('Отмена')}
           </Button>
           <Button htmlType="submit" type="primary" loading={isSubmitting}>
-            Создать
+            {t('Создать')}
           </Button>
         </div>
       </form>

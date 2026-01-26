@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { Button, Input } from 'antd'
 import { SendOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import { useSendMessage } from '@features/chat'
 import { useAppSelector } from '@app/store'
 
@@ -10,6 +11,7 @@ interface MessageFormData {
 }
 
 export const MessageInput = () => {
+  const { t } = useTranslation()
   const inputRef = useRef<any>(null)
   const { control, handleSubmit, reset, watch } = useForm<MessageFormData>({
     defaultValues: { body: '' }, // TODO добавить сохранение черновиков в localStorage и восстановление при монтировании
@@ -62,7 +64,7 @@ export const MessageInput = () => {
           control={control}
           render={({ field }) => (
             <Input.TextArea
-              placeholder="Введите сообщение..."
+              placeholder={t('Введите сообщение...')}
               {...field}
               rows={3}
               disabled={isPending}
@@ -81,10 +83,9 @@ export const MessageInput = () => {
         disabled={!messageValue.trim()}
         block
       >
-        Отправить
+        {t('Отправить')}
       </Button>
     </form>
   )
 }
-
 

@@ -3,13 +3,16 @@ import { Layout, Button, Space } from 'antd'
 import { LogoutOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { RootState } from '@app/store'
 import { logout } from '@features/auth'
 import { clearSelectedChannel } from '@features/chat'
+import { LanguageSelect } from '@features/i18n'
 
 const { Header } = Layout
 
 export const ChatHeader: FC = () => {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const username = useSelector((state: RootState) => state.auth.username)
@@ -31,18 +34,19 @@ export const ChatHeader: FC = () => {
         alignItems: 'center',
       }}
     >
-      <div style={{ fontSize: '18px', fontWeight: 600 }}>💬 Чат</div>
-      <Space size='middle'>
-        <span style={{ fontSize: '14px', color: '#333' }}>👤 {username}</span>
-        <Button
-          type="primary"
-          danger
-          icon={<LogoutOutlined />}
-          onClick={handleLogout}
-        >
-          Выйти
-        </Button>
-      </Space>
-    </Header>
+        <div style={{ fontSize: '18px', fontWeight: 600 }}>{t('💬 Чат')}</div>
+        <Space size='middle'>
+          <span style={{ fontSize: '14px', color: '#333' }}>👤 {username}</span>
+          <Button
+            type="primary"
+            danger
+            icon={<LogoutOutlined />}
+            onClick={handleLogout}
+          >
+            {t('Выйти')}
+          </Button>
+          <LanguageSelect />
+        </Space>
+      </Header>
   )
 }

@@ -1,5 +1,6 @@
 import { FC, RefObject } from 'react'
 import { Empty } from 'antd'
+import { useTranslation } from 'react-i18next'
 import { MessageItem } from './MessageItem'
 
 import styles from '../MessagesList.module.scss'
@@ -22,10 +23,12 @@ export const MessagesContainer: FC<MessagesContainerProps> = ({
   currentUsername,
   messagesEndRef,
 }) => {
+  const { t } = useTranslation()
+
   if (filteredMessages.length === 0) {
     return (
       <div className={styles.emptyPlaceholder}>
-        <Empty description="Нет сообщений в этом канале" />
+        <Empty description={t('Нет сообщений в этом канале')} />
       </div>
     )
   }

@@ -3,6 +3,7 @@ import { Input, Button, Alert } from 'antd'
 import { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 import { AuthService, setAuthUser, setError as setAuthError, clearError } from '@features/auth'
 
@@ -13,8 +14,8 @@ interface LoginFormData extends FieldValues {
   password: string
 }
 
-// Компонент страницы входа
 export const LoginPage: FC = () => {
+  const { t } = useTranslation()
   const { control, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
     defaultValues: {
       username: '',
@@ -26,30 +27,24 @@ export const LoginPage: FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  // Обработчик отправки формы
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
       setLoading(true)
       setErrorMessage(null)
       dispatch(clearError())
 
-      // Отправляем учетные данные на сервер
       const response = await AuthService.login({
         username: data.username,
         password: data.password,
       })
 
-      // Сохраняем токен в localStorage и имя пользователя в Redux
       dispatch(setAuthUser({ token: response.token, username: response.username }))
-
-      // Переходим на главную страницу (чат)
       navigate('/')
     } catch (error: any) {
-      // Обработка ошибок авторизации
-      let message = 'Не удалось выполнить вход. Попробуйте еще раз.'
+      let message = t('Не удалось выполнить вход. Попробуйте еще раз.')
 
       if (error.response?.status === 401) {
-        message = 'Неправильное имя пользователя или пароль'
+        message = t('Неправильное имя пользователя или пароль')
       } else if (error.response?.data?.message) {
         message = error.response.data.message
       } else if (error.message) {
@@ -66,9 +61,8 @@ export const LoginPage: FC = () => {
   return (
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-        <h2 className={styles.title}>Вход</h2>
+        <h2 className={styles.title}>{t('Вход')}</h2>
 
-        {/* Сообщение об ошибке */}
         {errorMessage && (
           <Alert
             message={errorMessage}
@@ -80,12 +74,11 @@ export const LoginPage: FC = () => {
           />
         )}
 
-        {/* Поле для имени пользователя */}
-        <label className={styles.label}>Имя пользователя</label>
+        <label className={styles.label}>{t('Имя пользователя')}</label>
         <Controller
           name="username"
           control={control}
-          rules={{ required: 'Введите имя пользователя' }}
+          rules={{ required: t('Введите имя пользователя') }}
           render={({ field }) => (
             <Input
               {...field}
@@ -99,12 +92,11 @@ export const LoginPage: FC = () => {
           <p className={styles.error}>{errors.username.message?.toString()}</p>
         )}
 
-        {/* Поле для пароля */}
-        <label className={styles.label}>Пароль</label>
+        <label className={styles.label}>{t('Пароль')}</label>
         <Controller
           name="password"
           control={control}
-          rules={{ required: 'Введите пароль' }}
+          rules={{ required: t('Введите пароль') }}
           render={({ field }) => (
             <Input.Password
               {...field}
@@ -126,13 +118,13 @@ export const LoginPage: FC = () => {
           loading={loading}
           disabled={loading}
         >
-          Войти
+          {t('Войти')}
         </Button>
 
         <div className={styles.footer}>
-          <span>Нет аккаунта?</span>
+          <span>{t('Нет аккаунта?')}</span>
           <Button type="link" onClick={() => navigate('/signup')}>
-            Зарегистрироваться
+            {t('Зарегистрироваться')}
           </Button>
         </div>
       </form>
