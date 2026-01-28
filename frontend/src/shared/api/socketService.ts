@@ -3,11 +3,17 @@ import { io, Socket } from 'socket.io-client'
 // Инстанс сокета
 let socket: Socket | null = null
 
+// URL сокет-сервера:
+// - в dev всё ходит через прокси Vite на текущий origin (порт 5002),
+// - в проде бэкенд и статика на одном origin, поэтому тоже берём его,
+// - при необходимости можно задать VITE_SOCKET_URL.
+const socketUrl = import.meta.env.VITE_SOCKET_URL ?? window.location.origin
+
 export const socketService = {
   // Инициализация соединения
   connect: () => {
     if (!socket) {
-      socket = io('http://localhost:5001', {
+      socket = io(socketUrl, {
         auth: {
           token: localStorage.getItem('token') || '',
         },
