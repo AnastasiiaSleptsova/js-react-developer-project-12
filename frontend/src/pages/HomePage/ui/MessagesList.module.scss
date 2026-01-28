@@ -79,6 +79,44 @@
   height: 100%;
 }
 
+.loadingPlaceholder {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 100%;
+}
+
+.loadingHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.loadingMessages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.skeletonMessage {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  width: 100%;
+}
+
+.skeletonMessageRight {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.loadingInput {
+  margin-top: auto;
+}
+
 .contentLayout {
   height: 100%;
   display: flex;
@@ -87,6 +125,12 @@
   .layoutContent {
     overflow: auto;
     flex: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .loadingMessages {
+    gap: 14px;
   }
 }
 
@@ -109,5 +153,13 @@
     .layoutContent {
       padding-bottom: 4px;
     }
+  }
+
+  .loadingPlaceholder {
+    gap: 14px;
+  }
+
+  .loadingMessages {
+    gap: 12px;
   }
 }

@@ -9,7 +9,6 @@ import { MessageInput } from './MessageInput'
 import { useMessagesScroll } from './hooks/useMessagesScroll'
 import { useMessageNotification } from './hooks/useMessageNotification'
 import { MessagesContainer } from './components/MessagesContainer'
-import { EmptyMessages } from './components/EmptyMessages'
 import { LoadingMessages } from './components/LoadingMessages'
 import { ErrorMessages } from './components/ErrorMessages'
 import { SelectedChannelInfo } from './components/SelectedChannelInfo'
@@ -20,8 +19,8 @@ export const MessagesList = () => {
   const { t } = useTranslation()
   const selectedChannelId = useAppSelector((state) => state.chat.selectedChannelId)
   const currentUsername = useAppSelector((state) => state.auth.username)
-  const { data: filteredMessages = [], isLoading, error } = useMessages(selectedChannelId)
-  const { data: channels = [] } = useChannels()
+  const { data: filteredMessages = [], isLoading: isMessagesLoading, error } = useMessages(selectedChannelId)
+  const { data: channels = [], isLoading: isChannelsLoading } = useChannels()
   const removeMessage = useRemoveMessage()
   const [editingMessage, setEditingMessage] = useState<Message | null>(null)
 
@@ -71,11 +70,7 @@ export const MessagesList = () => {
     [editingMessage, removeMessage, t],
   )
 
-  if (!selectedChannelId) {
-    return <EmptyMessages />
-  }
-
-  if (isLoading) {
+  if (isChannelsLoading || !selectedChannelId || isMessagesLoading) {
     return <LoadingMessages />
   }
 
