@@ -40,7 +40,7 @@ export const ChatHeader: FC<ChatHeaderProps> = ({
   }
 
   if (shouldCrash) {
-    throw new Error(t('Тестовая ошибка', { time: new Date().toISOString() }))
+    throw new Error(t('Тестовая ошибка: {{time}}', { time: new Date().toISOString() }))
   }
 
   const mobileMenuItems: MenuProps['items'] = useMemo(

@@ -75,7 +75,7 @@ export const RenameChannelModal: React.FC<Props> = ({
           control={control}
           render={({ field }) => (
             <Input
-              placeholder={t('Введите имя канала')}
+              placeholder={t('Имя канала')}
               {...field}
               ref={inputRef}
             />

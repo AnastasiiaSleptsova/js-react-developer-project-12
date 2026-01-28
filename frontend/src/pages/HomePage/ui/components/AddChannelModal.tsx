@@ -63,7 +63,7 @@ export const AddChannelModal: React.FC<Props> = ({ open, onClose, onSubmit, exis
           control={control}
           render={({ field }) => (
             <Input
-              placeholder={t('Введите имя канала')}
+              placeholder={t('Имя канала')}
               {...field}
               ref={inputRef}
             />

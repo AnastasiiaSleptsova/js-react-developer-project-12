@@ -22,7 +22,7 @@ export const useRemoveMessage = () => {
     },
     onError: (error) => {
       if (isNetworkError(error)) {
-        showError(t('Похоже, нет соединения с интернетом'))
+        showError(t('Ошибка соединения'))
       } else {
         showError(t('Ошибка удаления сообщения'))
       }

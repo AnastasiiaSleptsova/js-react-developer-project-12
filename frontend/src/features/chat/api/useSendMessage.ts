@@ -20,7 +20,7 @@ export const useSendMessage = () => {
     },
     onError: (error) => {
       if (isNetworkError(error)) {
-        showError(t('Похоже, нет соединения с интернетом'))
+        showError(t('Ошибка соединения'))
         return
       }
 

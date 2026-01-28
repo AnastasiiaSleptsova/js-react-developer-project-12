@@ -48,16 +48,30 @@ const ChannelListItemComponent = ({
         [styles.selected]: isSelected,
       })}
       onClick={() => onSelect(id)}
+      role="button"
+      tabIndex={0}
+      aria-pressed={isSelected}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          onSelect(id)
+        }
+      }}
     >
       <div className={styles.itemContent}>
         <span className={styles.channelName}># {name}</span>
       </div>
       <div onClick={(e) => e.stopPropagation()}>
+        <span className={styles.srOnly}>{t('Управление каналом')}</span>
         <Dropdown
           menu={{ items: menuItems }}
           trigger={["click"]}
         >
-          <Button type="text" icon={<EllipsisOutlined />} />
+          <Button
+            type="text"
+            icon={<EllipsisOutlined />}
+            aria-label={t('Управление каналом')}
+          />
         </Dropdown>
       </div>
     </List.Item>

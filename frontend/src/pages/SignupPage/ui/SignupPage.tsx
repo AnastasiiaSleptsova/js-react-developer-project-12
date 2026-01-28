@@ -12,15 +12,15 @@ import { useHeaderConfig } from '@app/providers'
 
 import styles from './SignupPage.module.scss'
 
-const buildSignupSchema = (t: (key: string) => string) =>
+const buildSignupSchema = (t: (key: string, options?: Record<string, unknown>) => string) =>
   z
     .object({
-      username: z.string().min(3, { message: t('Имя пользователя должно содержать минимум 3 символа') }),
-      password: z.string().min(6, { message: t('Пароль должен содержать минимум 6 символов') }),
-      confirmPassword: z.string().min(6, { message: t('Пароль должен содержать минимум 6 символов') }),
+      username: z.string().min(3, { message: t('От {{minSymbols}} до {{maxSymbols}} символов', { minSymbols: 3, maxSymbols: 20 }) }).max(20, { message: t('От {{minSymbols}} до {{maxSymbols}} символов', { minSymbols: 3, maxSymbols: 20 })}),
+      password: z.string().min(6, { message: t('Не менее {{minSymbols}} символов', { minSymbols: 6 }) }),
+      confirmPassword: z.string().min(6, { message: t('Не менее {{minSymbols}} символов', { minSymbols: 6 }) }),
     })
     .refine((data) => data.password === data.confirmPassword, {
-      message: t('Пароли не совпадают'),
+      message: t('Пароли должны совпадать'),
       path: ['confirmPassword'],
     })
 
@@ -47,6 +47,8 @@ export const SignupPage = () => {
     formState: { errors },
   } = useForm<SignupFormData>({
     resolver,
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
     defaultValues: {
       username: '',
       password: '',
@@ -109,7 +111,7 @@ export const SignupPage = () => {
           render={({ field }) => (
             <Input
               {...field}
-              placeholder={t('Минимум 3 символа')}
+              placeholder={t('От {{minSymbols}} до {{maxSymbols}} символов', { minSymbols: 3, maxSymbols: 20 })}
               disabled={isLoading}
               status={errors.username ? 'error' : ''}
             />
@@ -126,7 +128,7 @@ export const SignupPage = () => {
           render={({ field }) => (
             <Input.Password
               {...field}
-              placeholder={t('Минимум 6 символов')}
+              placeholder={t('Не менее {{minSymbols}} символов', { minSymbols: 6 })}
               disabled={isLoading}
               status={errors.password ? 'error' : ''}
             />
@@ -136,14 +138,14 @@ export const SignupPage = () => {
           <p className={styles.error}>{errors.password.message?.toString()}</p>
         )}
 
-        <label className={styles.label}>{t('Повторите пароль')}</label>
+        <label className={styles.label}>{t('Подтвердите пароль')}</label>
         <Controller
           name="confirmPassword"
           control={control}
           render={({ field }) => (
             <Input.Password
               {...field}
-              placeholder={t('Повторите пароль')}
+              placeholder={t('Подтвердите пароль')}
               disabled={isLoading}
               status={errors.confirmPassword ? 'error' : ''}
             />

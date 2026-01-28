@@ -50,7 +50,7 @@ export const LoginPage: FC = () => {
       let message = t('Не удалось выполнить вход. Попробуйте еще раз.')
 
       if (error.response?.status === 401) {
-        message = t('Неправильное имя пользователя или пароль')
+        message = t('Неверные имя пользователя или пароль')
       } else if (error.response?.data?.message) {
         message = error.response.data.message
       } else if (error.message) {
@@ -80,15 +80,15 @@ export const LoginPage: FC = () => {
           />
         )}
 
-        <label className={styles.label}>{t('Имя пользователя')}</label>
+        <label className={styles.label}>{t('Ваш ник')}</label>
         <Controller
           name="username"
           control={control}
-          rules={{ required: t('Введите имя пользователя') }}
+          rules={{ required: t('Ваш ник') }}
           render={({ field }) => (
             <Input
               {...field}
-              placeholder={t('Имя пользователя')}
+              placeholder={t('Ваш ник')}
               disabled={loading}
               status={errors.username ? 'error' : ''}
             />
