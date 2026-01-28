@@ -1,70 +1,69 @@
-.signupContainer {
+.container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  justify-content: center;
+  min-height: 60vh;
+  padding: 24px;
+  background: #f7f9fc;
 }
 
-.signupCard {
-  background: white;
-  border-radius: 8px;
-  padding: 32px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+.form {
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
 }
 
 .title {
-  font-size: 28px;
-  font-weight: 600;
+  margin: 0 0 16px 0;
+  font-size: 20px;
   text-align: center;
-  margin-bottom: 24px;
-  color: #1f2937;
-}
-
-.formGroup {
-  margin-bottom: 16px;
 }
 
 .label {
   display: block;
-  margin-bottom: 6px;
+  margin: 12px 0 6px;
   font-size: 14px;
-  font-weight: 500;
-  color: #374151;
+  color: #333;
 }
 
-.errorText {
-  display: block;
-  margin-top: 4px;
-  font-size: 12px;
-  color: #ef4444;
+.error {
+  color: #ff4d4f;
+  margin: 6px 0 0;
+  font-size: 13px;
 }
 
-.toggleButton {
-  background: none;
-  border: none;
-  color: #6b7280;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-
-  &:hover {
-    color: #374151;
-  }
+.button {
+  margin-top: 18px;
 }
 
 .footer {
   text-align: center;
   margin-top: 20px;
   font-size: 14px;
-  color: #6b7280;
+  color: #666;
 
   button {
     padding: 0;
     margin-left: 4px;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    min-height: 100dvh;
+    padding: 16px;
+  }
+
+  .form {
+    padding: 20px;
+  }
+
+  .form :global(.ant-input),
+  .form :global(.ant-input-password),
+  .form :global(.ant-input-affix-wrapper > input) {
+    font-size: 16px; // предотвращает авто-зуум на iOS при фокусе
   }
 }

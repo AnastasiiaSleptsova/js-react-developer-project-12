@@ -1,9 +1,9 @@
 import { Layout, Modal } from 'antd'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Message } from '@shared/api'
 import { useTranslation } from 'react-i18next'
 
-import { useMessages, useRemoveMessage } from '@features/chat'
+import { useChannels, useMessages, useRemoveMessage } from '@features/chat'
 import { useAppSelector } from '@app/store'
 import { MessageInput } from './MessageInput'
 import { useMessagesScroll } from './hooks/useMessagesScroll'
@@ -12,6 +12,7 @@ import { MessagesContainer } from './components/MessagesContainer'
 import { EmptyMessages } from './components/EmptyMessages'
 import { LoadingMessages } from './components/LoadingMessages'
 import { ErrorMessages } from './components/ErrorMessages'
+import { SelectedChannelInfo } from './components/SelectedChannelInfo'
 
 import styles from './MessagesList.module.scss'
 
@@ -20,8 +21,15 @@ export const MessagesList = () => {
   const selectedChannelId = useAppSelector((state) => state.chat.selectedChannelId)
   const currentUsername = useAppSelector((state) => state.auth.username)
   const { data: filteredMessages = [], isLoading, error } = useMessages(selectedChannelId)
+  const { data: channels = [] } = useChannels()
   const removeMessage = useRemoveMessage()
   const [editingMessage, setEditingMessage] = useState<Message | null>(null)
+
+  const selectedChannelName = useMemo(() => {
+    if (!selectedChannelId) return ''
+    const foundChannel = channels.find((channel) => channel.id === selectedChannelId)
+    return foundChannel?.name ?? ''
+  }, [channels, selectedChannelId])
 
   const messagesEndRef = useMessagesScroll({
     filteredMessages,
@@ -78,6 +86,10 @@ export const MessagesList = () => {
   return (
     <Layout className={styles.contentLayout}>
       <Layout.Content className={styles.layoutContent}>
+        <SelectedChannelInfo
+          channelName={selectedChannelName}
+          messageCount={filteredMessages.length}
+        />
         <MessagesContainer
           filteredMessages={filteredMessages}
           currentUsername={currentUsername}

@@ -4,6 +4,7 @@
   justify-content: center;
   min-height: 60vh;
   padding: 24px;
+  background: #f7f9fc;
  }
 
  .form {
@@ -40,9 +41,9 @@
 
  .footer {
   text-align: center;
-  margin-top: 20px;
-  font-size: 14px;
-  color: #666;
+ margin-top: 20px;
+ font-size: 14px;
+ color: #666;
 
   button {
     padding: 0;
@@ -50,3 +51,19 @@
   }
  }
 
+@media (max-width: 767px) {
+ .container {
+  min-height: 100dvh;
+  padding: 16px;
+ }
+
+ .form {
+ padding: 20px;
+ }
+
+ .form :global(.ant-input),
+ .form :global(.ant-input-password),
+ .form :global(.ant-input-affix-wrapper > input) {
+  font-size: 16px;
+ }
+}

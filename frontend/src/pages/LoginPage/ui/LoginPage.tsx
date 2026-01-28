@@ -82,7 +82,7 @@ export const LoginPage: FC = () => {
           render={({ field }) => (
             <Input
               {...field}
-              placeholder="admin"
+              placeholder={t('Имя пользователя')}
               disabled={loading}
               status={errors.username ? 'error' : ''}
             />

@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useNavigate } from 'react-router-dom'
 import { Button, Input, Alert } from 'antd'
-import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
 import { AuthService } from '@features/auth/api/authService'
 import { useAppDispatch } from '@app/store'
 import { setUsername } from '@features/auth'
@@ -34,7 +33,6 @@ export const SignupPage = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
-  const [showPassword, setShowPassword] = useState(false)
   const [serverError, setServerError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
 
@@ -83,104 +81,82 @@ export const SignupPage = () => {
   }
 
   return (
-    <div className={styles.signupContainer}>
-      <div className={styles.signupCard}>
-        <h1 className={styles.title}>{t('Регистрация')}</h1>
+    <div className={styles.container}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <h2 className={styles.title}>{t('Регистрация')}</h2>
 
         {serverError && (
-          <Alert title={serverError} type="error" showIcon style={{ marginBottom: '16px' }} />
+          <Alert
+            message={serverError}
+            type="error"
+            showIcon
+            closable
+            onClose={() => setServerError('')}
+            style={{ marginBottom: '16px' }}
+          />
         )}
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles.formGroup}>
-            <label className={styles.label}>{t('Имя пользователя')}</label>
-            <Controller
-              name="username"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  placeholder={t('Минимум 3 символа')}
-                  disabled={isLoading}
-                  status={errors.username ? 'error' : ''}
-                />
-              )}
+        <label className={styles.label}>{t('Имя пользователя')}</label>
+        <Controller
+          name="username"
+          control={control}
+          render={({ field }) => (
+            <Input
+              {...field}
+              placeholder={t('Минимум 3 символа')}
+              disabled={isLoading}
+              status={errors.username ? 'error' : ''}
             />
-            {errors.username && (
-              <span className={styles.errorText}>{errors.username.message}</span>
-            )}
-          </div>
+          )}
+        />
+        {errors.username && (
+          <p className={styles.error}>{errors.username.message?.toString()}</p>
+        )}
 
-          <div className={styles.formGroup}>
-            <label className={styles.label}>{t('Пароль')}</label>
-            <Controller
-              name="password"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder={t('Минимум 6 символов')}
-                  disabled={isLoading}
-                  status={errors.password ? 'error' : ''}
-                  suffix={
-                    <button
-                      type="button"
-                      className={styles.toggleButton}
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-                    </button>
-                  }
-                />
-              )}
+        <label className={styles.label}>{t('Пароль')}</label>
+        <Controller
+          name="password"
+          control={control}
+          render={({ field }) => (
+            <Input.Password
+              {...field}
+              placeholder={t('Минимум 6 символов')}
+              disabled={isLoading}
+              status={errors.password ? 'error' : ''}
             />
-            {errors.password && (
-              <span className={styles.errorText}>{errors.password.message}</span>
-            )}
-          </div>
+          )}
+        />
+        {errors.password && (
+          <p className={styles.error}>{errors.password.message?.toString()}</p>
+        )}
 
-          <div className={styles.formGroup}>
-            <label className={styles.label}>{t('Повторите пароль')}</label>
-            <Controller
-              name="confirmPassword"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  {...field}
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder={t('Повторите пароль')}
-                  disabled={isLoading}
-                  status={errors.confirmPassword ? 'error' : ''}
-                  suffix={
-                    <button
-                      type="button"
-                      className={styles.toggleButton}
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-                    </button>
-                  }
-                />
-              )}
+        <label className={styles.label}>{t('Повторите пароль')}</label>
+        <Controller
+          name="confirmPassword"
+          control={control}
+          render={({ field }) => (
+            <Input.Password
+              {...field}
+              placeholder={t('Повторите пароль')}
+              disabled={isLoading}
+              status={errors.confirmPassword ? 'error' : ''}
             />
-            {errors.confirmPassword && (
-              <span className={styles.errorText}>{errors.confirmPassword.message}</span>
-            )}
-          </div>
+          )}
+        />
+        {errors.confirmPassword && (
+          <p className={styles.error}>{errors.confirmPassword.message?.toString()}</p>
+        )}
 
-          <Button
-            htmlType="submit"
-            type="primary"
-            size="large"
-            block
-            disabled={isLoading}
-            loading={isLoading}
-            style={{ marginTop: '24px' }}
-          >
-            {t('Зарегистрироваться')}
-          </Button>
-        </form>
+        <Button
+          type="primary"
+          htmlType="submit"
+          className={styles.button}
+          block
+          loading={isLoading}
+          disabled={isLoading}
+        >
+          {t('Зарегистрироваться')}
+        </Button>
 
         <div className={styles.footer}>
           <span>{t('Уже есть аккаунт?')}</span>
@@ -188,7 +164,7 @@ export const SignupPage = () => {
             {t('Войти')}
           </Button>
         </div>
-      </div>
+      </form>
     </div>
   )
 }
