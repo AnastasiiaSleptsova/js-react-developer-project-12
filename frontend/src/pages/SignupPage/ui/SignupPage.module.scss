@@ -64,6 +64,6 @@
   .form :global(.ant-input),
   .form :global(.ant-input-password),
   .form :global(.ant-input-affix-wrapper > input) {
-    font-size: 16px; // предотвращает авто-зуум на iOS при фокусе
+    font-size: 16px; // предотвращает авто-зуум на мобильных iOS при фокусе
   }
 }

@@ -1,11 +1,12 @@
 import { useForm, Controller, SubmitHandler, FieldValues } from 'react-hook-form'
 import { Input, Button, Alert } from 'antd'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
 import { AuthService, setAuthUser, setError as setAuthError, clearError } from '@features/auth'
+import { useHeaderConfig } from '@app/providers'
 
 import styles from './LoginPage.module.scss'
 
@@ -26,6 +27,11 @@ export const LoginPage: FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { resetHeaderConfig } = useHeaderConfig()
+
+  useEffect(() => {
+    resetHeaderConfig()
+  }, [resetHeaderConfig])
 
   const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {

@@ -5,6 +5,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .titleRow {
@@ -30,6 +33,13 @@
 
 .username {
   font-size: 14px;
+  color: #fff;
+}
+
+.mobileActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   color: #fff;
 }
 

@@ -1,13 +1,15 @@
 .layoutRoot {
-  height: 100vh;
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 
 .mainArea {
   flex: 1;
   overflow: hidden;
   display: flex;
+  min-height: 0;
 }
 
 .sider {
@@ -19,13 +21,12 @@
 .content {
   overflow: hidden;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 @media (max-width: 767px) {
-  .layoutRoot {
-    height: 100dvh; /* better on mobile browsers */
-  }
-
   .mainArea {
     flex-direction: column;
   }

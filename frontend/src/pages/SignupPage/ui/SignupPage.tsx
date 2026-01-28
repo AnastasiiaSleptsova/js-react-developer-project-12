@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -8,6 +8,7 @@ import { AuthService } from '@features/auth/api/authService'
 import { useAppDispatch } from '@app/store'
 import { setUsername } from '@features/auth'
 import { useTranslation } from 'react-i18next'
+import { useHeaderConfig } from '@app/providers'
 
 import styles from './SignupPage.module.scss'
 
@@ -35,6 +36,7 @@ export const SignupPage = () => {
   const { t } = useTranslation()
   const [serverError, setServerError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
+  const { resetHeaderConfig } = useHeaderConfig()
 
   const schema = useMemo(() => buildSignupSchema(t), [t])
   const resolver = useMemo(() => zodResolver(schema), [schema])
@@ -51,6 +53,10 @@ export const SignupPage = () => {
       confirmPassword: '',
     },
   })
+
+  useEffect(() => {
+    resetHeaderConfig()
+  }, [resetHeaderConfig])
 
   const onSubmit = async (data: SignupFormData) => {
     setServerError('')

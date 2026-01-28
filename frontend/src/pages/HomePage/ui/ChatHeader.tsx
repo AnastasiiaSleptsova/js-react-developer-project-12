@@ -14,17 +14,24 @@ import styles from './ChatHeader.module.scss'
 const { Header } = Layout
 
 interface ChatHeaderProps {
-  onToggleChannels: () => void
-  isMobile: boolean
+  onToggleChannels?: () => void
+  isMobile?: boolean
+  showUserControls?: boolean
 }
 
-export const ChatHeader: FC<ChatHeaderProps> = ({ onToggleChannels, isMobile }) => {
+export const ChatHeader: FC<ChatHeaderProps> = ({
+  onToggleChannels,
+  isMobile = false,
+  showUserControls = true,
+}) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const username = useSelector((state: RootState) => state.auth.username)
   const [shouldCrash, setShouldCrash] = useState(false)
   const { language, changeLanguage } = useLanguage()
+  const displayUserControls = showUserControls !== false
+  const handleToggleChannels = onToggleChannels ?? (() => {})
 
   const handleLogout = () => {
     dispatch(logout())
@@ -94,45 +101,55 @@ export const ChatHeader: FC<ChatHeaderProps> = ({ onToggleChannels, isMobile }) 
   return (
     <Header className={styles.header}>
       <div className={styles.titleRow}>
-        {isMobile && (
+        {isMobile && !!onToggleChannels && (
           <Button
             type="text"
             icon={<MenuOutlined />}
             aria-label={t('Каналы')}
             className={styles.menuButton}
-            onClick={onToggleChannels}
+            onClick={handleToggleChannels}
           />
         )}
         <div className={styles.title}>{t('Hexlet Chat')}</div>
       </div>
       {isMobile ? (
-        <Dropdown menu={{ items: mobileMenuItems }} trigger={['click']}>
-          <Button type="text" icon={<UserOutlined />} className={styles.userButton}>
-            <span className={styles.userButtonText}>{username}</span>
-          </Button>
-        </Dropdown>
+        displayUserControls ? (
+          <Dropdown menu={{ items: mobileMenuItems }} trigger={['click']}>
+            <Button type="text" icon={<UserOutlined />} className={styles.userButton}>
+              <span className={styles.userButtonText}>{username}</span>
+            </Button>
+          </Dropdown>
+        ) : (
+          <div className={styles.mobileActions}>
+            <LanguageSelect />
+          </div>
+        )
       ) : (
         <div className={styles.actions}>
           <Space size="middle" wrap className={styles.actionsSpace}>
-            <span className={styles.username}>👤 {username}</span>
-            <Tooltip title={t('Сознательно вызвать ошибку для проверки')}>
-              <Button
-                type="default"
-                danger
-                icon={<BugOutlined />}
-                onClick={() => setShouldCrash(true)}
-              >
-                {t('Вызвать ошибку')}
-              </Button>
-            </Tooltip>
-            <Button
-              type="primary"
-              danger
-              icon={<LogoutOutlined />}
-              onClick={handleLogout}
-            >
-              {t('Выйти')}
-            </Button>
+            {displayUserControls && (
+              <>
+                <span className={styles.username}>👤 {username}</span>
+                <Tooltip title={t('Сознательно вызвать ошибку для проверки')}>
+                  <Button
+                    type="default"
+                    danger
+                    icon={<BugOutlined />}
+                    onClick={() => setShouldCrash(true)}
+                  >
+                    {t('Вызвать ошибку')}
+                  </Button>
+                </Tooltip>
+                <Button
+                  type="primary"
+                  danger
+                  icon={<LogoutOutlined />}
+                  onClick={handleLogout}
+                >
+                  {t('Выйти')}
+                </Button>
+              </>
+            )}
             <LanguageSelect />
           </Space>
         </div>
