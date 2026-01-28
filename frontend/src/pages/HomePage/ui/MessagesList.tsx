@@ -1,6 +1,9 @@
-import { Layout } from 'antd'
+import { Layout, Modal } from 'antd'
+import { useCallback, useEffect, useState } from 'react'
+import { Message } from '@shared/api'
+import { useTranslation } from 'react-i18next'
 
-import { useMessages } from '@features/chat'
+import { useMessages, useRemoveMessage } from '@features/chat'
 import { useAppSelector } from '@app/store'
 import { MessageInput } from './MessageInput'
 import { useMessagesScroll } from './hooks/useMessagesScroll'
@@ -13,9 +16,12 @@ import { ErrorMessages } from './components/ErrorMessages'
 import styles from './MessagesList.module.scss'
 
 export const MessagesList = () => {
+  const { t } = useTranslation()
   const selectedChannelId = useAppSelector((state) => state.chat.selectedChannelId)
   const currentUsername = useAppSelector((state) => state.auth.username)
   const { data: filteredMessages = [], isLoading, error } = useMessages(selectedChannelId)
+  const removeMessage = useRemoveMessage()
+  const [editingMessage, setEditingMessage] = useState<Message | null>(null)
 
   const messagesEndRef = useMessagesScroll({
     filteredMessages,
@@ -27,6 +33,35 @@ export const MessagesList = () => {
     currentUsername,
     selectedChannelId,
   })
+
+  useEffect(() => {
+    // Сбрасываем редактируемое сообщение при смене канала
+    setEditingMessage(null)
+  }, [selectedChannelId])
+
+  const handleEditMessage = useCallback((message: Message) => {
+    setEditingMessage(message)
+  }, [])
+
+  const handleRemoveMessage = useCallback(
+    (message: Message) => {
+      Modal.confirm({
+        title: t('Подтвердите удаление'),
+        content: t('Удалить сообщение?'),
+        okText: t('Удалить'),
+        cancelText: t('Отмена'),
+        okButtonProps: { danger: true },
+        centered: true,
+        onOk: async () => {
+          await removeMessage.mutateAsync(String(message.id))
+          if (editingMessage && String(editingMessage.id) === String(message.id)) {
+            setEditingMessage(null)
+          }
+        },
+      })
+    },
+    [editingMessage, removeMessage, t],
+  )
 
   if (!selectedChannelId) {
     return <EmptyMessages />
@@ -47,9 +82,14 @@ export const MessagesList = () => {
           filteredMessages={filteredMessages}
           currentUsername={currentUsername}
           messagesEndRef={messagesEndRef}
+          onEditMessage={handleEditMessage}
+          onRemoveMessage={handleRemoveMessage}
         />
       </Layout.Content>
-      <MessageInput />
+      <MessageInput
+        editingMessage={editingMessage}
+        onResetEditing={() => setEditingMessage(null)}
+      />
     </Layout>
   )
 }

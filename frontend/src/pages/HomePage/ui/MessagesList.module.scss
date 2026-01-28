@@ -49,6 +49,11 @@
     }
   }
 
+  .actionsButton {
+    padding: 2px 6px;
+    align-self: flex-end;
+  }
+
   .messageBubble {
     padding: 8px 12px;
     max-width: 60%;
@@ -84,4 +89,3 @@
     flex: 1;
   }
 }
-

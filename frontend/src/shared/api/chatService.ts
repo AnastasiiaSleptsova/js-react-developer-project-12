@@ -7,6 +7,10 @@ export interface CreateMessagePayload {
   username: string
 }
 
+export interface EditMessagePayload {
+  body: string
+}
+
 // Сервис для работы с каналами и сообщениями чата
 export class ChatService {
   // Получение списка всех каналов
@@ -24,6 +28,18 @@ export class ChatService {
   // Создание нового сообщения
   static async createMessage(payload: CreateMessagePayload): Promise<Message> {
     const response = await apiClient.post<Message>('/v1/messages', payload)
+    return response.data
+  }
+
+  // Редактирование сообщения
+  static async editMessage(id: string, payload: EditMessagePayload): Promise<Message> {
+    const response = await apiClient.patch<Message>(`/v1/messages/${id}`, payload)
+    return response.data
+  }
+
+  // Удаление сообщения
+  static async removeMessage(id: string): Promise<{ id: string }> {
+    const response = await apiClient.delete<{ id: string }>(`/v1/messages/${id}`)
     return response.data
   }
 
@@ -45,4 +61,3 @@ export class ChatService {
     return response.data
   }
 }
-

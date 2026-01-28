@@ -2,26 +2,24 @@ import { FC, RefObject } from 'react'
 import { Empty } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { MessageItem } from './MessageItem'
+import { Message } from '@shared/api'
 
 import styles from '../MessagesList.module.scss'
-
-interface Message {
-  id: string | number
-  body: string
-  username: string
-  channelId: string
-}
 
 interface MessagesContainerProps {
   filteredMessages: Message[]
   currentUsername: string | null
   messagesEndRef: RefObject<HTMLDivElement | null>
+  onEditMessage: (message: Message) => void
+  onRemoveMessage: (message: Message) => void
 }
 
 export const MessagesContainer: FC<MessagesContainerProps> = ({
   filteredMessages,
   currentUsername,
   messagesEndRef,
+  onEditMessage,
+  onRemoveMessage,
 }) => {
   const { t } = useTranslation()
 
@@ -43,6 +41,8 @@ export const MessagesContainer: FC<MessagesContainerProps> = ({
               key={message.id}
               message={message}
               isCurrentUser={isCurrentUser}
+              onEdit={onEditMessage}
+              onRemove={onRemoveMessage}
             />
           )
         })}

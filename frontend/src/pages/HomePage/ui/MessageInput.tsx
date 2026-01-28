@@ -1,32 +1,69 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { Button, Input } from 'antd'
-import { SendOutlined } from '@ant-design/icons'
+import { EditOutlined, SendOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
-import { useSendMessage } from '@features/chat'
+import { useEditMessage, useSendMessage } from '@features/chat'
 import { useAppSelector } from '@app/store'
+import { Message } from '@shared/api'
 
 interface MessageFormData {
   body: string
 }
 
-export const MessageInput = () => {
+interface MessageInputProps {
+  editingMessage: Message | null
+  onResetEditing: () => void
+}
+
+export const MessageInput = ({ editingMessage, onResetEditing }: MessageInputProps) => {
   const { t } = useTranslation()
   const inputRef = useRef<any>(null)
-  const { control, handleSubmit, reset, watch } = useForm<MessageFormData>({
+  const { control, handleSubmit, reset, watch, setValue } = useForm<MessageFormData>({
     defaultValues: { body: '' }, // TODO добавить сохранение черновиков в localStorage и восстановление при монтировании
   })
-  const { mutate: sendMessage, isPending } = useSendMessage()
+  const { mutate: sendMessage, isPending: isSendPending } = useSendMessage()
+  const { mutate: editMessage, isPending: isEditPending } = useEditMessage()
   const username = useAppSelector((state) => state.auth.username) // TODO использовать селекторы
   const selectedChannelId = useAppSelector((state) => state.chat.selectedChannelId)
   const messageValue = watch('body')
 
+  useEffect(() => {
+    if (editingMessage) {
+      setValue('body', editingMessage.body, { shouldDirty: true })
+      if (inputRef.current?.resizableTextArea?.textArea) {
+        setTimeout(() => {
+          inputRef.current.resizableTextArea.textArea.focus()
+        }, 0)
+      }
+    }
+  }, [editingMessage, setValue])
+
   const onSubmit = (data: MessageFormData) => {
-    if (!messageValue.trim() || !selectedChannelId || !username) return
+    const trimmedBody = data.body.trim()
+    if (!trimmedBody || !selectedChannelId || !username) return
+
+    if (editingMessage) {
+      editMessage(
+        { id: String(editingMessage.id), body: trimmedBody },
+        {
+          onSuccess: () => {
+            reset()
+            onResetEditing()
+            if (inputRef.current?.resizableTextArea?.textArea) {
+              setTimeout(() => {
+                inputRef.current.resizableTextArea.textArea.focus()
+              }, 0)
+            }
+          },
+        },
+      )
+      return
+    }
 
     sendMessage(
       {
-        body: data.body,
+        body: trimmedBody,
         channelId: selectedChannelId,
         username,
       },
@@ -56,6 +93,8 @@ export const MessageInput = () => {
     return null
   }
 
+  const isSubmitting = isSendPending || isEditPending
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} style={{ padding: '16px', borderTop: '1px solid #f0f0f0' }}>
       <div style={{ marginBottom: '8px' }}>
@@ -67,7 +106,7 @@ export const MessageInput = () => {
               placeholder={t('Введите сообщение...')}
               {...field}
               rows={3}
-              disabled={isPending}
+              disabled={isSubmitting}
               onKeyDown={handleKeyDown}
               style={{ resize: 'none' }}
               ref={inputRef}
@@ -78,14 +117,13 @@ export const MessageInput = () => {
       <Button
         htmlType="submit"
         type="primary"
-        icon={<SendOutlined />}
-        loading={isPending}
+        icon={editingMessage ? <EditOutlined /> : <SendOutlined />}
+        loading={isSubmitting}
         disabled={!messageValue.trim()}
         block
       >
-        {t('Отправить')}
+        {editingMessage ? t('Изменить сообщение') : t('Отправить')}
       </Button>
     </form>
   )
 }
-

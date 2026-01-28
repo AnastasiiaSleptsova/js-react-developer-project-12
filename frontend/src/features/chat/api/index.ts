@@ -4,4 +4,5 @@ export { useSendMessage } from './useSendMessage'
 export { useCreateChannel } from './useCreateChannel'
 export { useEditChannel } from './useEditChannel'
 export { useRemoveChannel } from './useRemoveChannel'
-
+export { useEditMessage } from './useEditMessage'
+export { useRemoveMessage } from './useRemoveMessage'
