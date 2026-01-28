@@ -89,3 +89,25 @@
     flex: 1;
   }
 }
+
+@media (max-width: 767px) {
+  .messagesList {
+    padding: 12px 12px 6px;
+    gap: 6px;
+
+    .messagesContainer {
+      gap: 10px;
+    }
+  }
+
+  .messageBubble {
+    max-width: 85%;
+    padding: 8px 10px;
+  }
+
+  .contentLayout {
+    .layoutContent {
+      padding-bottom: 4px;
+    }
+  }
+}

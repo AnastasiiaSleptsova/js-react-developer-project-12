@@ -1,6 +1,6 @@
-import { FC, useState } from 'react'
-import { Layout, Button, Space, Tooltip } from 'antd'
-import { LogoutOutlined, BugOutlined } from '@ant-design/icons'
+import { FC, useMemo, useState } from 'react'
+import { Layout, Button, Space, Tooltip, Dropdown, MenuProps, Segmented } from 'antd'
+import { LogoutOutlined, BugOutlined, MenuOutlined, UserOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -8,15 +8,23 @@ import { RootState } from '@app/store'
 import { logout } from '@features/auth'
 import { clearSelectedChannel } from '@features/chat'
 import { LanguageSelect } from '@features/i18n'
+import { useLanguage } from '@features/i18n/hooks/useLanguage'
+import styles from './ChatHeader.module.scss'
 
 const { Header } = Layout
 
-export const ChatHeader: FC = () => {
+interface ChatHeaderProps {
+  onToggleChannels: () => void
+  isMobile: boolean
+}
+
+export const ChatHeader: FC<ChatHeaderProps> = ({ onToggleChannels, isMobile }) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const username = useSelector((state: RootState) => state.auth.username)
   const [shouldCrash, setShouldCrash] = useState(false)
+  const { language, changeLanguage } = useLanguage()
 
   const handleLogout = () => {
     dispatch(logout())
@@ -28,41 +36,107 @@ export const ChatHeader: FC = () => {
     throw new Error(t('Тестовая ошибка', { time: new Date().toISOString() }))
   }
 
-  return (
-    <Header
-      style={{
-        background: '#1890ff',
-        padding: '0 24px',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}
-    >
-        <div style={{ fontSize: '18px', fontWeight: 600 }}>{t('💬 Hexlet Chat')}</div>
-        <Space size='middle'>
-          <span style={{ fontSize: '14px', color: '#333' }}>👤 {username}</span>
-          <Tooltip title={t('Сознательно вызвать ошибку для проверки')}>
-            <Button
-              type="default"
-              danger
-              // ghost
-              icon={<BugOutlined />}
-              onClick={() => setShouldCrash(true)}
-            >
-              {t('Вызвать ошибку')}
-            </Button>
-          </Tooltip>
+  const mobileMenuItems: MenuProps['items'] = useMemo(
+    () => [
+      {
+        key: 'crash',
+        label: (
+          <Button
+            type="default"
+            danger
+            block
+            size="middle"
+            className={styles.menuAction}
+            onClick={() => setShouldCrash(true)}
+            icon={<BugOutlined />}
+          >
+            {t('Вызвать ошибку')}
+          </Button>
+        ),
+      },
+      {
+        key: 'logout',
+        label: (
           <Button
             type="primary"
             danger
-            icon={<LogoutOutlined />}
+            block
+            size="middle"
+            className={styles.menuAction}
             onClick={handleLogout}
+            icon={<LogoutOutlined />}
           >
             {t('Выйти')}
           </Button>
-          <LanguageSelect />
-        </Space>
-      </Header>
+        ),
+      },
+      { type: 'divider' },
+      {
+        key: 'lang',
+        label: (
+          <div className={styles.langToggle}>
+            <Segmented
+              options={[
+                { label: 'RU', value: 'ru' },
+                { label: 'EN', value: 'en' },
+              ]}
+              size="small"
+              value={language}
+              onChange={(val) => changeLanguage(val as 'ru' | 'en')}
+            />
+          </div>
+        ),
+      },
+    ],
+    [changeLanguage, handleLogout, language, t],
+  )
+
+  return (
+    <Header className={styles.header}>
+      <div className={styles.titleRow}>
+        {isMobile && (
+          <Button
+            type="text"
+            icon={<MenuOutlined />}
+            aria-label={t('Каналы')}
+            className={styles.menuButton}
+            onClick={onToggleChannels}
+          />
+        )}
+        <div className={styles.title}>{t('Hexlet Chat')}</div>
+      </div>
+      {isMobile ? (
+        <Dropdown menu={{ items: mobileMenuItems }} trigger={['click']}>
+          <Button type="text" icon={<UserOutlined />} className={styles.userButton}>
+            {username}
+          </Button>
+        </Dropdown>
+      ) : (
+        <div className={styles.actions}>
+          <Space size="middle" wrap className={styles.actionsSpace}>
+            <span className={styles.username}>👤 {username}</span>
+            <Tooltip title={t('Сознательно вызвать ошибку для проверки')}>
+              <Button
+                type="default"
+                danger
+                icon={<BugOutlined />}
+                onClick={() => setShouldCrash(true)}
+              >
+                {t('Вызвать ошибку')}
+              </Button>
+            </Tooltip>
+            <Button
+              type="primary"
+              danger
+              icon={<LogoutOutlined />}
+              onClick={handleLogout}
+            >
+              {t('Выйти')}
+            </Button>
+            <LanguageSelect />
+          </Space>
+        </div>
+      )}
+    </Header>
   )
 }

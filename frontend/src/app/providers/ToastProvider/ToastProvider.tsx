@@ -3,17 +3,20 @@ import { ToastContainer } from 'react-toastify'
 
 import styles from './ToastProvider.module.scss'
 import 'react-toastify/dist/ReactToastify.css'
+import { useResponsive } from '@shared/hooks/useResponsive'
 
 type Props = {
   children: ReactNode
 }
 
 export const ToastProvider = ({ children }: Props) => {
+  const { isMobile } = useResponsive()
+
   return (
     <>
       {children}
       <ToastContainer
-        position="bottom-left"
+        position={isMobile ? 'top-center' : 'bottom-left'}
         autoClose={3000}
         hideProgressBar={false}
         newestOnTop

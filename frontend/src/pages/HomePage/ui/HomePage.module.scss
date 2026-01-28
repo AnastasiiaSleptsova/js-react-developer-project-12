@@ -1,0 +1,36 @@
+.layoutRoot {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainArea {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+}
+
+.sider {
+  overflow: auto;
+  background-color: #fafafa;
+  border-right: 1px solid #f0f0f0;
+}
+
+.content {
+  overflow: hidden;
+  background-color: #fff;
+}
+
+@media (max-width: 767px) {
+  .layoutRoot {
+    height: 100dvh; /* better on mobile browsers */
+  }
+
+  .mainArea {
+    flex-direction: column;
+  }
+
+  .sider {
+    display: none;
+  }
+}

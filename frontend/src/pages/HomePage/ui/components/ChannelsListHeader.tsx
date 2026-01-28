@@ -13,7 +13,7 @@ export const ChannelsListHeader = ({ onAdd }: ChannelsListHeaderProps) => {
 
   return (
     <div className={styles.header}>
-      <div className={styles.title}>{t('📢 Каналы')}</div>
+      <div className={styles.title}>{t('Каналы')}</div>
       <Button type="text" icon={<PlusOutlined />} onClick={onAdd}>
         {t('Добавить')}
       </Button>

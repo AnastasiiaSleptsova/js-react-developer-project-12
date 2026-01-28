@@ -14,7 +14,11 @@ import { RenameChannelModal } from './components/RenameChannelModal'
 
 import styles from './ChannelsList.module.scss'
 
-export const ChannelsList = () => {
+interface ChannelsListProps {
+  onChannelSelected?: () => void
+}
+
+export const ChannelsList = ({ onChannelSelected }: ChannelsListProps) => {
   const { t } = useTranslation()
   const { data: channels = [], isLoading, error } = useChannels()
   const dispatch = useAppDispatch()
@@ -40,7 +44,8 @@ export const ChannelsList = () => {
 
   const handleSelectChannel = useCallback((id: string) => {
     dispatch(setSelectedChannel(id))
-  }, [dispatch])
+    onChannelSelected?.()
+  }, [dispatch, onChannelSelected])
 
   const handleRenameChannel = useCallback((id: string, name: string) => {
     setRenameInfo({ id, name })
