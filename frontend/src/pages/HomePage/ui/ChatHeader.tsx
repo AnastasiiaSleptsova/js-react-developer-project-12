@@ -108,7 +108,7 @@ export const ChatHeader: FC<ChatHeaderProps> = ({ onToggleChannels, isMobile }) 
       {isMobile ? (
         <Dropdown menu={{ items: mobileMenuItems }} trigger={['click']}>
           <Button type="text" icon={<UserOutlined />} className={styles.userButton}>
-            {username}
+            <span className={styles.userButtonText}>{username}</span>
           </Button>
         </Dropdown>
       ) : (

@@ -40,6 +40,24 @@
 .userButton {
   color: #fff;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 60vw;
+  min-width: 120px;
+  justify-content: flex-start;
+
+  :global(.anticon) {
+    flex-shrink: 0;
+  }
+}
+
+.userButtonText {
+  display: inline-block;
+  max-width: 48vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .langToggle {
@@ -66,5 +84,13 @@
 
   .actions {
     display: none;
+  }
+
+  .userButton {
+    max-width: 45vw;
+  }
+
+  .userButtonText {
+    max-width: 28vw;
   }
 }
