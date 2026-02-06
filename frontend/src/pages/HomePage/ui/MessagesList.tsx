@@ -2,12 +2,11 @@ import { Layout, Modal } from 'antd'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useAppSelector } from '@app/store'
-
 import { selectAuthUsername } from '@features/auth'
 import { selectSelectedChannelId, useChannels, useMessages, useRemoveMessage } from '@features/chat'
 
 import type { Message } from '@shared/api'
+import { useAppSelector } from '@shared/hooks/useAppStore'
 
 import { ErrorMessages } from './components/ErrorMessages'
 import { LoadingMessages } from './components/LoadingMessages'

@@ -5,12 +5,11 @@ import { useEffect, useRef } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { useAppSelector } from '@app/store'
-
 import { selectAuthUsername } from '@features/auth'
 import { selectSelectedChannelId, useEditMessage, useSendMessage } from '@features/chat'
 
 import type { Message } from '@shared/api'
+import { useAppSelector } from '@shared/hooks/useAppStore'
 
 import styles from './MessageInput.module.scss'
 

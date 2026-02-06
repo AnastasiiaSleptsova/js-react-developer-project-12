@@ -7,11 +7,10 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
-import { useAppDispatch } from '@app/store'
-
 import { setAuthUser, useAuthSignup } from '@features/auth'
 
 import { routePaths } from '@shared/config/routes'
+import { useAppDispatch } from '@shared/hooks/useAppStore'
 
 import { useHeaderConfig } from '@widgets/chatHeader'
 

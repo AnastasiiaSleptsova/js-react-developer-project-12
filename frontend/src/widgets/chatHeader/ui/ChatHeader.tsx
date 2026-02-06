@@ -5,13 +5,12 @@ import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '@app/store'
-
 import { logout, selectAuthUsername } from '@features/auth'
 import { clearSelectedChannel } from '@features/chat'
 import { LanguageSelect, useLanguage } from '@features/i18n'
 
 import { routePaths } from '@shared/config/routes'
+import { useAppDispatch, useAppSelector } from '@shared/hooks/useAppStore'
 
 import styles from './ChatHeader.module.scss'
 

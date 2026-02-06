@@ -1,12 +1,11 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 
-import { useAppDispatch } from '@app/store'
-
 import { setSelectedChannel } from '@features/chat'
 
 import type { Channel, Message, RemoveChannelResponse } from '@shared/api'
 import { socketService } from '@shared/api'
+import { useAppDispatch } from '@shared/hooks/useAppStore'
 
 /**
  * Единая точка подписки на сокет-события чата.

@@ -2,8 +2,6 @@ import { Alert, List, Skeleton, Modal } from 'antd'
 import { useEffect, useState, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useAppDispatch, useAppSelector } from '@app/store'
-
 import {
   selectSelectedChannelId,
   setSelectedChannel,
@@ -12,6 +10,8 @@ import {
   useEditChannel,
   useRemoveChannel,
 } from '@features/chat'
+
+import { useAppDispatch, useAppSelector } from '@shared/hooks/useAppStore'
 
 import styles from './ChannelsList.module.scss'
 import { AddChannelModal } from './components/AddChannelModal'

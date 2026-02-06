@@ -6,11 +6,10 @@ import type { SubmitHandler, FieldValues } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppDispatch } from '@app/store'
-
 import { useAuthLogin, setAuthUser, setError as setAuthError, clearError } from '@features/auth'
 
 import { routePaths } from '@shared/config/routes'
+import { useAppDispatch } from '@shared/hooks/useAppStore'
 
 import { useHeaderConfig } from '@widgets/chatHeader'
 

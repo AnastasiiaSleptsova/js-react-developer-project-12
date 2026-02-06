@@ -3,6 +3,7 @@ import { createRequire } from 'node:module'
 import { FlatCompat } from '@eslint/eslintrc'
 import js from '@eslint/js'
 import globals from 'globals'
+import eslintConfigPrettier from 'eslint-config-prettier'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
@@ -168,6 +169,7 @@ export default tseslint.config(
           patterns: [
             {
               group: ['@features/*', '@pages/*', '@app/*'],
+              allowTypeImports: true,
               message: 'shared layer cannot import higher layers (features/pages/app)',
             },
           ],
@@ -185,6 +187,7 @@ export default tseslint.config(
           patterns: [
             {
               group: ['@pages/*', '@app/*'],
+              allowTypeImports: true,
               message: 'features layer cannot import higher layers (pages/app)',
             },
           ],
@@ -193,4 +196,5 @@ export default tseslint.config(
       semi: ['error', 'never'],
     },
   },
+  eslintConfigPrettier,
 )
