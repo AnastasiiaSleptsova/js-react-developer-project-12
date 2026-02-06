@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next'
 
 import { useAppSelector } from '@app/store'
 
-import { useEditMessage, useSendMessage } from '@features/chat'
+import { selectAuthUsername } from '@features/auth'
+import { selectSelectedChannelId, useEditMessage, useSendMessage } from '@features/chat'
 
 import type { Message } from '@shared/api'
 
@@ -29,8 +30,8 @@ export const MessageInput = ({ editingMessage, onResetEditing }: MessageInputPro
   })
   const { mutate: sendMessage, isPending: isSendPending } = useSendMessage()
   const { mutate: editMessage, isPending: isEditPending } = useEditMessage()
-  const username = useAppSelector((state) => state.auth.username) // TODO использовать селекторы
-  const selectedChannelId = useAppSelector((state) => state.chat.selectedChannelId)
+  const username = useAppSelector(selectAuthUsername)
+  const selectedChannelId = useAppSelector(selectSelectedChannelId)
   const messageValue = watch('body')
 
   useEffect(() => {

@@ -1,7 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
 
+// eslint-disable-next-line no-restricted-imports -- нужен типизированный хук для побочных эффектов сокетов
+import { useAppDispatch } from '@app/store'
 import { setSelectedChannel } from '@features/chat'
 
 import type { Channel, Message } from '@shared/api'
@@ -13,7 +14,7 @@ import { socketService } from '@shared/api'
  */
 export const useChatSocket = () => {
   const queryClient = useQueryClient()
-  const dispatch = useDispatch() // TODO: использовать useAppDispatch и централизовать очистку/отключение сокета при анмаунте/логауте
+  const dispatch = useAppDispatch()
   const subscribedRef = useRef(false)
 
   useEffect(() => {

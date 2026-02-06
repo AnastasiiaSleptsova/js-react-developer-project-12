@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-type AuthState = {
+export type AuthState = {
   username: string | null
   loading: boolean
   error: string | null

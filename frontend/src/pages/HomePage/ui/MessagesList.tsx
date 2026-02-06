@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next'
 
 import { useAppSelector } from '@app/store'
 
-import { useChannels, useMessages, useRemoveMessage } from '@features/chat'
+import { selectAuthUsername } from '@features/auth'
+import { selectSelectedChannelId, useChannels, useMessages, useRemoveMessage } from '@features/chat'
 
 import type { Message } from '@shared/api'
 
@@ -20,8 +21,8 @@ import styles from './MessagesList.module.scss'
 
 export const MessagesList = () => {
   const { t } = useTranslation()
-  const selectedChannelId = useAppSelector((state) => state.chat.selectedChannelId)
-  const currentUsername = useAppSelector((state) => state.auth.username)
+  const selectedChannelId = useAppSelector(selectSelectedChannelId)
+  const currentUsername = useAppSelector(selectAuthUsername)
   const {
     data: filteredMessages = [],
     isLoading: isMessagesLoading,

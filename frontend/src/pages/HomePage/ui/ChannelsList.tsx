@@ -5,11 +5,12 @@ import { useTranslation } from 'react-i18next'
 import { useAppDispatch, useAppSelector } from '@app/store'
 
 import {
+  selectSelectedChannelId,
+  setSelectedChannel,
   useChannels,
   useCreateChannel,
   useEditChannel,
   useRemoveChannel,
-  setSelectedChannel,
 } from '@features/chat'
 
 import { AddChannelModal } from './components/AddChannelModal'
@@ -27,7 +28,7 @@ export const ChannelsList = ({ onChannelSelected }: ChannelsListProps) => {
   const { t } = useTranslation()
   const { data: channels = [], isLoading, error } = useChannels()
   const dispatch = useAppDispatch()
-  const reduxSelectedChannelId = useAppSelector((state) => state.chat.selectedChannelId) // TODO использовать селектор
+  const selectedChannelIdFromStore = useAppSelector(selectSelectedChannelId)
   const createChannel = useCreateChannel()
   const editChannel = useEditChannel()
   const removeChannel = useRemoveChannel()
@@ -40,12 +41,13 @@ export const ChannelsList = ({ onChannelSelected }: ChannelsListProps) => {
 
   // Выбираем первый канал при загрузке, если ничего не выбрано
   useEffect(() => {
-    if (channels.length > 0 && !reduxSelectedChannelId) {
+    if (channels.length > 0 && !selectedChannelIdFromStore) {
       dispatch(setSelectedChannel(channels[0].id))
     }
-  }, [channels, reduxSelectedChannelId, dispatch])
+  }, [channels, selectedChannelIdFromStore, dispatch])
 
-  const selectedChannelId = reduxSelectedChannelId || (channels.length > 0 ? channels[0].id : null)
+  const selectedChannelId =
+    selectedChannelIdFromStore || (channels.length > 0 ? channels[0].id : null)
 
   const handleSelectChannel = useCallback(
     (id: string) => {

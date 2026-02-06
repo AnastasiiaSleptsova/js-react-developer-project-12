@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 import { setSelectedChannel } from '@features/chat'
 

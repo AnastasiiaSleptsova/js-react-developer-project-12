@@ -3,12 +3,11 @@ import { Layout, Button, Space, Tooltip, Dropdown, Segmented } from 'antd'
 import type { MenuProps } from 'antd'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import type { RootState } from '@app/store'
+import { useAppDispatch, useAppSelector } from '@app/store'
 
-import { logout } from '@features/auth'
+import { logout, selectAuthUsername } from '@features/auth'
 import { clearSelectedChannel } from '@features/chat'
 import { LanguageSelect } from '@features/i18n'
 import { useLanguage } from '@features/i18n/hooks/useLanguage'
@@ -29,9 +28,9 @@ export const ChatHeader = ({
   showUserControls = true,
 }: ChatHeaderProps) => {
   const { t } = useTranslation()
-  const dispatch = useDispatch() // TODO: перевести на useAppDispatch/useSelector
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const username = useSelector((state: RootState) => state.auth.username)
+  const username = useAppSelector(selectAuthUsername)
   const [shouldCrash, setShouldCrash] = useState(false)
   const { language, changeLanguage } = useLanguage()
   const displayUserControls = showUserControls !== false
