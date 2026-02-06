@@ -1,4 +1,6 @@
-import { createContext, useCallback, useContext, useMemo, useState, ReactNode, FC } from 'react'
+import { createContext, useCallback, useContext, useMemo, useState } from 'react'
+
+import type { ReactNode } from 'react'
 
 type HeaderConfig = {
   isMobile?: boolean
@@ -18,28 +20,25 @@ type HeaderConfigContextValue = {
 
 const HeaderConfigContext = createContext<HeaderConfigContextValue | undefined>(undefined)
 
-export const HeaderConfigProvider: FC<{ children: ReactNode }> = ({ children }) => {
+export const HeaderConfigProvider = ({ children }: { children: ReactNode }) => {
   const [headerConfig, setHeaderConfigState] = useState<HeaderConfig>(DEFAULT_HEADER_CONFIG)
 
   const setHeaderConfig = useCallback((config: Partial<HeaderConfig>) => {
     setHeaderConfigState((prev) => ({ ...prev, ...config }))
   }, [])
 
-  const resetHeaderConfig = useCallback(
-    () => setHeaderConfigState(DEFAULT_HEADER_CONFIG),
-    [],
-  )
+  const resetHeaderConfig = useCallback(() => setHeaderConfigState(DEFAULT_HEADER_CONFIG), [])
 
   const value = useMemo(
-    () => ({ headerConfig, setHeaderConfig, resetHeaderConfig }),
+    () => ({
+      headerConfig,
+      setHeaderConfig,
+      resetHeaderConfig,
+    }),
     [headerConfig, resetHeaderConfig, setHeaderConfig],
   )
 
-  return (
-    <HeaderConfigContext.Provider value={value}>
-      {children}
-    </HeaderConfigContext.Provider>
-  )
+  return <HeaderConfigContext.Provider value={value}>{children}</HeaderConfigContext.Provider>
 }
 
 export const useHeaderConfig = (): HeaderConfigContextValue => {

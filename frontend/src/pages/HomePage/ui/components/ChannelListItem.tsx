@@ -1,11 +1,10 @@
-import { memo, useMemo } from 'react'
-import classNames from 'classnames'
-
-import { Button, Dropdown, List } from 'antd'
 import { EllipsisOutlined } from '@ant-design/icons'
+import { Button, Dropdown, List } from 'antd'
+import classNames from 'classnames'
+import { memo, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import styles from '../ChannelsList.module.scss'
-import { useTranslation } from 'react-i18next'
 
 type ChannelListItemProps = {
   id: string
@@ -28,19 +27,22 @@ const ChannelListItemComponent = ({
 }: ChannelListItemProps) => {
   const { t } = useTranslation()
 
-  const menuItems = useMemo(() => ([
-    {
-      key: 'rename',
-      label: t('Переименовать'),
-      onClick: () => onRename(id, name),
-    },
-    {
-      key: 'remove',
-      label: t('Удалить'),
-      disabled: !removable,
-      onClick: () => onRemove(id, name),
-    },
-  ]), [id, name, removable, onRemove, onRename])
+  const menuItems = useMemo(
+    () => [
+      {
+        key: 'rename',
+        label: t('Переименовать'),
+        onClick: () => onRename(id, name),
+      },
+      {
+        key: 'remove',
+        label: t('Удалить'),
+        disabled: !removable,
+        onClick: () => onRemove(id, name),
+      },
+    ],
+    [id, name, onRemove, onRename, removable, t],
+  )
 
   return (
     <List.Item
@@ -63,15 +65,8 @@ const ChannelListItemComponent = ({
       </div>
       <div onClick={(e) => e.stopPropagation()}>
         <span className={styles.srOnly}>{t('Управление каналом')}</span>
-        <Dropdown
-          menu={{ items: menuItems }}
-          trigger={["click"]}
-        >
-          <Button
-            type="text"
-            icon={<EllipsisOutlined />}
-            aria-label={t('Управление каналом')}
-          />
+        <Dropdown menu={{ items: menuItems }} trigger={['click']}>
+          <Button type="text" icon={<EllipsisOutlined />} aria-label={t('Управление каналом')} />
         </Dropdown>
       </div>
     </List.Item>

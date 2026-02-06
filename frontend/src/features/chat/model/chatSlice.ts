@@ -1,6 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-interface ChatState {
+import type { PayloadAction } from '@reduxjs/toolkit'
+
+type ChatState = {
   selectedChannelId: string | null
 }
 

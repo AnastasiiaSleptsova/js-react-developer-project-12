@@ -26,6 +26,7 @@ apiClient.interceptors.response.use(
       localStorage.removeItem('username')
       window.location.href = '/login'
     }
-    return Promise.reject(error)
-  }
+    const reason = error instanceof Error ? error : new Error('Request failed')
+    return Promise.reject(reason)
+  },
 )

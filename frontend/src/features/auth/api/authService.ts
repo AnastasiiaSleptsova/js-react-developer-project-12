@@ -1,6 +1,6 @@
 import { apiClient } from '@shared/api/apiClient'
 
-import { LoginRequest, AuthResponse } from './types'
+import type { LoginRequest, AuthResponse } from './types'
 
 // Сервис для работы с авторизацией
 export class AuthService {

@@ -8,7 +8,7 @@ type AppErrorBoundaryProps = {
   rollbar?: Rollbar | null
 }
 
-interface AppErrorBoundaryState {
+type AppErrorBoundaryState = {
   error: Error | null
 }
 
@@ -26,7 +26,7 @@ export class AppErrorBoundary extends Component<AppErrorBoundaryProps, AppErrorB
       this.props.rollbar.error(error, { info })
     }
     // дублируем в консоль для удобства разработки
-    // eslint-disable-next-line no-console
+
     console.error('Caught by AppErrorBoundary', error, info)
   }
 

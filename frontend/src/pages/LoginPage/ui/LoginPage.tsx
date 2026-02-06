@@ -1,23 +1,29 @@
-import { useForm, Controller, SubmitHandler, FieldValues } from 'react-hook-form'
 import { Input, Button, Alert } from 'antd'
-import { FC, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import type { SubmitHandler, FieldValues } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+
+import { useHeaderConfig } from '@app/providers'
 
 import { AuthService, setAuthUser, setError as setAuthError, clearError } from '@features/auth'
-import { useHeaderConfig } from '@app/providers'
 
 import styles from './LoginPage.module.scss'
 
-interface LoginFormData extends FieldValues {
+type LoginFormData = FieldValues & {
   username: string
   password: string
 }
 
-export const LoginPage: FC = () => {
+export const LoginPage = () => {
   const { t } = useTranslation()
-  const { control, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>({
     defaultValues: {
       username: '',
       password: '',
@@ -64,9 +70,11 @@ export const LoginPage: FC = () => {
     }
   }
 
+  const handleFormSubmit = handleSubmit(onSubmit)
+
   return (
     <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.form} onSubmit={handleFormSubmit}>
         <h2 className={styles.title}>{t('Вход')}</h2>
 
         {errorMessage && (
@@ -94,9 +102,7 @@ export const LoginPage: FC = () => {
             />
           )}
         />
-        {errors.username && (
-          <p className={styles.error}>{errors.username.message?.toString()}</p>
-        )}
+        {errors.username && <p className={styles.error}>{errors.username.message?.toString()}</p>}
 
         <label className={styles.label}>{t('Пароль')}</label>
         <Controller
@@ -112,9 +118,7 @@ export const LoginPage: FC = () => {
             />
           )}
         />
-        {errors.password && (
-          <p className={styles.error}>{errors.password.message?.toString()}</p>
-        )}
+        {errors.password && <p className={styles.error}>{errors.password.message?.toString()}</p>}
 
         <Button
           type="primary"
@@ -129,7 +133,12 @@ export const LoginPage: FC = () => {
 
         <div className={styles.footer}>
           <span>{t('Нет аккаунта?')}</span>
-          <Button type="link" onClick={() => navigate('/signup')}>
+          <Button
+            type="link"
+            onClick={() => {
+              navigate('/signup')
+            }}
+          >
             {t('Зарегистрироваться')}
           </Button>
         </div>

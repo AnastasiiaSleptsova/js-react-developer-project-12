@@ -1,4 +1,3 @@
-import { FC } from 'react'
 import classNames from 'classnames'
 
 import styles from './SelectedChannelInfo.module.scss'
@@ -9,11 +8,11 @@ type SelectedChannelInfoProps = {
   className?: string
 }
 
-export const SelectedChannelInfo: FC<SelectedChannelInfoProps> = ({
+export const SelectedChannelInfo = ({
   channelName,
   messageCount,
   className,
-}) => {
+}: SelectedChannelInfoProps) => {
   const displayName = channelName || '—'
 
   return (

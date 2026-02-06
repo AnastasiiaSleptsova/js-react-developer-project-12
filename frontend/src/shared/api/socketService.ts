@@ -1,4 +1,5 @@
-import { io, Socket } from 'socket.io-client'
+import { io } from 'socket.io-client'
+import type { Socket } from 'socket.io-client'
 
 // Инстанс сокета
 let socket: Socket | null = null
@@ -29,11 +30,11 @@ export const socketService = {
       })
 
       socket.on('connect', () => {
-        console.log('Socket connected:', socket?.id)
+        console.info('Socket connected:', socket?.id)
       })
 
       socket.on('disconnect', () => {
-        console.log('Socket disconnected')
+        console.info('Socket disconnected')
       })
 
       socket.on('error', (error) => {

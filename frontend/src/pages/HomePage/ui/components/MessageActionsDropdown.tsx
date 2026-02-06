@@ -1,6 +1,9 @@
-import { FC, ReactNode, useMemo, useState } from 'react'
-import { Dropdown, ButtonProps, MenuProps } from 'antd'
+import { Dropdown } from 'antd'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import type { ButtonProps, MenuProps } from 'antd'
+import type { ReactNode } from 'react'
 
 type MessageActionsDropdownProps = {
   onEdit: () => void
@@ -8,11 +11,11 @@ type MessageActionsDropdownProps = {
   renderTrigger: (args: { open: boolean; buttonProps?: Partial<ButtonProps> }) => ReactNode
 }
 
-export const MessageActionsDropdown: FC<MessageActionsDropdownProps> = ({
+export const MessageActionsDropdown = ({
   onEdit,
   onRemove,
   renderTrigger,
-}) => {
+}: MessageActionsDropdownProps) => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
 

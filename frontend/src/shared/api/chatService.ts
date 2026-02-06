@@ -1,13 +1,14 @@
 import { apiClient } from './apiClient'
-import { Channel, Message } from './types'
 
-export interface CreateMessagePayload {
+import type { Channel, Message } from './types'
+
+export type CreateMessagePayload = {
   body: string
   channelId: string
   username: string
 }
 
-export interface EditMessagePayload {
+export type EditMessagePayload = {
   body: string
 }
 

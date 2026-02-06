@@ -1,17 +1,20 @@
 import { Layout, Modal } from 'antd'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Message } from '@shared/api'
 import { useTranslation } from 'react-i18next'
 
-import { useChannels, useMessages, useRemoveMessage } from '@features/chat'
 import { useAppSelector } from '@app/store'
-import { MessageInput } from './MessageInput'
-import { useMessagesScroll } from './hooks/useMessagesScroll'
-import { useMessageNotification } from './hooks/useMessageNotification'
-import { MessagesContainer } from './components/MessagesContainer'
-import { LoadingMessages } from './components/LoadingMessages'
+
+import { useChannels, useMessages, useRemoveMessage } from '@features/chat'
+
+import type { Message } from '@shared/api'
+
 import { ErrorMessages } from './components/ErrorMessages'
+import { LoadingMessages } from './components/LoadingMessages'
+import { MessagesContainer } from './components/MessagesContainer'
 import { SelectedChannelInfo } from './components/SelectedChannelInfo'
+import { useMessageNotification } from './hooks/useMessageNotification'
+import { useMessagesScroll } from './hooks/useMessagesScroll'
+import { MessageInput } from './MessageInput'
 
 import styles from './MessagesList.module.scss'
 
@@ -19,7 +22,11 @@ export const MessagesList = () => {
   const { t } = useTranslation()
   const selectedChannelId = useAppSelector((state) => state.chat.selectedChannelId)
   const currentUsername = useAppSelector((state) => state.auth.username)
-  const { data: filteredMessages = [], isLoading: isMessagesLoading, error } = useMessages(selectedChannelId)
+  const {
+    data: filteredMessages = [],
+    isLoading: isMessagesLoading,
+    error,
+  } = useMessages(selectedChannelId)
   const { data: channels = [], isLoading: isChannelsLoading } = useChannels()
   const removeMessage = useRemoveMessage()
   const [editingMessage, setEditingMessage] = useState<Message | null>(null)

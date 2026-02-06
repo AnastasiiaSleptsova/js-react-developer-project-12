@@ -1,69 +1,69 @@
- .container {
+.container {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 60vh;
   padding: 24px;
   background: #f7f9fc;
- }
+}
 
- .form {
+.form {
   width: 100%;
   max-width: 420px;
   background: #ffffff;
   padding: 24px;
   border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
- }
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
 
- .title {
+.title {
   margin: 0 0 16px 0;
   font-size: 20px;
   text-align: center;
- }
+}
 
- .label {
+.label {
   display: block;
   margin: 12px 0 6px;
   font-size: 14px;
   color: #333;
- }
+}
 
- .error {
+.error {
   color: #ff4d4f;
   margin: 6px 0 0;
   font-size: 13px;
- }
+}
 
- .button {
+.button {
   margin-top: 18px;
- }
+}
 
- .footer {
+.footer {
   text-align: center;
- margin-top: 20px;
- font-size: 14px;
- color: #666;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
 
   button {
     padding: 0;
     margin-left: 4px;
   }
- }
+}
 
 @media (max-width: 767px) {
- .container {
-  min-height: 100dvh;
-  padding: 16px;
- }
+  .container {
+    min-height: 100dvh;
+    padding: 16px;
+  }
 
- .form {
- padding: 20px;
- }
+  .form {
+    padding: 20px;
+  }
 
- .form :global(.ant-input),
- .form :global(.ant-input-password),
- .form :global(.ant-input-affix-wrapper > input) {
-  font-size: 16px;
- }
+  .form :global(.ant-input),
+  .form :global(.ant-input-password),
+  .form :global(.ant-input-affix-wrapper > input) {
+    font-size: 16px;
+  }
 }

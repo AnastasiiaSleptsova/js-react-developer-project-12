@@ -1,20 +1,21 @@
-import { FC } from 'react'
-import { Button } from 'antd'
 import { EllipsisOutlined } from '@ant-design/icons'
-import { Message } from '@shared/api'
+import { Button } from 'antd'
 import { useTranslation } from 'react-i18next'
+
+import type { Message } from '@shared/api'
+
 import { MessageActionsDropdown } from './MessageActionsDropdown'
 
 import styles from '../MessagesList.module.scss'
 
-interface MessageItemProps {
+type MessageItemProps = {
   message: Message
   isCurrentUser: boolean
   onEdit: (message: Message) => void
   onRemove: (message: Message) => void
 }
 
-export const MessageItem: FC<MessageItemProps> = ({ message, isCurrentUser, onEdit, onRemove }) => {
+export const MessageItem = ({ message, isCurrentUser, onEdit, onRemove }: MessageItemProps) => {
   const { t } = useTranslation()
 
   return (

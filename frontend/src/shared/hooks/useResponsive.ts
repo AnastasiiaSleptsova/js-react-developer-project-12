@@ -20,7 +20,11 @@ export const useResponsive = (): ResponsiveState => {
 
   const getInitialState = (): ResponsiveState => {
     if (typeof window === 'undefined') {
-      return { isMobile: false, isTablet: false, isDesktop: true }
+      return {
+        isMobile: false,
+        isTablet: false,
+        isDesktop: true,
+      }
     }
     return computeState(window.innerWidth)
   }

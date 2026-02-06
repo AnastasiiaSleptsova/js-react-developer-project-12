@@ -1,14 +1,15 @@
-import { FC } from 'react'
 import { Layout } from 'antd'
 import { Outlet } from 'react-router-dom'
 
 import { ChatHeader } from '@pages/HomePage/ui/ChatHeader'
+
 import { useResponsive } from '@shared/hooks/useResponsive'
-import { useHeaderConfig } from '@app/providers/HeaderConfigProvider'
+
+import { useHeaderConfig } from '../../providers/HeaderConfigProvider'
 
 import styles from './AppLayout.module.scss'
 
-export const AppLayout: FC = () => {
+export const AppLayout = () => {
   const { isMobile } = useResponsive()
   const { headerConfig } = useHeaderConfig()
 

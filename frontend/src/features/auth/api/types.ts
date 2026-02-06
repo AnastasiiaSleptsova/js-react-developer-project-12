@@ -1,15 +1,15 @@
 // Типы для API авторизации
-export interface LoginRequest {
+export type LoginRequest = {
   username: string
   password: string
 }
 
-export interface AuthResponse {
+export type AuthResponse = {
   token: string
   username: string
 }
 
-export interface AuthError {
+export type AuthError = {
   message: string
   status?: number
 }

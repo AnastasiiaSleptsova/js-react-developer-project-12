@@ -1,5 +1,5 @@
-import { Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
+import { Button } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 import styles from '../ChannelsList.module.scss'

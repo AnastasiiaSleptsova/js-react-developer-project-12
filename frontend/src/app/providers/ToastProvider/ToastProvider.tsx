@@ -1,15 +1,17 @@
-import { ReactNode } from 'react'
 import { ToastContainer } from 'react-toastify'
+import type { ReactNode } from 'react'
 
-import styles from './ToastProvider.module.scss'
-import 'react-toastify/dist/ReactToastify.css'
 import { useResponsive } from '@shared/hooks/useResponsive'
 
-type Props = {
+import styles from './ToastProvider.module.scss'
+
+import 'react-toastify/dist/ReactToastify.css'
+
+type ToastProviderProps = {
   children: ReactNode
 }
 
-export const ToastProvider = ({ children }: Props) => {
+export const ToastProvider = ({ children }: ToastProviderProps) => {
   const { isMobile } = useResponsive()
 
   return (

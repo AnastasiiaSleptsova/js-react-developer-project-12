@@ -1,15 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { ChatService, Channel } from '@shared/api'
 import { useTranslation } from 'react-i18next'
-import { showError, showSuccess } from '@shared/lib/toast'
+
+import type { Channel } from '@shared/api'
+import { ChatService } from '@shared/api'
 import { isNetworkError } from '@shared/lib/networkError'
+import { showError, showSuccess } from '@shared/lib/toast'
 
 export const useEditChannel = () => {
   const queryClient = useQueryClient()
   const { t } = useTranslation()
 
   return useMutation({
-    mutationFn: ({ id, newName }: { id: string; newName: string }) => ChatService.editChannel(id, { name: newName }),
+    mutationFn: ({ id, newName }: { id: string; newName: string }) =>
+      ChatService.editChannel(id, { name: newName }),
     networkMode: 'always',
     retry: false,
     onSuccess: (data: Channel) => {

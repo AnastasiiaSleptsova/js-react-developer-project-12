@@ -1,10 +1,11 @@
-import { FC, useEffect } from 'react'
 import { Result, Button } from 'antd'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+
 import { useHeaderConfig } from '@app/providers'
 
-export const NotFoundPage: FC = () => {
+export const NotFoundPage = () => {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { resetHeaderConfig } = useHeaderConfig()
@@ -14,7 +15,14 @@ export const NotFoundPage: FC = () => {
   }, [resetHeaderConfig])
 
   return (
-    <div style={{ minHeight: 'calc(100vh - 64px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div
+      style={{
+        minHeight: 'calc(100vh - 64px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }} // TODO перенести из стилей
+    >
       <Result
         status="404"
         title="404"
@@ -23,7 +31,9 @@ export const NotFoundPage: FC = () => {
           <Button
             type="primary"
             size="large"
-            onClick={() => navigate('/')}
+            onClick={() => {
+              navigate('/')
+            }}
           >
             {t('Вернуться на главную')}
           </Button>

@@ -1,12 +1,12 @@
-import { useRef, useEffect } from "react"
-import { notification } from "antd"
+import { notification } from 'antd'
+import { useRef, useEffect } from 'react'
 
-import { Message } from "@shared/api"
+import type { Message } from '@shared/api'
 
-interface UseMessageNotificationProps {
-  filteredMessages: Message[];
-  currentUsername: string | null;
-  selectedChannelId: string | null;
+type UseMessageNotificationProps = {
+  filteredMessages: Message[]
+  currentUsername: string | null
+  selectedChannelId: string | null
 }
 
 export const useMessageNotification = ({
@@ -17,7 +17,7 @@ export const useMessageNotification = ({
   const previousMessagesLengthRef = useRef(new Map<string | null, number>())
 
   useEffect(() => {
-    const previousLength = previousMessagesLengthRef.current.get(selectedChannelId);
+    const previousLength = previousMessagesLengthRef.current.get(selectedChannelId)
 
     // Показываем нотификацию только если:
     // 1. Этот чат уже был загружен ранее (previousLength !== undefined)
@@ -31,8 +31,7 @@ export const useMessageNotification = ({
         notification.info({
           message: `Новое сообщение от ${newMessage.username}`,
           description:
-            newMessage.body.substring(0, 50) +
-            (newMessage.body.length > 50 ? '...' : ''),
+            newMessage.body.substring(0, 50) + (newMessage.body.length > 50 ? '...' : ''),
           placement: 'topRight',
           duration: 3,
         })
@@ -41,4 +40,4 @@ export const useMessageNotification = ({
 
     previousMessagesLengthRef.current.set(selectedChannelId, filteredMessages.length)
   }, [filteredMessages, currentUsername, selectedChannelId])
-};
+}

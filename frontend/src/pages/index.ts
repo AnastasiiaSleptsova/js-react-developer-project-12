@@ -3,3 +3,4 @@ export { SignupPage } from './SignupPage'
 export { HomePage } from './HomePage'
 export { NotFoundPage } from './NotFoundPage'
 
+// TODO убрать этот индексный файл

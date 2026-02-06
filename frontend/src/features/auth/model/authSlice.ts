@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
 
-interface AuthState {
+type AuthState = {
   username: string | null
   loading: boolean
   error: string | null
@@ -44,6 +45,6 @@ export const authSlice = createSlice({
   },
 })
 
-export const { setLoading, setAuthUser, setUsername, setError, clearError, logout } = authSlice.actions
+export const { setLoading, setAuthUser, setUsername, setError, clearError, logout } =
+  authSlice.actions
 export default authSlice.reducer
-

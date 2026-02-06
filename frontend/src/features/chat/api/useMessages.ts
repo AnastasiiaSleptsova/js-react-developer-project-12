@@ -1,6 +1,8 @@
-import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { ChatService, Message } from '@shared/api'
+import { useMemo } from 'react'
+
+import type { Message } from '@shared/api'
+import { ChatService } from '@shared/api'
 
 export const useMessages = (channelId: string | null) => {
   // Храним полный список сообщений под единым ключом

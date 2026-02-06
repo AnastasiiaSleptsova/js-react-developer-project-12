@@ -1,14 +1,17 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { ChatService, Channel, Message } from '@shared/api'
-import { setSelectedChannel } from '@features/chat'
-import { useAppDispatch } from '@app/store'
 import { useTranslation } from 'react-i18next'
-import { showError, showSuccess } from '@shared/lib/toast'
+import { useDispatch } from 'react-redux'
+
+import { setSelectedChannel } from '@features/chat'
+
+import type { Channel, Message } from '@shared/api'
+import { ChatService } from '@shared/api'
 import { isNetworkError } from '@shared/lib/networkError'
+import { showError, showSuccess } from '@shared/lib/toast'
 
 export const useRemoveChannel = () => {
   const queryClient = useQueryClient()
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
   const { t } = useTranslation()
 
   return useMutation({

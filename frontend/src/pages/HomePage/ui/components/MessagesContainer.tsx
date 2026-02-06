@@ -1,12 +1,14 @@
-import { FC, RefObject } from 'react'
 import { Empty } from 'antd'
 import { useTranslation } from 'react-i18next'
+import type { RefObject } from 'react'
+
+import type { Message } from '@shared/api'
+
 import { MessageItem } from './MessageItem'
-import { Message } from '@shared/api'
 
 import styles from '../MessagesList.module.scss'
 
-interface MessagesContainerProps {
+type MessagesContainerProps = {
   filteredMessages: Message[]
   currentUsername: string | null
   messagesEndRef: RefObject<HTMLDivElement | null>
@@ -14,13 +16,13 @@ interface MessagesContainerProps {
   onRemoveMessage: (message: Message) => void
 }
 
-export const MessagesContainer: FC<MessagesContainerProps> = ({
+export const MessagesContainer = ({
   filteredMessages,
   currentUsername,
   messagesEndRef,
   onEditMessage,
   onRemoveMessage,
-}) => {
+}: MessagesContainerProps) => {
   const { t } = useTranslation()
 
   if (filteredMessages.length === 0) {

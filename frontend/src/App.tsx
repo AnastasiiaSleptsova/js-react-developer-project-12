@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { FC } from 'react'
 
 import { HomePage, LoginPage, SignupPage, NotFoundPage } from '@pages'
-import { ProtectedRoute, HeaderConfigProvider } from '@app/providers'
+
 import { AppLayout } from '@app/layouts'
+import { ProtectedRoute, HeaderConfigProvider } from '@app/providers'
 
 import 'antd/dist/reset.css'
 
-const App: FC = () => {
+const App = () => {
   return (
     <BrowserRouter>
       <HeaderConfigProvider>
@@ -15,13 +15,13 @@ const App: FC = () => {
           <Route element={<AppLayout />}>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
-            <Route 
-              path="/" 
+            <Route
+              path="/"
               element={
                 <ProtectedRoute>
                   <HomePage />
                 </ProtectedRoute>
-              } 
+              }
             />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
@@ -32,4 +32,3 @@ const App: FC = () => {
 }
 
 export default App
-

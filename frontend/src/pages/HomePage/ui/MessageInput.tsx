@@ -1,17 +1,20 @@
+import { EditOutlined, SendOutlined } from '@ant-design/icons'
+import { Button, Input } from 'antd'
 import { useEffect, useRef } from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import { Button, Input } from 'antd'
-import { EditOutlined, SendOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
-import { useEditMessage, useSendMessage } from '@features/chat'
-import { useAppSelector } from '@app/store'
-import { Message } from '@shared/api'
 
-interface MessageFormData {
+import { useAppSelector } from '@app/store'
+
+import { useEditMessage, useSendMessage } from '@features/chat'
+
+import type { Message } from '@shared/api'
+
+type MessageFormData = {
   body: string
 }
 
-interface MessageInputProps {
+type MessageInputProps = {
   editingMessage: Message | null
   onResetEditing: () => void
 }
@@ -82,7 +85,6 @@ export const MessageInput = ({ editingMessage, onResetEditing }: MessageInputPro
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // Enter без Shift отправляет сообщение
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSubmit(onSubmit)()
@@ -96,7 +98,12 @@ export const MessageInput = ({ editingMessage, onResetEditing }: MessageInputPro
   const isSubmitting = isSendPending || isEditPending
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} style={{ padding: '16px', borderTop: '1px solid #f0f0f0' }}>
+    <form
+      onSubmit={(event) => {
+        handleSubmit(onSubmit)(event)
+      }}
+      style={{ padding: '16px', borderTop: '1px solid #f0f0f0' }} // TODO вынести стили
+    >
       <div style={{ marginBottom: '8px' }}>
         <Controller
           name="body"

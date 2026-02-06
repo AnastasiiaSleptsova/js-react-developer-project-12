@@ -1,14 +1,18 @@
-import { FC, useState, useCallback, useEffect } from 'react'
 import { Layout, Drawer } from 'antd'
+import { useState, useCallback, useEffect } from 'react'
+
+import { useHeaderConfig } from '@app/providers'
+
+import { useChatSocket } from '@features/chat/hooks/useChatSocket'
+
+import { useResponsive } from '@shared/hooks/useResponsive'
+
 import { ChannelsList } from './ChannelsList'
 import { MessagesList } from './MessagesList'
-import { useChatSocket } from '@features/chat/hooks/useChatSocket'
-import { useResponsive } from '@shared/hooks/useResponsive'
-import { useHeaderConfig } from '@app/providers'
 
 import styles from './HomePage.module.scss'
 
-export const HomePage: FC = () => {
+export const HomePage = () => {
   useChatSocket()
   const { isMobile } = useResponsive()
   const { setHeaderConfig, resetHeaderConfig } = useHeaderConfig()

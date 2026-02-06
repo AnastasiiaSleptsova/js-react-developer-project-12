@@ -1,20 +1,25 @@
+import { Alert, List, Skeleton, Modal } from 'antd'
 import { useEffect, useState, useMemo, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, List, Skeleton, Modal } from 'antd'
 
 import { useAppDispatch, useAppSelector } from '@app/store'
-import { setSelectedChannel } from '@features/chat'
-import { useChannels, useCreateChannel, useEditChannel, useRemoveChannel } from '@features/chat'
 
+import {
+  useChannels,
+  useCreateChannel,
+  useEditChannel,
+  useRemoveChannel,
+  setSelectedChannel,
+} from '@features/chat'
 
 import { AddChannelModal } from './components/AddChannelModal'
-import { ChannelsListHeader } from './components/ChannelsListHeader'
 import { ChannelListItem } from './components/ChannelListItem'
+import { ChannelsListHeader } from './components/ChannelsListHeader'
 import { RenameChannelModal } from './components/RenameChannelModal'
 
 import styles from './ChannelsList.module.scss'
 
-interface ChannelsListProps {
+type ChannelsListProps = {
   onChannelSelected?: () => void
 }
 
@@ -29,10 +34,10 @@ export const ChannelsList = ({ onChannelSelected }: ChannelsListProps) => {
 
   const [isAddOpen, setAddOpen] = useState(false)
   const [renameInfo, setRenameInfo] = useState<{ id: string; name: string } | null>(null)
-  
+
   // Мемоизируем existingNames для избежания лишних пересчетов
   const existingNames = useMemo(() => channels.map((c) => String(c.name)), [channels])
-  
+
   // Выбираем первый канал при загрузке, если ничего не выбрано
   useEffect(() => {
     if (channels.length > 0 && !reduxSelectedChannelId) {
@@ -42,28 +47,36 @@ export const ChannelsList = ({ onChannelSelected }: ChannelsListProps) => {
 
   const selectedChannelId = reduxSelectedChannelId || (channels.length > 0 ? channels[0].id : null)
 
-  const handleSelectChannel = useCallback((id: string) => {
-    dispatch(setSelectedChannel(id))
-    onChannelSelected?.()
-  }, [dispatch, onChannelSelected])
+  const handleSelectChannel = useCallback(
+    (id: string) => {
+      dispatch(setSelectedChannel(id))
+      onChannelSelected?.()
+    },
+    [dispatch, onChannelSelected],
+  )
 
   const handleRenameChannel = useCallback((id: string, name: string) => {
     setRenameInfo({ id, name })
   }, [])
 
-  const handleRemoveChannel = useCallback((channelId: string, channelName: string) => {
-    Modal.confirm({
-      title: t('Подтвердите удаление'),
-      content: t('Удалить канал "{{channelName}}"? Все сообщения канала будут удалены.', { channelName }),
-      okText: t('Удалить'),
-      cancelText: t('Отмена'),
-      okButtonProps: { danger: true },
-      centered: true,
-      onOk: async () => {
-        await removeChannel.mutateAsync(String(channelId))
-      },
-    })
-  }, [removeChannel])
+  const handleRemoveChannel = useCallback(
+    (channelId: string, channelName: string) => {
+      Modal.confirm({
+        title: t('Подтвердите удаление'),
+        content: t('Удалить канал "{{channelName}}"? Все сообщения канала будут удалены.', {
+          channelName,
+        }),
+        okText: t('Удалить'),
+        cancelText: t('Отмена'),
+        okButtonProps: { danger: true },
+        centered: true,
+        onOk: async () => {
+          await removeChannel.mutateAsync(String(channelId))
+        },
+      })
+    },
+    [removeChannel, t],
+  )
 
   if (isLoading) {
     return (

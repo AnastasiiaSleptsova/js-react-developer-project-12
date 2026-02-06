@@ -1,29 +1,33 @@
-import { FC, useMemo, useState } from 'react'
-import { Layout, Button, Space, Tooltip, Dropdown, MenuProps, Segmented } from 'antd'
 import { LogoutOutlined, BugOutlined, MenuOutlined, UserOutlined } from '@ant-design/icons'
+import { Layout, Button, Space, Tooltip, Dropdown, Segmented } from 'antd'
+import type { MenuProps } from 'antd'
+import { useCallback, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { RootState } from '@app/store'
+
+import type { RootState } from '@app/store'
+
 import { logout } from '@features/auth'
 import { clearSelectedChannel } from '@features/chat'
 import { LanguageSelect } from '@features/i18n'
 import { useLanguage } from '@features/i18n/hooks/useLanguage'
+
 import styles from './ChatHeader.module.scss'
 
 const { Header } = Layout
 
-interface ChatHeaderProps {
+type ChatHeaderProps = {
   onToggleChannels?: () => void
   isMobile?: boolean
   showUserControls?: boolean
 }
 
-export const ChatHeader: FC<ChatHeaderProps> = ({
+export const ChatHeader = ({
   onToggleChannels,
   isMobile = false,
   showUserControls = true,
-}) => {
+}: ChatHeaderProps) => {
   const { t } = useTranslation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -31,13 +35,13 @@ export const ChatHeader: FC<ChatHeaderProps> = ({
   const [shouldCrash, setShouldCrash] = useState(false)
   const { language, changeLanguage } = useLanguage()
   const displayUserControls = showUserControls !== false
-  const handleToggleChannels = onToggleChannels ?? (() => {})
+  const handleToggleChannels = onToggleChannels ?? (() => undefined)
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     dispatch(logout())
     dispatch(clearSelectedChannel())
     navigate('/login')
-  }
+  }, [dispatch, navigate])
 
   if (shouldCrash) {
     throw new Error(t('Тестовая ошибка: {{time}}', { time: new Date().toISOString() }))
@@ -140,12 +144,7 @@ export const ChatHeader: FC<ChatHeaderProps> = ({
                     {t('Вызвать ошибку')}
                   </Button>
                 </Tooltip>
-                <Button
-                  type="primary"
-                  danger
-                  icon={<LogoutOutlined />}
-                  onClick={handleLogout}
-                >
+                <Button type="primary" danger icon={<LogoutOutlined />} onClick={handleLogout}>
                   {t('Выйти')}
                 </Button>
               </>

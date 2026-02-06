@@ -1,8 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { ChatService, Message } from '@shared/api'
 import { useTranslation } from 'react-i18next'
-import { showError, showSuccess } from '@shared/lib/toast'
+
+import type { Message } from '@shared/api'
+import { ChatService } from '@shared/api'
 import { isNetworkError } from '@shared/lib/networkError'
+import { showError, showSuccess } from '@shared/lib/toast'
 
 export const useRemoveMessage = () => {
   const queryClient = useQueryClient()

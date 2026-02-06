@@ -1,23 +1,42 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Button, Input, Alert } from 'antd'
 import { useState, useMemo, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { useNavigate } from 'react-router-dom'
-import { Button, Input, Alert } from 'antd'
-import { AuthService } from '@features/auth/api/authService'
-import { useAppDispatch } from '@app/store'
-import { setUsername } from '@features/auth'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import { z } from 'zod'
+
 import { useHeaderConfig } from '@app/providers'
+import { useAppDispatch } from '@app/store'
+
+import { setUsername } from '@features/auth'
+import { AuthService } from '@features/auth/api/authService'
 
 import styles from './SignupPage.module.scss'
 
 const buildSignupSchema = (t: (key: string, options?: Record<string, unknown>) => string) =>
   z
     .object({
-      username: z.string().min(3, { message: t('От {{minSymbols}} до {{maxSymbols}} символов', { minSymbols: 3, maxSymbols: 20 }) }).max(20, { message: t('От {{minSymbols}} до {{maxSymbols}} символов', { minSymbols: 3, maxSymbols: 20 })}),
-      password: z.string().min(6, { message: t('Не менее {{minSymbols}} символов', { minSymbols: 6 }) }),
-      confirmPassword: z.string().min(6, { message: t('Не менее {{minSymbols}} символов', { minSymbols: 6 }) }),
+      username: z
+        .string()
+        .min(3, {
+          message: t('От {{minSymbols}} до {{maxSymbols}} символов', {
+            minSymbols: 3,
+            maxSymbols: 20,
+          }),
+        })
+        .max(20, {
+          message: t('От {{minSymbols}} до {{maxSymbols}} символов', {
+            minSymbols: 3,
+            maxSymbols: 20,
+          }),
+        }),
+      password: z
+        .string()
+        .min(6, { message: t('Не менее {{minSymbols}} символов', { minSymbols: 6 }) }),
+      confirmPassword: z
+        .string()
+        .min(6, { message: t('Не менее {{minSymbols}} символов', { minSymbols: 6 }) }),
     })
     .refine((data) => data.password === data.confirmPassword, {
       message: t('Пароли должны совпадать'),
@@ -85,12 +104,14 @@ export const SignupPage = () => {
   }
 
   const handleLoginClick = () => {
-    navigate('/login')
+    navigate('/login') // TODO вынести названия роутов в константы
   }
+
+  const handleFormSubmit = handleSubmit(onSubmit)
 
   return (
     <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.form} onSubmit={handleFormSubmit}>
         <h2 className={styles.title}>{t('Регистрация')}</h2>
 
         {serverError && (
@@ -111,15 +132,16 @@ export const SignupPage = () => {
           render={({ field }) => (
             <Input
               {...field}
-              placeholder={t('От {{minSymbols}} до {{maxSymbols}} символов', { minSymbols: 3, maxSymbols: 20 })}
+              placeholder={t('От {{minSymbols}} до {{maxSymbols}} символов', {
+                minSymbols: 3,
+                maxSymbols: 20,
+              })}
               disabled={isLoading}
               status={errors.username ? 'error' : ''}
             />
           )}
         />
-        {errors.username && (
-          <p className={styles.error}>{errors.username.message?.toString()}</p>
-        )}
+        {errors.username && <p className={styles.error}>{errors.username.message?.toString()}</p>}
 
         <label className={styles.label}>{t('Пароль')}</label>
         <Controller
@@ -134,9 +156,7 @@ export const SignupPage = () => {
             />
           )}
         />
-        {errors.password && (
-          <p className={styles.error}>{errors.password.message?.toString()}</p>
-        )}
+        {errors.password && <p className={styles.error}>{errors.password.message?.toString()}</p>}
 
         <label className={styles.label}>{t('Подтвердите пароль')}</label>
         <Controller

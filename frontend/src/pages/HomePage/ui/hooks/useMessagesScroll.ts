@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 
-interface UseMessagesScrollProps {
+type UseMessagesScrollProps = {
   filteredMessages: any[]
   selectedChannelId: string | null
 }

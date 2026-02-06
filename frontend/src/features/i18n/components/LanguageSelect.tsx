@@ -1,8 +1,10 @@
 import { DownOutlined } from '@ant-design/icons'
-import { Button, Dropdown, MenuProps, Space } from 'antd'
+import { Button, Dropdown, Space } from 'antd'
+import type { MenuProps } from 'antd'
 import { useMemo } from 'react'
 
 import { useLanguage } from '../hooks/useLanguage'
+
 import styles from './LanguageSelect.module.scss'
 
 const FLAGS: Record<'ru' | 'en', string> = {
@@ -49,11 +51,7 @@ export const LanguageSelect = () => {
 
   return (
     <Dropdown menu={{ items }} trigger={['click']} overlayClassName={styles.dropdown}>
-      <Button
-        type="default"
-        size="middle"
-        className={styles.trigger}
-      >
+      <Button type="default" size="middle" className={styles.trigger}>
         {currentLabel}
       </Button>
     </Dropdown>

@@ -1,21 +1,26 @@
-import React, { useEffect, useMemo, useRef } from 'react'
-import { Modal, Input, Button } from 'antd'
-import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Modal, Input, Button } from 'antd'
 import type { InputRef } from 'antd'
+import { useEffect, useMemo, useRef } from 'react'
+import { useForm, Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import styles from './AddChannelModal.module.scss'
 import { buildChannelNameSchema } from './channelNameSchema'
 
-type Props = {
+type AddChannelModalProps = {
   open: boolean
   onClose: () => void
   onSubmit: (name: string) => Promise<void>
   existingNames: string[]
 }
 
-export const AddChannelModal: React.FC<Props> = ({ open, onClose, onSubmit, existingNames }) => {
+export const AddChannelModal = ({
+  open,
+  onClose,
+  onSubmit,
+  existingNames,
+}: AddChannelModalProps) => {
   const { t } = useTranslation()
   const inputRef = useRef<InputRef>(null)
 
@@ -30,6 +35,9 @@ export const AddChannelModal: React.FC<Props> = ({ open, onClose, onSubmit, exis
   } = useForm<{ name: string }>({
     resolver,
     defaultValues: { name: '' },
+  })
+  const handleFormSubmit = handleSubmit(async (values) => {
+    await onSubmit(values.name)
   })
 
   useEffect(() => {
@@ -54,26 +62,18 @@ export const AddChannelModal: React.FC<Props> = ({ open, onClose, onSubmit, exis
     >
       <form
         className={styles.form}
-        onSubmit={handleSubmit(async (values) => {
-          await onSubmit(values.name)
-        })}
+        onSubmit={(event) => {
+          handleFormSubmit(event)
+        }}
       >
         <Controller
           name="name"
           control={control}
-          render={({ field }) => (
-            <Input
-              placeholder={t('Имя канала')}
-              {...field}
-              ref={inputRef}
-            />
-          )}
+          render={({ field }) => <Input placeholder={t('Имя канала')} {...field} ref={inputRef} />}
         />
         {errors.name && <div className={styles.error}>{errors.name.message}</div>}
         <div className={styles.footer}>
-          <Button onClick={onClose}>
-            {t('Отмена')}
-          </Button>
+          <Button onClick={onClose}>{t('Отмена')}</Button>
           <Button htmlType="submit" type="primary" loading={isSubmitting}>
             {t('Создать')}
           </Button>

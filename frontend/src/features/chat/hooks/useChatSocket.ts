@@ -1,9 +1,11 @@
-import { useEffect, useRef } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { useEffect, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 
-import { socketService, Channel, Message } from '@shared/api'
-import { useAppDispatch } from '@app/store'
 import { setSelectedChannel } from '@features/chat'
+
+import type { Channel, Message } from '@shared/api'
+import { socketService } from '@shared/api'
 
 /**
  * Единая точка подписки на сокет-события чата.
@@ -11,7 +13,7 @@ import { setSelectedChannel } from '@features/chat'
  */
 export const useChatSocket = () => {
   const queryClient = useQueryClient()
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
   const subscribedRef = useRef(false)
 
   useEffect(() => {

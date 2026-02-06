@@ -14,21 +14,12 @@ export const ErrorBoundaryFallback = ({ error, resetError }: ErrorBoundaryFallba
   const errorMessage = error?.message
 
   const actions: ReactNode[] = [
-    (
-      <Button key="retry" type="default" size="large" onClick={resetError}>
-        {t('Попробовать ещё раз')}
-      </Button>
-    ),
-    (
-      <Button
-        key="reload"
-        size="large"
-        type="primary"
-        onClick={() => window.location.reload()}
-      >
-        {t('Обновить страницу')}
-      </Button>
-    ),
+    <Button key="retry" type="default" size="large" onClick={resetError}>
+      {t('Попробовать ещё раз')}
+    </Button>,
+    <Button key="reload" size="large" type="primary" onClick={() => window.location.reload()}>
+      {t('Обновить страницу')}
+    </Button>,
   ]
 
   return (

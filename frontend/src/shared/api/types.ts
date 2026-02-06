@@ -1,21 +1,21 @@
 // Типы для работы с каналами и сообщениями
-export interface Channel {
+export type Channel = {
   id: string
   name: string
   removable: boolean
 }
 
-export interface Message {
+export type Message = {
   id: string
   body: string
   channelId: string
   username: string
 }
 
-export interface GetChannelsResponse {
+export type GetChannelsResponse = {
   channels: Channel[]
 }
 
-export interface GetMessagesResponse {
+export type GetMessagesResponse = {
   messages: Message[]
 }

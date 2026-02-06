@@ -1,12 +1,14 @@
 import { Provider as RollbarReactProvider, useRollbar } from '@rollbar/react'
-import type { Configuration } from 'rollbar'
 import type { ReactNode } from 'react'
+import type { Configuration } from 'rollbar'
 
 import { AppErrorBoundary } from '@shared/ui/ErrorBoundary'
 
 const rollbarAccessToken = (import.meta.env.VITE_ROLLBAR_ACCESS_TOKEN ?? '').trim()
 const rollbarEnvironment = (
-  import.meta.env.VITE_ROLLBAR_ENVIRONMENT ?? import.meta.env.MODE ?? 'development'
+  import.meta.env.VITE_ROLLBAR_ENVIRONMENT ??
+  import.meta.env.MODE ??
+  'development'
 ).trim()
 const rollbarConfig: Configuration | null = rollbarAccessToken
   ? {
