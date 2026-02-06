@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
 import { useAppDispatch } from '@app/store'
 import { setSelectedChannel } from '@features/chat'
 
-import type { Channel, Message } from '@shared/api'
+import type { Channel, Message, RemoveChannelResponse } from '@shared/api'
 import { socketService } from '@shared/api'
 
 /**
@@ -30,7 +30,7 @@ export const useChatSocket = () => {
       })
     }
 
-    const handleRemoveChannel = (payload: { id: string }) => {
+    const handleRemoveChannel = (payload: RemoveChannelResponse) => {
       const removedId = String(payload.id)
       queryClient.setQueryData(['channels'], (oldChannels: Channel[] | undefined) => {
         if (!oldChannels) return []

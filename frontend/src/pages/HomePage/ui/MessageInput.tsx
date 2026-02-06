@@ -1,5 +1,6 @@
 import { EditOutlined, SendOutlined } from '@ant-design/icons'
 import { Button, Input } from 'antd'
+import type { TextAreaRef } from 'antd/es/input/TextArea'
 import { useEffect, useRef } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -24,7 +25,7 @@ type MessageInputProps = {
 
 export const MessageInput = ({ editingMessage, onResetEditing }: MessageInputProps) => {
   const { t } = useTranslation()
-  const inputRef = useRef<any>(null)
+  const inputRef = useRef<TextAreaRef | null>(null)
   const { control, handleSubmit, reset, watch, setValue } = useForm<MessageFormData>({
     defaultValues: { body: '' },
   })
@@ -37,9 +38,10 @@ export const MessageInput = ({ editingMessage, onResetEditing }: MessageInputPro
   useEffect(() => {
     if (editingMessage) {
       setValue('body', editingMessage.body, { shouldDirty: true })
-      if (inputRef.current?.resizableTextArea?.textArea) {
+      const textArea = inputRef.current?.resizableTextArea?.textArea
+      if (textArea) {
         setTimeout(() => {
-          inputRef.current.resizableTextArea.textArea.focus()
+          textArea.focus()
         }, 0)
       }
     }
@@ -56,9 +58,10 @@ export const MessageInput = ({ editingMessage, onResetEditing }: MessageInputPro
           onSuccess: () => {
             reset()
             onResetEditing()
-            if (inputRef.current?.resizableTextArea?.textArea) {
+            const textArea = inputRef.current?.resizableTextArea?.textArea
+            if (textArea) {
               setTimeout(() => {
-                inputRef.current.resizableTextArea.textArea.focus()
+                textArea.focus()
               }, 0)
             }
           },
@@ -77,9 +80,10 @@ export const MessageInput = ({ editingMessage, onResetEditing }: MessageInputPro
         onSuccess: () => {
           reset()
           // Возвращаем фокус на инпут после отправки
-          if (inputRef.current?.resizableTextArea?.textArea) {
+          const textArea = inputRef.current?.resizableTextArea?.textArea
+          if (textArea) {
             setTimeout(() => {
-              inputRef.current.resizableTextArea.textArea.focus()
+              textArea.focus()
             }, 0)
           }
         },

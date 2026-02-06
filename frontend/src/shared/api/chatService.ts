@@ -1,6 +1,12 @@
 import { apiClient } from './apiClient'
 
-import type { Channel, Message } from './types'
+import type {
+  Channel,
+  CreateChannelRequest,
+  EditChannelRequest,
+  Message,
+  RemoveChannelResponse,
+} from './types'
 
 export type CreateMessagePayload = {
   body: string
@@ -45,21 +51,20 @@ export class ChatService {
   }
 
   // Создать канал
-  static async createChannel(payload: { name: string }) {
-    const response = await apiClient.post('/v1/channels', payload)
+  static async createChannel(payload: CreateChannelRequest): Promise<Channel> {
+    const response = await apiClient.post<Channel>('/v1/channels', payload)
     return response.data
   }
 
   // Переименовать канал
-  static async editChannel(id: string, payload: { name: string }) {
-    const response = await apiClient.patch(`/v1/channels/${id}`, payload)
+  static async editChannel(id: string, payload: EditChannelRequest): Promise<Channel> {
+    const response = await apiClient.patch<Channel>(`/v1/channels/${id}`, payload)
     return response.data
   }
 
   // Удалить канал
-  static async removeChannel(id: string) {
-    const response = await apiClient.delete(`/v1/channels/${id}`)
+  static async removeChannel(id: string): Promise<RemoveChannelResponse> {
+    const response = await apiClient.delete<RemoveChannelResponse>(`/v1/channels/${id}`)
     return response.data
   }
 }
-// TODO: добавить типы DTO для create/edit/remove channel вместо implicit any и унифицировать схемы ответа

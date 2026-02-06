@@ -1,7 +1,9 @@
-import { useRef, useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+
+import type { Message } from '@shared/api'
 
 type UseMessagesScrollProps = {
-  filteredMessages: any[] // TODO: заменить any на тип Message и не хранить лишний ререндерный стейт
+  filteredMessages: Message[]
   selectedChannelId: string | null
 }
 
@@ -12,6 +14,7 @@ export const useMessagesScroll = ({
   const messagesEndRef = useRef<HTMLDivElement | null>(null)
   const previousMessagesLengthRef = useRef(0)
   const previousChannelRef = useRef<string | null>(null)
+  const messagesLength = filteredMessages.length
 
   useEffect(() => {
     // Скролл при переключении между чатами
@@ -22,14 +25,14 @@ export const useMessagesScroll = ({
       previousChannelRef.current = selectedChannelId
     }
     // Скролл при получении новых сообщений
-    else if (filteredMessages.length > previousMessagesLengthRef.current) {
+    else if (messagesLength > previousMessagesLengthRef.current) {
       setTimeout(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
       }, 0)
     }
 
-    previousMessagesLengthRef.current = filteredMessages.length
-  }, [filteredMessages, selectedChannelId])
+    previousMessagesLengthRef.current = messagesLength
+  }, [messagesLength, selectedChannelId])
 
   return messagesEndRef
 }

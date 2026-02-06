@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { setSelectedChannel } from '@features/chat'
 
-import type { Channel, Message } from '@shared/api'
+import type { Channel, Message, RemoveChannelResponse } from '@shared/api'
 import { ChatService } from '@shared/api'
 import { isNetworkError } from '@shared/lib/networkError'
 import { showError, showSuccess } from '@shared/lib/toast'
@@ -18,7 +18,7 @@ export const useRemoveChannel = () => {
     mutationFn: (id: string) => ChatService.removeChannel(id),
     networkMode: 'always',
     retry: false,
-    onSuccess: (data: { id: string }) => {
+    onSuccess: (data: RemoveChannelResponse) => {
       const removedId = String(data.id)
       queryClient.setQueryData(['channels'], (old: Channel[] | undefined) => {
         if (!old) return []

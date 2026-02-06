@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Input, Alert } from 'antd'
+import { Alert, Button, Input } from 'antd'
+import { isAxiosError } from 'axios'
 import { useState, useMemo, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -92,11 +93,15 @@ export const SignupPage = () => {
 
       dispatch(setAuthUser({ token: response.token, username: response.username }))
       navigate('/')
-    } catch (error: any) {
-      if (error.response?.status === 409) {
+    } catch (error: unknown) {
+      if (isAxiosError(error) && error.response?.status === 409) {
         setServerError(t('Это имя пользователя уже занято'))
       } else {
-        setServerError(t('Ошибка регистрации. Попробуйте позже'))
+        const fallbackMessage =
+          (isAxiosError(error) && error.message) ||
+          (error instanceof Error ? error.message : t('Ошибка регистрации. Попробуйте позже'))
+
+        setServerError(fallbackMessage)
       }
     } finally {
       setIsLoading(false)

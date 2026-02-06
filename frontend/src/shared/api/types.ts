@@ -12,6 +12,18 @@ export type Message = {
   username: string
 }
 
+export type CreateChannelRequest = {
+  name: string
+}
+
+export type EditChannelRequest = {
+  name: string
+}
+
+export type RemoveChannelResponse = {
+  id: string
+}
+
 export type GetChannelsResponse = {
   channels: Channel[]
 }

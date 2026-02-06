@@ -1,4 +1,5 @@
-import { Input, Button, Alert } from 'antd'
+import { Alert, Button, Input } from 'antd'
+import { isAxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import type { SubmitHandler, FieldValues } from 'react-hook-form'
@@ -52,14 +53,14 @@ export const LoginPage = () => {
 
       dispatch(setAuthUser({ token: response.token, username: response.username }))
       navigate('/')
-    } catch (error: any) {
+    } catch (error: unknown) {
       let message = t('Не удалось выполнить вход. Попробуйте еще раз.')
 
-      if (error.response?.status === 401) {
+      if (isAxiosError(error) && error.response?.status === 401) {
         message = t('Неверные имя пользователя или пароль')
-      } else if (error.response?.data?.message) {
-        message = error.response.data.message
-      } else if (error.message) {
+      } else if (isAxiosError(error) && error.response?.data?.message) {
+        message = String(error.response.data.message)
+      } else if (error instanceof Error && error.message) {
         message = error.message
       }
 

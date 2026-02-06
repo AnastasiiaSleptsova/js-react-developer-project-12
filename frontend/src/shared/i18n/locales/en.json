@@ -52,7 +52,7 @@
   "Вернуться на главную": "Return to homepage",
   "Войти": "Log in",
   "Неверные имя пользователя или пароль": "Invalid username or password",
-  "Канал создан": "Channel created",
+  "Канал создан": "Channel {{channelName}} created",
   "Канал переименован": "Channel renamed",
   "Канал удалён": "Channel deleted",
   "Ошибка создания канала": "Channel creation failed",

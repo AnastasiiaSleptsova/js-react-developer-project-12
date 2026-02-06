@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { setSelectedChannel } from '@features/chat'
 
-import type { Channel } from '@shared/api'
+import type { Channel, CreateChannelRequest } from '@shared/api'
 import { ChatService } from '@shared/api'
 import { isNetworkError } from '@shared/lib/networkError'
 import { showError, showSuccess } from '@shared/lib/toast'
@@ -14,8 +14,8 @@ export const useCreateChannel = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
-  return useMutation({
-    mutationFn: ({ name }: { name: string }) => ChatService.createChannel({ name }),
+  return useMutation<Channel, Error, CreateChannelRequest>({
+    mutationFn: ({ name }) => ChatService.createChannel({ name }),
     networkMode: 'always',
     retry: false,
     onMutate: async () => {
@@ -25,7 +25,8 @@ export const useCreateChannel = () => {
       // Переключаемся в созданный канал
       // Добавление канала в кеш произойдёт через socket событие newChannel
       if (data?.id) dispatch(setSelectedChannel(String(data.id)))
-      showSuccess(t('Канал создан'))
+      const channelName = data?.name ?? ''
+      showSuccess(t('Канал создан', { channelName }))
     },
     onError: (error) => {
       if (isNetworkError(error)) {

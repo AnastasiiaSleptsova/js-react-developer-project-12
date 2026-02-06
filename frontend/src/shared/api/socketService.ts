@@ -1,5 +1,6 @@
 import { io } from 'socket.io-client'
 import type { Socket } from 'socket.io-client'
+import type { Channel, Message, RemoveChannelResponse } from './types'
 
 // Инстанс сокета
 let socket: Socket | null = null
@@ -62,39 +63,39 @@ export const socketService = {
   },
 
   // Подписаться на событие новое сообщение
-  onNewMessage: (callback: (message: any) => void) => {
+  onNewMessage: (callback: (message: Message) => void) => {
     socketService.getSocket().on('newMessage', callback)
   },
 
   // Подписаться на событие новый канал
-  onNewChannel: (callback: (channel: any) => void) => {
+  onNewChannel: (callback: (channel: Channel) => void) => {
     socketService.getSocket().on('newChannel', callback)
   },
 
   // Подписаться на событие удаления канала
-  onRemoveChannel: (callback: (payload: any) => void) => {
+  onRemoveChannel: (callback: (payload: RemoveChannelResponse) => void) => {
     socketService.getSocket().on('removeChannel', callback)
   },
 
   // Подписаться на событие переименования канала
-  onRenameChannel: (callback: (channel: any) => void) => {
+  onRenameChannel: (callback: (channel: Channel) => void) => {
     socketService.getSocket().on('renameChannel', callback)
   },
 
   // Отписаться от события
-  offNewMessage: (callback: (message: any) => void) => {
+  offNewMessage: (callback: (message: Message) => void) => {
     socketService.getSocket().off('newMessage', callback)
   },
 
-  offNewChannel: (callback: (channel: any) => void) => {
+  offNewChannel: (callback: (channel: Channel) => void) => {
     socketService.getSocket().off('newChannel', callback)
   },
 
-  offRemoveChannel: (callback: (payload: any) => void) => {
+  offRemoveChannel: (callback: (payload: RemoveChannelResponse) => void) => {
     socketService.getSocket().off('removeChannel', callback)
   },
 
-  offRenameChannel: (callback: (channel: any) => void) => {
+  offRenameChannel: (callback: (channel: Channel) => void) => {
     socketService.getSocket().off('renameChannel', callback)
   },
 }
