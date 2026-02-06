@@ -24,6 +24,7 @@ export const MessagesList = () => {
   const {
     data: filteredMessages = [],
     isLoading: isMessagesLoading,
+    isFetched: isMessagesFetched,
     error,
   } = useMessages(selectedChannelId)
   const { data: channels = [], isLoading: isChannelsLoading } = useChannels()
@@ -45,6 +46,7 @@ export const MessagesList = () => {
     filteredMessages,
     currentUsername,
     selectedChannelId,
+    isMessagesFetched,
   })
 
   useEffect(() => {

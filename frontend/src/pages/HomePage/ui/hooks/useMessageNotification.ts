@@ -7,16 +7,20 @@ type UseMessageNotificationProps = {
   filteredMessages: Message[]
   currentUsername: string | null
   selectedChannelId: string | null
+  isMessagesFetched: boolean
 }
 
 export const useMessageNotification = ({
   filteredMessages,
   currentUsername,
   selectedChannelId,
+  isMessagesFetched,
 }: UseMessageNotificationProps) => {
   const previousMessagesLengthRef = useRef(new Map<string | null, number>())
 
   useEffect(() => {
+    if (!isMessagesFetched || !selectedChannelId) return
+
     const previousLength = previousMessagesLengthRef.current.get(selectedChannelId)
 
     // Показываем нотификацию только если:
@@ -39,5 +43,5 @@ export const useMessageNotification = ({
     }
 
     previousMessagesLengthRef.current.set(selectedChannelId, filteredMessages.length)
-  }, [filteredMessages, currentUsername, selectedChannelId])
+  }, [filteredMessages, currentUsername, isMessagesFetched, selectedChannelId])
 }

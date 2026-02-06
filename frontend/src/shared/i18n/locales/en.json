@@ -2,7 +2,7 @@
   "Hexlet Chat": "Hexlet Chat",
   "Выйти": "Log out",
   "Каналы": "Channels",
-  "+": "+",
+  "+": "Add",
   "Переименовать": "Rename",
   "Удалить": "Delete",
   "Подтвердите удаление": "Confirm removal",
@@ -68,5 +68,6 @@
   "Вызвать ошибку": "Trigger error",
   "Сознательно вызвать ошибку для проверки": "Intentionally trigger an error for testing",
   "Тестовая ошибка: {{time}}": "Test error: {{time}}",
-  "Управление каналом": "Channel management"
+  "Управление каналом": "Channel management",
+  "Подготавливаем интерфейс...": "Preparing the interface..."
 }
