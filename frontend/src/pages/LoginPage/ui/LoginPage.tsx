@@ -84,7 +84,7 @@ export const LoginPage = () => {
             showIcon
             closable
             onClose={() => setErrorMessage(null)}
-            style={{ marginBottom: '16px' }}
+            className={styles.alert}
           />
         )}
 

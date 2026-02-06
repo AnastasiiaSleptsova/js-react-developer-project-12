@@ -121,7 +121,7 @@ export const SignupPage = () => {
             showIcon
             closable
             onClose={() => setServerError('')}
-            style={{ marginBottom: '16px' }}
+            className={styles.alert}
           />
         )}
 

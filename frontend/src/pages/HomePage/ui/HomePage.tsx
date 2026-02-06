@@ -48,8 +48,7 @@ export const HomePage = () => {
         onClose={closeDrawer}
         open={isMobile && isDrawerOpen}
         destroyOnClose
-        bodyStyle={{ padding: 0 }}
-        headerStyle={{ display: 'none' }}
+        rootClassName={styles.drawer}
       >
         <ChannelsList onChannelSelected={closeDrawer} />
       </Drawer>

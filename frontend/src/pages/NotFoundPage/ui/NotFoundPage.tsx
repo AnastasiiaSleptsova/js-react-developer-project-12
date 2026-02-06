@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 
 import { useHeaderConfig } from '@widgets/chatHeader'
 
+import styles from './NotFoundPage.module.scss'
+
 export const NotFoundPage = () => {
   const navigate = useNavigate()
   const { t } = useTranslation()
@@ -15,14 +17,7 @@ export const NotFoundPage = () => {
   }, [resetHeaderConfig])
 
   return (
-    <div
-      style={{
-        minHeight: 'calc(100vh - 64px)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }} // TODO перенести из стилей
-    >
+    <div className={styles.container}>
       <Result
         status="404"
         title="404"

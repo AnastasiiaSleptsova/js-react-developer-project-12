@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import { EllipsisOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { useTranslation } from 'react-i18next'
@@ -20,9 +21,10 @@ export const MessageItem = ({ message, isCurrentUser, onEdit, onRemove }: Messag
 
   return (
     <div
-      className={`${styles.messageItem} ${
-        isCurrentUser ? styles.isCurrentUser : styles.isOtherUser
-      }`}
+      className={classNames(styles.messageItem, {
+        [styles.isCurrentUser]: isCurrentUser,
+        [styles.isOtherUser]: !isCurrentUser,
+      })}
     >
       <div className={styles.messageBubble}>
         <span className={styles.username}>{message.username}</span>

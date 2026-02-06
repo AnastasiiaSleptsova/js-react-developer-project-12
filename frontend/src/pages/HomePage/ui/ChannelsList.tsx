@@ -80,7 +80,7 @@ export const ChannelsList = ({ onChannelSelected }: ChannelsListProps) => {
 
   if (isLoading) {
     return (
-      <div style={{ padding: '16px' }}>
+      <div className={styles.skeletonWrapper}>
         <Skeleton active paragraph={{ rows: 10 }} />
       </div>
     )

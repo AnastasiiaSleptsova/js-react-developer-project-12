@@ -117,6 +117,62 @@
   margin-top: auto;
 }
 
+.loadingTitleSkeleton {
+  width: 180px;
+}
+
+.loadingActionSkeleton {
+  width: 90px;
+}
+
+.skeletonBubbleBlock {
+  width: 100%;
+}
+
+.width64 {
+  width: 64%;
+}
+
+.width60 {
+  width: 60%;
+}
+
+.width56 {
+  width: 56%;
+}
+
+.width52 {
+  width: 52%;
+}
+
+.width48 {
+  width: 48%;
+}
+
+.width44 {
+  width: 44%;
+}
+
+.width58 {
+  width: 58%;
+}
+
+.heightTall :global(.ant-skeleton-input) {
+  height: 74px;
+}
+
+.heightRegular :global(.ant-skeleton-input) {
+  height: 54px;
+}
+
+.heightMedium :global(.ant-skeleton-input) {
+  height: 62px;
+}
+
+.loadingInputSkeleton :global(.ant-skeleton-input) {
+  height: 48px;
+}
+
 .contentLayout {
   height: 100%;
   display: flex;

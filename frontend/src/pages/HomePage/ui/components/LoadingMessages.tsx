@@ -1,53 +1,51 @@
+import classNames from 'classnames'
 import { Skeleton } from 'antd'
-import { useMemo } from 'react'
 
 import styles from '../MessagesList.module.scss'
 
-const SKELETON_MESSAGES_COUNT = 6
+const skeletonMessages = [
+  { side: 'left' as const, widthClass: 'width64', heightClass: 'heightTall' },
+  { side: 'right' as const, widthClass: 'width60', heightClass: 'heightRegular' },
+  { side: 'left' as const, widthClass: 'width56', heightClass: 'heightRegular' },
+  { side: 'right' as const, widthClass: 'width52', heightClass: 'heightTall' },
+  { side: 'left' as const, widthClass: 'width48', heightClass: 'heightRegular' },
+  { side: 'right' as const, widthClass: 'width44', heightClass: 'heightRegular' },
+  { side: 'right' as const, widthClass: 'width58', heightClass: 'heightMedium' },
+]
 
 export const LoadingMessages = () => {
-  const skeletonMessages = useMemo(() => {
-    const base = Array.from({ length: SKELETON_MESSAGES_COUNT }, (_, index) => ({
-      side: index % 2 === 0 ? 'left' : 'right',
-      width: `${64 - index * 4}%`,
-      height: index % 3 === 0 ? 74 : 54,
-    }))
-
-    // Добавляем дополнительный пузырь справа, чтобы подчеркнуть сообщения текущего пользователя
-    return [
-      ...base,
-      {
-        side: 'right' as const,
-        width: '58%',
-        height: 62,
-      },
-    ]
-  }, [])
-
   return (
     <div className={styles.loadingPlaceholder}>
       <div className={styles.loadingHeader}>
-        <Skeleton.Input active size="small" style={{ width: 180 }} />
-        <Skeleton.Button active size="small" style={{ width: 90 }} />
+        <Skeleton.Input active size="small" className={styles.loadingTitleSkeleton} />
+        <Skeleton.Button active size="small" className={styles.loadingActionSkeleton} />
       </div>
 
       <div className={styles.loadingMessages}>
         {skeletonMessages.map((item, idx) => (
           <div
             key={idx}
-            className={`${styles.skeletonMessage} ${
-              item.side === 'right' ? styles.skeletonMessageRight : ''
-            }`}
+            className={classNames(styles.skeletonMessage, {
+              [styles.skeletonMessageRight]: item.side === 'right',
+            })}
           >
             {item.side === 'left' && <Skeleton.Avatar active size="small" shape="circle" />}
-            <Skeleton.Input active block style={{ width: item.width, height: item.height }} />
+            <Skeleton.Input
+              active
+              block
+              className={classNames(
+                styles.skeletonBubbleBlock,
+                styles[item.widthClass],
+                styles[item.heightClass],
+              )}
+            />
             {item.side === 'right' && <Skeleton.Avatar active size="small" shape="circle" />}
           </div>
         ))}
       </div>
 
       <div className={styles.loadingInput}>
-        <Skeleton.Input active block style={{ height: 48 }} />
+        <Skeleton.Input active block className={styles.loadingInputSkeleton} />
       </div>
     </div>
   )

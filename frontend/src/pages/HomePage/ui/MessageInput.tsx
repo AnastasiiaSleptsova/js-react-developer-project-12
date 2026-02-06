@@ -10,6 +10,8 @@ import { useEditMessage, useSendMessage } from '@features/chat'
 
 import type { Message } from '@shared/api'
 
+import styles from './MessageInput.module.scss'
+
 type MessageFormData = {
   body: string
 }
@@ -102,9 +104,9 @@ export const MessageInput = ({ editingMessage, onResetEditing }: MessageInputPro
       onSubmit={(event) => {
         handleSubmit(onSubmit)(event)
       }}
-      style={{ padding: '16px', borderTop: '1px solid #f0f0f0' }} // TODO вынести стили
+      className={styles.form}
     >
-      <div style={{ marginBottom: '8px' }}>
+      <div className={styles.inputWrapper}>
         <Controller
           name="body"
           control={control}
@@ -115,7 +117,7 @@ export const MessageInput = ({ editingMessage, onResetEditing }: MessageInputPro
               rows={3}
               disabled={isSubmitting}
               onKeyDown={handleKeyDown}
-              style={{ resize: 'none' }}
+              className={styles.textArea}
               ref={inputRef}
             />
           )}
