@@ -7,4 +7,4 @@ export {
   clearError,
   logout,
 } from './authSlice'
-export type { default as authReducer } from './authSlice'
+export type { default as authReducer } from './authSlice' // TODO: экспортировать реальный редьюсер (сейчас уходит type вместо value)

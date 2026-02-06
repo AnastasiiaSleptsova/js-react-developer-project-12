@@ -3,12 +3,11 @@ import { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import type { SubmitHandler, FieldValues } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { useHeaderConfig } from '@app/providers'
-
-import { AuthService, setAuthUser, setError as setAuthError, clearError } from '@features/auth'
+import { useAppDispatch } from '@app/store'
+import { useAuthLogin, setAuthUser, setError as setAuthError, clearError } from '@features/auth'
+import { useHeaderConfig } from '@widgets/chatHeader'
 
 import styles from './LoginPage.module.scss'
 
@@ -32,7 +31,8 @@ export const LoginPage = () => {
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
+  const { mutateAsync: login } = useAuthLogin()
   const { resetHeaderConfig } = useHeaderConfig()
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export const LoginPage = () => {
       setErrorMessage(null)
       dispatch(clearError())
 
-      const response = await AuthService.login({
+      const response = await login({
         username: data.username,
         password: data.password,
       })

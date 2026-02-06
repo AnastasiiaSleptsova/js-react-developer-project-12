@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react'
 
 type UseMessagesScrollProps = {
-  filteredMessages: any[]
+  filteredMessages: any[] // TODO: заменить any на тип Message и не хранить лишний ререндерный стейт
   selectedChannelId: string | null
 }
 

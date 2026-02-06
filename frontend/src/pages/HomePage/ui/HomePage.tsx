@@ -1,11 +1,11 @@
 import { Layout, Drawer } from 'antd'
 import { useState, useCallback, useEffect } from 'react'
 
-import { useHeaderConfig } from '@app/providers'
-
 import { useChatSocket } from '@features/chat/hooks/useChatSocket'
 
 import { useResponsive } from '@shared/hooks/useResponsive'
+
+import { useHeaderConfig } from '@widgets/chatHeader'
 
 import { ChannelsList } from './ChannelsList'
 import { MessagesList } from './MessagesList'

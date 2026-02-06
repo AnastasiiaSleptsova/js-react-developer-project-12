@@ -13,7 +13,7 @@ import { socketService } from '@shared/api'
  */
 export const useChatSocket = () => {
   const queryClient = useQueryClient()
-  const dispatch = useDispatch()
+  const dispatch = useDispatch() // TODO: использовать useAppDispatch и централизовать очистку/отключение сокета при анмаунте/логауте
   const subscribedRef = useRef(false)
 
   useEffect(() => {

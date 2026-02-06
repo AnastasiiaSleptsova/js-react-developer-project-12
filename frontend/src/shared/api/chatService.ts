@@ -62,3 +62,4 @@ export class ChatService {
     return response.data
   }
 }
+// TODO: добавить типы DTO для create/edit/remove channel вместо implicit any и унифицировать схемы ответа

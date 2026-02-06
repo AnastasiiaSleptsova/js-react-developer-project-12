@@ -29,7 +29,7 @@ export const ChatHeader = ({
   showUserControls = true,
 }: ChatHeaderProps) => {
   const { t } = useTranslation()
-  const dispatch = useDispatch()
+  const dispatch = useDispatch() // TODO: перевести на useAppDispatch/useSelector
   const navigate = useNavigate()
   const username = useSelector((state: RootState) => state.auth.username)
   const [shouldCrash, setShouldCrash] = useState(false)

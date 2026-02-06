@@ -23,7 +23,7 @@ export const MessageInput = ({ editingMessage, onResetEditing }: MessageInputPro
   const { t } = useTranslation()
   const inputRef = useRef<any>(null)
   const { control, handleSubmit, reset, watch, setValue } = useForm<MessageFormData>({
-    defaultValues: { body: '' }, // TODO добавить сохранение черновиков в localStorage и восстановление при монтировании
+    defaultValues: { body: '' },
   })
   const { mutate: sendMessage, isPending: isSendPending } = useSendMessage()
   const { mutate: editMessage, isPending: isEditPending } = useEditMessage()

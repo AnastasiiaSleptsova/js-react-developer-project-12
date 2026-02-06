@@ -1,11 +1,8 @@
 import { Layout } from 'antd'
 import { Outlet } from 'react-router-dom'
 
-import { ChatHeader } from '@pages/HomePage/ui/ChatHeader'
-
 import { useResponsive } from '@shared/hooks/useResponsive'
-
-import { useHeaderConfig } from '../../providers/HeaderConfigProvider'
+import { ChatHeader, useHeaderConfig } from '@widgets/chatHeader'
 
 import styles from './AppLayout.module.scss'
 

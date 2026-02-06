@@ -124,6 +124,7 @@ export default tseslint.config(
             { pattern: '@pages/**', group: 'internal', position: 'after' },
             { pattern: '@features/**', group: 'internal', position: 'after' },
             { pattern: '@shared/**', group: 'internal', position: 'after' },
+            { pattern: '@widgets/**', group: 'internal', position: 'after' },
             { pattern: '**/*.{scss,sass,css}', group: 'index', position: 'after' },
           ],
           pathGroupsExcludedImportTypes: ['builtin'],

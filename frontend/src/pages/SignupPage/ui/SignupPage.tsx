@@ -6,11 +6,11 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 
-import { useHeaderConfig } from '@app/providers'
 import { useAppDispatch } from '@app/store'
 
-import { setUsername } from '@features/auth'
-import { AuthService } from '@features/auth/api/authService'
+import { setAuthUser } from '@features/auth'
+import { useAuthSignup } from '@features/auth'
+import { useHeaderConfig } from '@widgets/chatHeader'
 
 import styles from './SignupPage.module.scss'
 
@@ -55,6 +55,7 @@ export const SignupPage = () => {
   const { t } = useTranslation()
   const [serverError, setServerError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
+  const { mutateAsync: signUp } = useAuthSignup()
   const { resetHeaderConfig } = useHeaderConfig()
 
   const schema = useMemo(() => buildSignupSchema(t), [t])
@@ -84,13 +85,12 @@ export const SignupPage = () => {
     setIsLoading(true)
 
     try {
-      const response = await AuthService.signup({
+      const response = await signUp({
         username: data.username,
         password: data.password,
       })
 
-      localStorage.setItem('token', response.token)
-      dispatch(setUsername(response.username))
+      dispatch(setAuthUser({ token: response.token, username: response.username }))
       navigate('/')
     } catch (error: any) {
       if (error.response?.status === 409) {
