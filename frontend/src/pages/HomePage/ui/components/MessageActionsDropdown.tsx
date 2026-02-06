@@ -1,9 +1,8 @@
 import { Dropdown } from 'antd'
-import { useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-
 import type { ButtonProps, MenuProps } from 'antd'
+import { useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 
 type MessageActionsDropdownProps = {
   onEdit: () => void

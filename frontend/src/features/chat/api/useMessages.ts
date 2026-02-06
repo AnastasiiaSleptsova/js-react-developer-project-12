@@ -6,7 +6,6 @@ import { ChatService } from '@shared/api'
 
 export const useMessages = (channelId: string | null) => {
   // Храним полный список сообщений под единым ключом
-  // TODO: разделить queryKey по channelId вместо единого кеша и вынести ключи в константы
   const baseQuery = useQuery<Message[], Error>({
     queryKey: ['messages', 'all'],
     queryFn: () => ChatService.getMessages(),

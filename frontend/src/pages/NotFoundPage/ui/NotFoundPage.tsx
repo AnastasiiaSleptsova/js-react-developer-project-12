@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
+import { routePaths } from '@shared/config/routes'
+
 import { useHeaderConfig } from '@widgets/chatHeader'
 
 import styles from './NotFoundPage.module.scss'
@@ -27,7 +29,7 @@ export const NotFoundPage = () => {
             type="primary"
             size="large"
             onClick={() => {
-              navigate('/')
+              void navigate(routePaths.home)
             }}
           >
             {t('Вернуться на главную')}

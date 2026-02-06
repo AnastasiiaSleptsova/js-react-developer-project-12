@@ -8,9 +8,8 @@ import { useResponsive } from '@shared/hooks/useResponsive'
 import { useHeaderConfig } from '@widgets/chatHeader'
 
 import { ChannelsList } from './ChannelsList'
-import { MessagesList } from './MessagesList'
-
 import styles from './HomePage.module.scss'
+import { MessagesList } from './MessagesList'
 
 export const HomePage = () => {
   useChatSocket()

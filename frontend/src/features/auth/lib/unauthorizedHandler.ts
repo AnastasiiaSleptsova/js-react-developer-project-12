@@ -1,6 +1,5 @@
 import { setUnauthorizedHandler } from '@shared/api/apiClient'
-
-const LOGIN_PATH = '/login'
+import { routePaths } from '@shared/config/routes'
 
 const clearAuthStorage = () => {
   localStorage.removeItem('token')
@@ -10,9 +9,9 @@ const clearAuthStorage = () => {
 export const initAuthUnauthorizedHandler = () => {
   setUnauthorizedHandler((error) => {
     const status = (error as { response?: { status?: number } })?.response?.status
-    if (status === 401 && window.location.pathname !== LOGIN_PATH) {
+    if (status === 401 && window.location.pathname !== routePaths.login) {
       clearAuthStorage()
-      window.location.href = LOGIN_PATH
+      window.location.href = routePaths.login
     }
   })
 }

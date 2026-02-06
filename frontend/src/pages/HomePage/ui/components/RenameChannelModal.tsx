@@ -6,7 +6,6 @@ import { useForm, Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import { buildChannelNameSchema } from './channelNameSchema'
-
 import styles from './RenameChannelModal.module.scss'
 
 type RenameChannelModalProps = {
@@ -71,7 +70,7 @@ export const RenameChannelModal = ({
       <form
         className={styles.form}
         onSubmit={(event) => {
-          handleFormSubmit(event)
+          void handleFormSubmit(event)
         }}
       >
         <Controller

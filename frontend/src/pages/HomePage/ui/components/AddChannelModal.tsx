@@ -63,7 +63,7 @@ export const AddChannelModal = ({
       <form
         className={styles.form}
         onSubmit={(event) => {
-          handleFormSubmit(event)
+          void handleFormSubmit(event)
         }}
       >
         <Controller

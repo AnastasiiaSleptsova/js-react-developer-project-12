@@ -1,12 +1,12 @@
 import { Empty } from 'antd'
-import { useTranslation } from 'react-i18next'
 import type { RefObject } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import type { Message } from '@shared/api'
 
-import { MessageItem } from './MessageItem'
-
 import styles from '../MessagesList.module.scss'
+
+import { MessageItem } from './MessageItem'
 
 type MessagesContainerProps = {
   filteredMessages: Message[]

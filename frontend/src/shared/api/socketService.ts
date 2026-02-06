@@ -1,10 +1,10 @@
 import { io } from 'socket.io-client'
 import type { Socket } from 'socket.io-client'
+
 import type { Channel, Message, RemoveChannelResponse } from './types'
 
 // Инстанс сокета
 let socket: Socket | null = null
-// TODO: добавить типизацию payload'ов и централизованный reconnect, refresh токена, disconnect при logout
 
 // URL сокет-сервера:
 // - в dev всё ходит через прокси Vite на текущий origin (порт 5002),

@@ -16,7 +16,6 @@ import { SelectedChannelInfo } from './components/SelectedChannelInfo'
 import { useMessageNotification } from './hooks/useMessageNotification'
 import { useMessagesScroll } from './hooks/useMessagesScroll'
 import { MessageInput } from './MessageInput'
-
 import styles from './MessagesList.module.scss'
 
 export const MessagesList = () => {

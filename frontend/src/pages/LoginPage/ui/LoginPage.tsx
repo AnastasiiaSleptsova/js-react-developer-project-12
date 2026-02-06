@@ -7,7 +7,11 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch } from '@app/store'
+
 import { useAuthLogin, setAuthUser, setError as setAuthError, clearError } from '@features/auth'
+
+import { routePaths } from '@shared/config/routes'
+
 import { useHeaderConfig } from '@widgets/chatHeader'
 
 import styles from './LoginPage.module.scss'
@@ -52,7 +56,7 @@ export const LoginPage = () => {
       })
 
       dispatch(setAuthUser({ token: response.token, username: response.username }))
-      navigate('/')
+      void navigate(routePaths.home)
     } catch (error: unknown) {
       let message = t('Не удалось выполнить вход. Попробуйте еще раз.')
 
@@ -75,7 +79,12 @@ export const LoginPage = () => {
 
   return (
     <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleFormSubmit}>
+      <form
+        className={styles.form}
+        onSubmit={(event) => {
+          void handleFormSubmit(event)
+        }}
+      >
         <h2 className={styles.title}>{t('Вход')}</h2>
 
         {errorMessage && (
@@ -137,7 +146,7 @@ export const LoginPage = () => {
           <Button
             type="link"
             onClick={() => {
-              navigate('/signup')
+              void navigate(routePaths.signup)
             }}
           >
             {t('Зарегистрироваться')}

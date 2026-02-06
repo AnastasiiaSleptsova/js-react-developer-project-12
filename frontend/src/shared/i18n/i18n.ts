@@ -11,7 +11,7 @@ const resources = {
   en: { translation: en },
 } as const
 
-i18n.use(initReactI18next).init({
+void i18n.use(initReactI18next).init({
   resources,
   lng: DEFAULT_LOCALE, // фиксированная дефолтная локаль; авто-детект не используем (чтобы тесты от Hexlet проходили)
   fallbackLng: DEFAULT_LOCALE,

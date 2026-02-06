@@ -17,8 +17,8 @@ export const useSendMessage = () => {
         ...payload,
         body: cleanProfanity(payload.body),
       }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['messages', 'all'] }) // TODO вынести messages в queryKey константу и переиспользовать по проекту
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['messages', 'all'] })
     },
     onError: (error) => {
       if (isNetworkError(error)) {

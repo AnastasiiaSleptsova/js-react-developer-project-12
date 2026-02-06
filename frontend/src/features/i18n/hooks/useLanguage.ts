@@ -10,7 +10,7 @@ export const useLanguage = (): {
   const changeLanguage = useCallback(
     (lng: 'ru' | 'en') => {
       if (i18n.language === lng) return
-      i18n.changeLanguage(lng)
+      void i18n.changeLanguage(lng)
     },
     [i18n],
   )

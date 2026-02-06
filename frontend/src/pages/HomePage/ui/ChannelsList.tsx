@@ -13,12 +13,11 @@ import {
   useRemoveChannel,
 } from '@features/chat'
 
+import styles from './ChannelsList.module.scss'
 import { AddChannelModal } from './components/AddChannelModal'
 import { ChannelListItem } from './components/ChannelListItem'
 import { ChannelsListHeader } from './components/ChannelsListHeader'
 import { RenameChannelModal } from './components/RenameChannelModal'
-
-import styles from './ChannelsList.module.scss'
 
 type ChannelsListProps = {
   onChannelSelected?: () => void

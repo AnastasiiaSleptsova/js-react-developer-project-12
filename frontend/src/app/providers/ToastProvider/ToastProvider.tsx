@@ -1,5 +1,5 @@
-import { ToastContainer } from 'react-toastify'
 import type { ReactNode } from 'react'
+import { ToastContainer } from 'react-toastify'
 
 import { useResponsive } from '@shared/hooks/useResponsive'
 

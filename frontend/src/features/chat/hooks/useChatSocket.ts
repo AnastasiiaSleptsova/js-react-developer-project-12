@@ -1,8 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 
-// eslint-disable-next-line no-restricted-imports -- нужен типизированный хук для побочных эффектов сокетов
 import { useAppDispatch } from '@app/store'
+
 import { setSelectedChannel } from '@features/chat'
 
 import type { Channel, Message, RemoveChannelResponse } from '@shared/api'

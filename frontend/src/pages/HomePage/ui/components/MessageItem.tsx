@@ -1,13 +1,13 @@
-import classNames from 'classnames'
 import { EllipsisOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
+import classNames from 'classnames'
 import { useTranslation } from 'react-i18next'
 
 import type { Message } from '@shared/api'
 
-import { MessageActionsDropdown } from './MessageActionsDropdown'
-
 import styles from '../MessagesList.module.scss'
+
+import { MessageActionsDropdown } from './MessageActionsDropdown'
 
 type MessageItemProps = {
   message: Message

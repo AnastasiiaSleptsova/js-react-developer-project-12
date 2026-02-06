@@ -9,8 +9,9 @@ import { useAppDispatch, useAppSelector } from '@app/store'
 
 import { logout, selectAuthUsername } from '@features/auth'
 import { clearSelectedChannel } from '@features/chat'
-import { LanguageSelect } from '@features/i18n'
-import { useLanguage } from '@features/i18n/hooks/useLanguage'
+import { LanguageSelect, useLanguage } from '@features/i18n'
+
+import { routePaths } from '@shared/config/routes'
 
 import styles from './ChatHeader.module.scss'
 
@@ -39,7 +40,7 @@ export const ChatHeader = ({
   const handleLogout = useCallback(() => {
     dispatch(logout())
     dispatch(clearSelectedChannel())
-    navigate('/login')
+    void navigate(routePaths.login)
   }, [dispatch, navigate])
 
   if (shouldCrash) {

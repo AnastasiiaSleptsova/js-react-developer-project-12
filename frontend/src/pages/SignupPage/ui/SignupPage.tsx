@@ -9,8 +9,10 @@ import { z } from 'zod'
 
 import { useAppDispatch } from '@app/store'
 
-import { setAuthUser } from '@features/auth'
-import { useAuthSignup } from '@features/auth'
+import { setAuthUser, useAuthSignup } from '@features/auth'
+
+import { routePaths } from '@shared/config/routes'
+
 import { useHeaderConfig } from '@widgets/chatHeader'
 
 import styles from './SignupPage.module.scss'
@@ -92,7 +94,7 @@ export const SignupPage = () => {
       })
 
       dispatch(setAuthUser({ token: response.token, username: response.username }))
-      navigate('/')
+      void navigate(routePaths.home)
     } catch (error: unknown) {
       if (isAxiosError(error) && error.response?.status === 409) {
         setServerError(t('Это имя пользователя уже занято'))
@@ -109,14 +111,19 @@ export const SignupPage = () => {
   }
 
   const handleLoginClick = () => {
-    navigate('/login') // TODO вынести названия роутов в константы
+    void navigate(routePaths.login)
   }
 
   const handleFormSubmit = handleSubmit(onSubmit)
 
   return (
     <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleFormSubmit}>
+      <form
+        className={styles.form}
+        onSubmit={(event) => {
+          void handleFormSubmit(event)
+        }}
+      >
         <h2 className={styles.title}>{t('Регистрация')}</h2>
 
         {serverError && (

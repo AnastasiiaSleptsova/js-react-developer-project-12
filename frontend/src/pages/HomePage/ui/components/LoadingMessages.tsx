@@ -1,16 +1,44 @@
-import classNames from 'classnames'
 import { Skeleton } from 'antd'
+import classNames from 'classnames'
 
 import styles from '../MessagesList.module.scss'
 
 const skeletonMessages = [
-  { side: 'left' as const, widthClass: 'width64', heightClass: 'heightTall' },
-  { side: 'right' as const, widthClass: 'width60', heightClass: 'heightRegular' },
-  { side: 'left' as const, widthClass: 'width56', heightClass: 'heightRegular' },
-  { side: 'right' as const, widthClass: 'width52', heightClass: 'heightTall' },
-  { side: 'left' as const, widthClass: 'width48', heightClass: 'heightRegular' },
-  { side: 'right' as const, widthClass: 'width44', heightClass: 'heightRegular' },
-  { side: 'right' as const, widthClass: 'width58', heightClass: 'heightMedium' },
+  {
+    side: 'left' as const,
+    widthClass: 'width64',
+    heightClass: 'heightTall',
+  },
+  {
+    side: 'right' as const,
+    widthClass: 'width60',
+    heightClass: 'heightRegular',
+  },
+  {
+    side: 'left' as const,
+    widthClass: 'width56',
+    heightClass: 'heightRegular',
+  },
+  {
+    side: 'right' as const,
+    widthClass: 'width52',
+    heightClass: 'heightTall',
+  },
+  {
+    side: 'left' as const,
+    widthClass: 'width48',
+    heightClass: 'heightRegular',
+  },
+  {
+    side: 'right' as const,
+    widthClass: 'width44',
+    heightClass: 'heightRegular',
+  },
+  {
+    side: 'right' as const,
+    widthClass: 'width58',
+    heightClass: 'heightMedium',
+  },
 ]
 
 export const LoadingMessages = () => {

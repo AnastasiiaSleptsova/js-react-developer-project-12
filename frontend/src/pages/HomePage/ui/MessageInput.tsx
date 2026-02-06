@@ -94,7 +94,7 @@ export const MessageInput = ({ editingMessage, onResetEditing }: MessageInputPro
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
-      handleSubmit(onSubmit)()
+      void handleSubmit(onSubmit)()
     }
   }
 
@@ -107,7 +107,7 @@ export const MessageInput = ({ editingMessage, onResetEditing }: MessageInputPro
   return (
     <form
       onSubmit={(event) => {
-        handleSubmit(onSubmit)(event)
+        void handleSubmit(onSubmit)(event)
       }}
       className={styles.form}
     >
